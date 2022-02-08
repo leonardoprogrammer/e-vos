@@ -1,34 +1,31 @@
-package com.evos.model.vo;
-
-import com.evos.enums.FormaPagamento;
-import com.evos.enums.TipoVenda;
+package com.evos.model.entity;
 
 import java.util.Calendar;
 
-public class VendaVO {
+public class Venda {
     private long id;
-    private ProdutoVO produto;
-    private UsuarioVO vendedor;
-    private ClienteVO comprador;
+    private long idProduto;
+    private long idVendedor;
+    private long idCliente;
     private Calendar dataCompra;
-    private TipoVenda tipoVenda;
-    private FormaPagamento formaPagamento;
-    private boolean gerouNotaFiscal;
+    private int tipoVenda;
+    private int formaPagamento;
+    private String gerouNotaFiscal;
     private String observacao;
     private String dtaInc;
     private String loginInc;
     private String dtaAlt;
     private String loginAlt;
 
-    public VendaVO() {
+    public Venda() {
 
     }
 
-    public VendaVO(long id, ProdutoVO produto, UsuarioVO vendedor, ClienteVO comprador, Calendar dataCompra, TipoVenda tipoVenda, FormaPagamento formaPagamento, boolean gerouNotaFiscal, String observacao, String dtaInc, String loginInc, String dtaAlt, String loginAlt) {
+    public Venda(long id, long id_produto, long id_vendedor, long id_cliente, Calendar dataCompra, int tipoVenda, int formaPagamento, String gerouNotaFiscal, String observacao, String dtaInc, String loginInc, String dtaAlt, String loginAlt) {
         this.id = id;
-        this.produto = produto;
-        this.vendedor = vendedor;
-        this.comprador = comprador;
+        this.idProduto = id_produto;
+        this.idVendedor = id_vendedor;
+        this.idCliente = id_cliente;
         this.dataCompra = dataCompra;
         this.tipoVenda = tipoVenda;
         this.formaPagamento = formaPagamento;
@@ -48,28 +45,28 @@ public class VendaVO {
         this.id = id;
     }
 
-    public ProdutoVO getProduto() {
-        return produto;
+    public long getIdProduto() {
+        return idProduto;
     }
 
-    public void setProduto(ProdutoVO produto) {
-        this.produto = produto;
+    public void setIdProduto(long idProduto) {
+        this.idProduto = idProduto;
     }
 
-    public UsuarioVO getVendedor() {
-        return vendedor;
+    public long getIdVendedor() {
+        return idVendedor;
     }
 
-    public void setVendedor(UsuarioVO vendedor) {
-        this.vendedor = vendedor;
+    public void setIdVendedor(long idVendedor) {
+        this.idVendedor = idVendedor;
     }
 
-    public ClienteVO getComprador() {
-        return comprador;
+    public long getIdCliente() {
+        return idCliente;
     }
 
-    public void setComprador(ClienteVO comprador) {
-        this.comprador = comprador;
+    public void setIdCliente(long idCliente) {
+        this.idCliente = idCliente;
     }
 
     public Calendar getDataCompra() {
@@ -80,27 +77,27 @@ public class VendaVO {
         this.dataCompra = dataCompra;
     }
 
-    public TipoVenda getTipoVenda() {
+    public int getTipoVenda() {
         return tipoVenda;
     }
 
-    public void setTipoVenda(TipoVenda tipoVenda) {
+    public void setTipoVenda(int tipoVenda) {
         this.tipoVenda = tipoVenda;
     }
 
-    public FormaPagamento getFormaPagamento() {
+    public int getFormaPagamento() {
         return formaPagamento;
     }
 
-    public void setFormaPagamento(FormaPagamento formaPagamento) {
+    public void setFormaPagamento(int formaPagamento) {
         this.formaPagamento = formaPagamento;
     }
 
-    public boolean isGerouNotaFiscal() {
+    public String getGerouNotaFiscal() {
         return gerouNotaFiscal;
     }
 
-    public void setGerouNotaFiscal(boolean gerouNotaFiscal) {
+    public void setGerouNotaFiscal(String gerouNotaFiscal) {
         this.gerouNotaFiscal = gerouNotaFiscal;
     }
 

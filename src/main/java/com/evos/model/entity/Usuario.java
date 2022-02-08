@@ -1,32 +1,31 @@
-package com.evos.model.vo;
-
-import com.evos.enums.TipoUsuario;
+package com.evos.model.entity;
 
 import java.util.Calendar;
 
-public class UsuarioVO {
+public class Usuario {
     private long id;
     private String nome;
-    private CargoVO cargo;
-    private TipoUsuario tipoUsuario;
+    private long idCargo;
+    private int tipoUsuario;
     private Calendar dataAdmissao;
     private String cpf;
     private Calendar dataNascimento;
     private String email;
-    private boolean ativo;
+    private String ativo;
     private String dtaInc;
     private String loginInc;
     private String dtaAlt;
     private String loginAlt;
 
-    public UsuarioVO() {
+    public Usuario() {
 
     }
 
-    public UsuarioVO(long id, String nome, CargoVO cargo, Calendar dataAdmissao, String cpf, Calendar dataNascimento, String email, boolean ativo, String dtaInc, String loginInc, String dtaAlt, String loginAlt) {
+    public Usuario(long id, String nome, long idCargo, int tipoUsuario, Calendar dataAdmissao, String cpf, Calendar dataNascimento, String email, String ativo, String dtaInc, String loginInc, String dtaAlt, String loginAlt) {
         this.id = id;
         this.nome = nome;
-        this.cargo = cargo;
+        this.idCargo = idCargo;
+        this.tipoUsuario = tipoUsuario;
         this.dataAdmissao = dataAdmissao;
         this.cpf = cpf;
         this.dataNascimento = dataNascimento;
@@ -54,19 +53,19 @@ public class UsuarioVO {
         this.nome = nome;
     }
 
-    public CargoVO getCargo() {
-        return cargo;
+    public long getIdCargo() {
+        return idCargo;
     }
 
-    public void setCargo(CargoVO cargo) {
-        this.cargo = cargo;
+    public void setIdCargo(long idCargo) {
+        this.idCargo = idCargo;
     }
 
-    public TipoUsuario getTipoUsuario() {
+    public int getTipoUsuario() {
         return tipoUsuario;
     }
 
-    public void setTipoUsuario(TipoUsuario tipoUsuario) {
+    public void setTipoUsuario(int tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
     }
 
@@ -102,11 +101,11 @@ public class UsuarioVO {
         this.email = email;
     }
 
-    public boolean isAtivo() {
+    public String getAtivo() {
         return ativo;
     }
 
-    public void setAtivo(boolean ativo) {
+    public void setAtivo(String ativo) {
         this.ativo = ativo;
     }
 
