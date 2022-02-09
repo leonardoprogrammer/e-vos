@@ -12,6 +12,9 @@ public class Venda {
     private int formaPagamento;
     private String gerouNotaFiscal;
     private String observacao;
+    private String cancelada;
+    private String prodDevolvido;
+    private Calendar dataCancela;
     private String dtaInc;
     private String loginInc;
     private String dtaAlt;
@@ -21,7 +24,7 @@ public class Venda {
 
     }
 
-    public Venda(long id, long id_produto, long id_vendedor, long id_cliente, Calendar dataCompra, int tipoVenda, int formaPagamento, String gerouNotaFiscal, String observacao, String dtaInc, String loginInc, String dtaAlt, String loginAlt) {
+    public Venda(long id, long id_produto, long id_vendedor, long id_cliente, Calendar dataCompra, int tipoVenda, int formaPagamento, String gerouNotaFiscal, String observacao, String cancelada, String prodDevolvido, Calendar dataCancela, String dtaInc, String loginInc, String dtaAlt, String loginAlt) {
         this.id = id;
         this.idProduto = id_produto;
         this.idVendedor = id_vendedor;
@@ -31,6 +34,9 @@ public class Venda {
         this.formaPagamento = formaPagamento;
         this.gerouNotaFiscal = gerouNotaFiscal;
         this.observacao = observacao;
+        this.cancelada = cancelada;
+        this.prodDevolvido = prodDevolvido;
+        this.dataCancela = dataCancela;
         this.dtaInc = dtaInc;
         this.loginInc = loginInc;
         this.dtaAlt = dtaAlt;
@@ -107,6 +113,30 @@ public class Venda {
 
     public void setObservacao(String observacao) {
         this.observacao = observacao;
+    }
+
+    public String getCancelada() {
+        return cancelada;
+    }
+
+    public void setCancelada(String cancelada) {
+        this.cancelada = cancelada;
+    }
+
+    public String getProdDevolvido() {
+        return prodDevolvido;
+    }
+
+    public void setProdDevolvido(String prodDevolvido) {
+        this.prodDevolvido = prodDevolvido;
+    }
+
+    public Calendar getDataCancela() {
+        return dataCancela;
+    }
+
+    public void setDataCancela(Calendar dataCancela) {
+        this.dataCancela = dataCancela;
     }
 
     public String getDtaInc() {

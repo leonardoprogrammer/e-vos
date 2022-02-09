@@ -139,9 +139,9 @@ public class UsuarioDAO {
         }
     }
 
-    public Usuario recuperarUsuario(long id) {
-        String query = "SELECT * FROM USUARIO WHERE = ?";
-        Usuario usuario = new Usuario();
+    public Usuario recuperarUsuarioPorId(long id) {
+        String query = "SELECT * FROM USUARIO WHERE id = ?";
+        Usuario usuario;
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -157,6 +157,7 @@ public class UsuarioDAO {
             rs = pstm.executeQuery();
 
             while (rs.next()) {
+                usuario = new Usuario();
                 usuario.setId(rs.getLong("id"));
                 usuario.setNome(rs.getString("nome"));
                 usuario.setIdCargo(rs.getLong("id_cargo"));
@@ -186,6 +187,7 @@ public class UsuarioDAO {
                 e.printStackTrace();
             }
         }
+        return usuario;
     }
 
     public List<Usuario> recuperarUsuarios() {
