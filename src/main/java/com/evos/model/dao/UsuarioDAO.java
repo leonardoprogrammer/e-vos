@@ -4,8 +4,12 @@ import com.evos.ConnectionFactory;
 import com.evos.model.entity.Usuario;
 import com.evos.model.vo.UsuarioVO;
 
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 public class UsuarioDAO {
@@ -32,14 +36,14 @@ public class UsuarioDAO {
             pstm.setString(1, usuario.getNome());
             pstm.setLong(2, usuario.getCargo().getId());
             pstm.setInt(3, usuario.getTipoUsuario().getId());
-            pstm.setDate(4, usuario.getDataAdmissao());
+            pstm.setDate(4, (Date) usuario.getDataAdmissao().getTime());
             pstm.setString(5, usuario.getCpf());
-            pstm.setDate(6, usuario.getDataNascimento());
+            pstm.setDate(6, (Date) usuario.getDataNascimento().getTime());
             pstm.setString(7, usuario.getEmail());
             pstm.setString(8, usuario.isAtivo() ? "S" : "N");
-            pstm.setDate(9, new Date());
+            pstm.setDate(9, (Date) Calendar.getInstance().getTime());
             pstm.setString(10, userLogado.getNome());
-            pstm.setDate(11, new Date());
+            pstm.setDate(11, (Date) Calendar.getInstance().getTime());
             pstm.setString(12, userLogado.getNome());
 
             // Executa a query para inserção dos dados
@@ -110,14 +114,14 @@ public class UsuarioDAO {
             pstm.setString(1, usuario.getNome());
             pstm.setLong(2, usuario.getCargo().getId());
             pstm.setInt(3, usuario.getTipoUsuario().getId());
-            pstm.setDate(4, usuario.getDataAdmissao());
+            pstm.setDate(4, (Date) usuario.getDataAdmissao().getTime());
             pstm.setString(5, usuario.getCpf());
-            pstm.setDate(6, usuario.getDataNascimento());
+            pstm.setDate(6, (Date) usuario.getDataNascimento().getTime());
             pstm.setString(7, usuario.getEmail());
             pstm.setString(8, usuario.isAtivo() ? "S" : "N");
-            pstm.setDate(9, usuario.getDtaInc());
+            pstm.setString(9, usuario.getDtaInc());
             pstm.setString(10, usuario.getLoginInc());
-            pstm.setDate(11, new Date());
+            pstm.setDate(11, (Date) Calendar.getInstance().getTime());
             pstm.setString(12, userLogado.getNome());
             pstm.setLong(13, usuario.getId());
 
@@ -141,7 +145,7 @@ public class UsuarioDAO {
 
     public Usuario recuperarUsuarioPorId(long id) {
         String query = "SELECT * FROM USUARIO WHERE id = ?";
-        Usuario usuario;
+        Usuario usuario = new Usuario();
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -162,9 +166,9 @@ public class UsuarioDAO {
                 usuario.setNome(rs.getString("nome"));
                 usuario.setIdCargo(rs.getLong("id_cargo"));
                 usuario.setTipoUsuario(rs.getInt("tipo_usuario"));
-                usuario.setDataAdmissao(rs.getDate("data_admissao"));
+                usuario.getDataAdmissao().setTime(rs.getDate("data_admissao"));
                 usuario.setCpf(rs.getString("cpf"));
-                usuario.setDataNascimento(rs.getDate("data_nasc"));
+                usuario.getDataNascimento().setTime(rs.getDate("data_nasc"));
                 usuario.setEmail(rs.getString("email"));
                 usuario.setAtivo(rs.getString("ativo"));
                 usuario.setDtaInc(rs.getString("dta_inc"));
@@ -213,9 +217,9 @@ public class UsuarioDAO {
                 usuario.setNome(rs.getString("nome"));
                 usuario.setIdCargo(rs.getLong("id_cargo"));
                 usuario.setTipoUsuario(rs.getInt("tipo_usuario"));
-                usuario.setDataAdmissao(rs.getDate("data_admissao"));
+                usuario.getDataAdmissao().setTime(rs.getDate("data_admissao"));
                 usuario.setCpf(rs.getString("cpf"));
-                usuario.setDataNascimento(rs.getDate("data_nasc"));
+                usuario.getDataNascimento().setTime(rs.getDate("data_nasc"));
                 usuario.setEmail(rs.getString("email"));
                 usuario.setAtivo(rs.getString("ativo"));
                 usuario.setDtaInc(rs.getString("dta_inc"));

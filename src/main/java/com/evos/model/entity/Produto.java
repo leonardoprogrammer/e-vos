@@ -1,26 +1,30 @@
-package com.evos.model.vo;
+package com.evos.model.entity;
 
-public class EmpresaVO {
+import java.util.Calendar;
+
+public class Produto {
     private long id;
     private String nome;
-    private String cnpj;
-    private boolean possuiCnpj;
-    private boolean ativa;
+    private int tipoProduto;
+    private long idCategoria;
+    private Double valor;
+    private String ativo;
     private String dtaInc;
     private String loginInc;
     private String dtaAlt;
     private String loginAlt;
 
-    public EmpresaVO() {
+    public Produto() {
 
     }
 
-    public EmpresaVO(long id, String nome, String cnpj, boolean possuiCnpj, boolean ativa, String dtaInc, String loginInc, String dtaAlt, String loginAlt) {
+    public Produto(long id, String nome, int tipoProduto, long idCategoria, Double valor, String ativo, String dtaInc, String loginInc, String dtaAlt, String loginAlt) {
         this.id = id;
         this.nome = nome;
-        this.cnpj = cnpj;
-        this.possuiCnpj = possuiCnpj;
-        this.ativa = ativa;
+        this.tipoProduto = tipoProduto;
+        this.idCategoria = idCategoria;
+        this.valor = valor;
+        this.ativo = ativo;
         this.dtaInc = dtaInc;
         this.loginInc = loginInc;
         this.dtaAlt = dtaAlt;
@@ -43,28 +47,36 @@ public class EmpresaVO {
         this.nome = nome;
     }
 
-    public String getCnpj() {
-        return cnpj;
+    public int getTipoProduto() {
+        return tipoProduto;
     }
 
-    public void setCnpj(String cnpj) {
-        this.cnpj = cnpj;
+    public void setTipoProduto(int tipoProduto) {
+        this.tipoProduto = tipoProduto;
     }
 
-    public boolean isPossuiCnpj() {
-        return possuiCnpj;
+    public long getIdCategoria() {
+        return idCategoria;
     }
 
-    public void setPossuiCnpj(boolean possuiCnpj) {
-        this.possuiCnpj = possuiCnpj;
+    public void setIdCategoria(long idCategoria) {
+        this.idCategoria = idCategoria;
     }
 
-    public boolean isAtiva() {
-        return ativa;
+    public Double getValor() {
+        return valor;
     }
 
-    public void setAtiva(boolean ativa) {
-        this.ativa = ativa;
+    public void setValor(Double valor) {
+        this.valor = valor;
+    }
+
+    public String getAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(String ativo) {
+        this.ativo = ativo;
     }
 
     public String getDtaInc() {

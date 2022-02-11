@@ -4,6 +4,9 @@ import com.evos.ConnectionFactory;
 import com.evos.model.entity.Login;
 import com.evos.model.vo.UsuarioVO;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +31,7 @@ public class LoginDAO {
             pstm.setLong(1, user.getIdUsuario());
             pstm.setString(2, user.getUsername());
             pstm.setString(3, user.getSenha());
-            pstm.getString(4, user.getDtaInc());
+            pstm.setString(4, user.getDtaInc());
             pstm.setString(5, user.getLoginInc());
             pstm.setString(6, user.getDtaAlt());
             pstm.setString(7, user.getLoginAlt());
@@ -100,7 +103,7 @@ public class LoginDAO {
             conn = ConnectionFactory.createConnectionToMySql();
             pstm = conn.prepareStatement(query);
 
-            pstm.setLong(1, id);
+            pstm.setLong(1, login.getId());
 
             pstm.execute();
         } catch (Exception e) {
@@ -122,7 +125,7 @@ public class LoginDAO {
 
     public Login recuperarLoginPorId(long id) {
         String query = "SELECT * FROM LOGIN WHERE id = ?";
-        Login login;
+        Login login = new Login();
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -139,7 +142,7 @@ public class LoginDAO {
             while (rs.next()) {
                 login = new Login();
                 login.setId(rs.getLong("id"));
-                login.setIdUsuario(rs.getLogin("id_usuario"));
+                login.setIdUsuario(rs.getLong("id_usuario"));
                 login.setUsername(rs.getString("username"));
                 login.setSenha(rs.getString("senha"));
                 login.setDtaInc(rs.getString("dta_inc"));
@@ -182,7 +185,7 @@ public class LoginDAO {
                 Login login = new Login();
 
                 login.setId(rs.getLong("id"));
-                login.setIdUsuario(rs.getLogin("id_usuario"));
+                login.setIdUsuario(rs.getLong("id_usuario"));
                 login.setUsername(rs.getString("username"));
                 login.setSenha(rs.getString("senha"));
                 login.setDtaInc(rs.getString("dta_inc"));

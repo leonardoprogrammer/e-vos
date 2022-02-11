@@ -1,6 +1,8 @@
 package com.evos.controller;
 
-import com.evos.model.dao.CondiguracoesDAO;
+import com.evos.business.SessionBeanConfiguracoes;
+import com.evos.business.SessionBeanEmpresa;
+import com.evos.model.dao.ConfiguracoesDAO;
 import com.evos.model.vo.ConfiguracoesVO;
 import com.evos.model.vo.EmpresaVO;
 import com.evos.model.vo.UsuarioVO;
@@ -14,13 +16,12 @@ public class ConfiguracoesController implements Initializable {
     private EmpresaVO empresa;
     private UsuarioVO usuario;
     private ConfiguracoesVO configuracoes;
-    private CondiguracoesDAO configuracoesDao;
+    private SessionBeanEmpresa sessionBeanEmpresa;
+    private SessionBeanConfiguracoes sessionBeanConfiguracoes;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // recebe EmpresaVO
-        // recebe UsuarioVO
-        configuracoes = new ConfiguracoesVO();
-        configuracoes = configuracoesDao.recuperarConfiguracoes(empresa.getId());
+        empresa = sessionBeanEmpresa.recuperarEmpresa();
+        configuracoes = sessionBeanConfiguracoes.recuperarConfiguracoes();
     }
 }

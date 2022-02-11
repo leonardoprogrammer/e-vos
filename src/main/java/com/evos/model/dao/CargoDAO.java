@@ -5,8 +5,12 @@ import com.evos.model.entity.Cargo;
 import com.evos.model.vo.CargoVO;
 import com.evos.model.vo.UsuarioVO;
 
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 public class CargoDAO {
@@ -28,7 +32,7 @@ public class CargoDAO {
 
             // Adiciona os valores como parâmetros
             pstm.setString(1, cargo.getNome());
-            pstm.setDate(2, cargo.getDataCadastro());
+            pstm.setDate(2, (Date) cargo.getDataCadastro().getTime());
             pstm.setString(3, cargo.isAtivo() ? "S" : "N");
             pstm.setString(4, cargo.getDtaInc());
             pstm.setString(5, cargo.getLoginInc());
@@ -68,13 +72,13 @@ public class CargoDAO {
             pstm = conn.prepareStatement(query.toString());
 
             pstm.setString(1, cargo.getNome());
-            pstm.setString(2, cargo.getDataCadastro());
+            pstm.setDate(2, (Date) cargo.getDataCadastro().getTime());
             pstm.setString(3, cargo.isAtivo() ? "S" : "N");
             pstm.setString(4, cargo.getDtaInc());
             pstm.setString(5, cargo.getLoginInc());
             pstm.setString(6, cargo.getDtaAlt());
             pstm.setString(7, cargo.getLoginAlt());
-            pstm.setString(8, cargo.getId());
+            pstm.setLong(8, cargo.getId());
 
             pstm.execute();
         } catch (Exception e) {
@@ -137,7 +141,7 @@ public class CargoDAO {
             pstm = conn.prepareStatement(query.toString());
 
             pstm.setLong(1, cargoSubstituto.getId());
-            pstm.setString(2, new Date().toString());
+            pstm.setString(2, Calendar.getInstance().toString());
             pstm.setString(3, userLogado.getNome());
             pstm.setLong(4, cargoRemover.getId());
 
@@ -181,7 +185,7 @@ public class CargoDAO {
 
 
                 // Adiciona o objeto atual à lista
-                usuarios.add(usuario);
+                cargos.add(cargo);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -198,9 +202,35 @@ public class CargoDAO {
                 e.printStackTrace();
             }
         }
+        return cargos;
     }
 
     public Cargo recuperarCargoPorId(long id) {
+        String query = "SELECT * FROM CARGO WHERE id = ?";
+        Cargo cargo = new Cargo();
 
+        Connection conn = null;
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+
+        try {
+            conn = ConnectionFactory.createConnectionToMySql();
+            pstm = conn.prepareStatement(query);
+            rs = pstm.executeQuery();
+
+            while (rs.next()) {
+                cargo = new Cargo();
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return cargo;
     }
 }

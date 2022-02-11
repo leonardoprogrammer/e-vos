@@ -1,33 +1,31 @@
-package com.evos.model.vo;
+package com.evos.model.entity;
 
-import com.evos.enums.TipoProduto;
-
-public class ProdutoVO {
+public class DescontoCompra {
     private long id;
-    private String nome;
-    private TipoProduto tipoProduto;
-    private CategoriaVO categoria;
+    private int qtdMininaProduto;
+    private int tipoDesconto;
+    private Double porcentagem;
     private Double valor;
-    private boolean ativo;
+    private String ativo;
     private String dtaInc;
     private String loginInc;
     private String dtaAlt;
     private String loginAlt;
 
-    public ProdutoVO() {
+    public DescontoCompra() {
 
     }
 
-    public ProdutoVO(long id, String nome, TipoProduto tipo, CategoriaVO categoria, Double valor, boolean ativo, String dtaInc, String loginInc, String dtaAlt, String loginAlt) {
+    public DescontoCompra(long id, int qtdMininaProduto, int tipoDesconto, Double porcentagem, Double valor, String ativo, String dtaInc, String loginInc, String dtAlt, String loginAlt) {
         this.id = id;
-        this.nome = nome;
-        this.tipoProduto = tipo;
-        this.categoria = categoria;
+        this.qtdMininaProduto = qtdMininaProduto;
+        this.tipoDesconto = tipoDesconto;
+        this.porcentagem = porcentagem;
         this.valor = valor;
         this.ativo = ativo;
         this.dtaInc = dtaInc;
         this.loginInc = loginInc;
-        this.dtaAlt = dtaAlt;
+        this.dtaAlt = dtAlt;
         this.loginAlt = loginAlt;
     }
 
@@ -39,28 +37,28 @@ public class ProdutoVO {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public int getQtdMininaProduto() {
+        return qtdMininaProduto;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setQtdMininaProduto(int qtdMininaProduto) {
+        this.qtdMininaProduto = qtdMininaProduto;
     }
 
-    public TipoProduto getTipoProduto() {
-        return tipoProduto;
+    public int getTipoDesconto() {
+        return tipoDesconto;
     }
 
-    public void setTipoProduto(TipoProduto tipoProduto) {
-        this.tipoProduto = tipoProduto;
+    public void setTipoDesconto(int tipoDesconto) {
+        this.tipoDesconto = tipoDesconto;
     }
 
-    public CategoriaVO getCategoria() {
-        return categoria;
+    public Double getPorcentagem() {
+        return porcentagem;
     }
 
-    public void setCategoria(CategoriaVO categoria) {
-        this.categoria = categoria;
+    public void setPorcentagem(Double porcentagem) {
+        this.porcentagem = porcentagem;
     }
 
     public Double getValor() {
@@ -71,11 +69,11 @@ public class ProdutoVO {
         this.valor = valor;
     }
 
-    public boolean isAtivo() {
+    public String getAtivo() {
         return ativo;
     }
 
-    public void setAtivo(boolean ativo) {
+    public void setAtivo(String ativo) {
         this.ativo = ativo;
     }
 

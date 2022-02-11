@@ -1,21 +1,21 @@
-package com.evos.model.vo;
+package com.evos.model.entity;
 
-public class EmpresaVO {
+public class Empresa {
     private long id;
     private String nome;
     private String cnpj;
-    private boolean possuiCnpj;
-    private boolean ativa;
+    private String possuiCnpj;
+    private String ativa;
     private String dtaInc;
     private String loginInc;
     private String dtaAlt;
     private String loginAlt;
 
-    public EmpresaVO() {
+    public Empresa() {
 
     }
 
-    public EmpresaVO(long id, String nome, String cnpj, boolean possuiCnpj, boolean ativa, String dtaInc, String loginInc, String dtaAlt, String loginAlt) {
+    public Empresa(long id, String nome, String cnpj, String possuiCnpj, String ativa, String dtaInc, String loginInc, String dtaAlt, String loginAlt) {
         this.id = id;
         this.nome = nome;
         this.cnpj = cnpj;
@@ -51,19 +51,19 @@ public class EmpresaVO {
         this.cnpj = cnpj;
     }
 
-    public boolean isPossuiCnpj() {
+    public String getPossuiCnpj() {
         return possuiCnpj;
     }
 
-    public void setPossuiCnpj(boolean possuiCnpj) {
+    public void setPossuiCnpj(String possuiCnpj) {
         this.possuiCnpj = possuiCnpj;
     }
 
-    public boolean isAtiva() {
+    public String getAtiva() {
         return ativa;
     }
 
-    public void setAtiva(boolean ativa) {
+    public void setAtiva(String ativa) {
         this.ativa = ativa;
     }
 

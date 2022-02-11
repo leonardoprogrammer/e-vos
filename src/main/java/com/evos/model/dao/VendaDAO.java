@@ -7,8 +7,12 @@ import com.evos.model.vo.UsuarioVO;
 import com.evos.model.vo.VendaVO;
 import com.evos.util.Utils;
 
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 public class VendaDAO {
@@ -33,7 +37,7 @@ public class VendaDAO {
             pstm.setLong(1, venda.getProduto().getId());
             pstm.setLong(2, venda.getVendedor().getId());
             pstm.setLong(3, venda.getCliente().getId());
-            pstm.setDate(4, venda.getDataCompra());
+            pstm.setDate(4, (Date) venda.getDataCompra().getTime());
             pstm.setInt(5, venda.getTipoVenda().getId());
             pstm.setInt(6, venda.getFormaPagamento().getId());
             pstm.setString(7, venda.isGerouNotaFiscal() ? "S" : "N");
@@ -81,14 +85,14 @@ public class VendaDAO {
             pstm.setLong(1, venda.getProduto().getId());
             pstm.setLong(2, venda.getVendedor().getId());
             pstm.setLong(3, venda.getCliente().getId());
-            pstm.setDate(4, venda.getDataCompra());
+            pstm.setDate(4, (Date) venda.getDataCompra().getTime());
             pstm.setInt(5, venda.getTipoVenda().getId());
             pstm.setInt(6, venda.getFormaPagamento().getId());
             pstm.setString(7, venda.isGerouNotaFiscal() ? "S" : "N");
             pstm.setString(8, venda.getObservacao());
             pstm.setString(9, venda.isCancelada() ? "S" : "N");
             pstm.setString(10, venda.isProdDevolvido() ? "S" : "N");
-            pstm.setDate(11, venda.getDataCancela());
+            pstm.setDate(11, (Date) venda.getDataCancela().getTime());
             pstm.setString(12, venda.getDtaInc());
             pstm.setString(13, venda.getLoginInc());
             pstm.setString(14, venda.getDtaAlt());
@@ -132,8 +136,8 @@ public class VendaDAO {
 
             pstm.setString(count++, "S");
             pstm.setString(count++, prodDevolvido ? "S" : "N");
-            pstm.setDate(count++, new Date());
-            pstm.setString(count++, new Date());
+            pstm.setDate(count++, (Date) Calendar.getInstance().getTime());
+            pstm.setString(count++, Calendar.getInstance().toString());
             pstm.setString(count++, userLogado.getNome());
             if (Utils.isNullOrEmpty(observacao)) {
                 pstm.setString(count++, observacao);
@@ -168,7 +172,7 @@ public class VendaDAO {
             conn = ConnectionFactory.createConnectionToMySql();
             pstm = conn.prepareStatement(query);
 
-            pstm.setLong(1, id);
+            pstm.setLong(1, venda.getId());
 
             pstm.execute();
         } catch (Exception e) {
@@ -188,7 +192,7 @@ public class VendaDAO {
         }
     }
 
-    public List<Venda> recuperarTodasVendas() {
+    public List<Venda> recuperarVendas() {
         String query = "SELECT * FROM VENDA";
         List<Venda> vendas = new ArrayList<Venda>();
 
@@ -208,14 +212,14 @@ public class VendaDAO {
                 venda.setIdProduto(rs.getLong("id_produto"));
                 venda.setIdVendedor(rs.getLong("id_vendedor"));
                 venda.setIdCliente(rs.getLong("id_cliente"));
-                venda.setDataCompra(rs.getDate("data_compra"));
+                venda.getDataCompra().setTime(rs.getDate("data_compra"));
                 venda.setTipoVenda(rs.getInt("tipo_venda"));
                 venda.setFormaPagamento(rs.getInt("forma_pagamento"));
                 venda.setGerouNotaFiscal(rs.getString("gerou_nfs"));
                 venda.setObservacao(rs.getString("observacao"));
                 venda.setCancelada(rs.getString("cancelada"));
                 venda.setProdDevolvido(rs.getString("prod_devolvido"));
-                venda.setDataCancela(rs.getDate("data_cancela"));
+                venda.getDataCancela().setTime(rs.getDate("data_cancela"));
                 venda.setDtaInc(rs.getString("dta_inc"));
                 venda.setLoginInc(rs.getString("login_inc"));
                 venda.setDtaAlt(rs.getString("dta_alt"));
@@ -243,7 +247,7 @@ public class VendaDAO {
 
     public Venda recuperarVendaPorId(long id) {
         String query = "SELECT * FROM VENDA WHERE id = ?";
-        Venda venda;
+        Venda venda = new Venda();
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -263,14 +267,14 @@ public class VendaDAO {
                 venda.setIdProduto(rs.getLong("id_produto"));
                 venda.setIdVendedor(rs.getLong("id_vendedor"));
                 venda.setIdCliente(rs.getLong("id_cliente"));
-                venda.setDataCompra(rs.getDate("data_compra"));
+                venda.getDataCompra().setTime(rs.getDate("data_compra"));
                 venda.setTipoVenda(rs.getInt("tipo_venda"));
                 venda.setFormaPagamento(rs.getInt("forma_pagamento"));
                 venda.setGerouNotaFiscal(rs.getString("gerou_nfs"));
                 venda.setObservacao(rs.getString("observacao"));
                 venda.setCancelada(rs.getString("cancelada"));
                 venda.setProdDevolvido(rs.getString("prod_devolvido"));
-                venda.setDataCancela(rs.getDate("data_cancela"));
+                venda.getDataCancela().setTime(rs.getDate("data_cancela"));
                 venda.setDtaInc(rs.getString("dta_inc"));
                 venda.setLoginInc(rs.getString("login_inc"));
                 venda.setDtaAlt(rs.getString("dta_alt"));
@@ -358,7 +362,7 @@ public class VendaDAO {
                 pstm.setLong(count++, filtroVenda.getCliente().getId());
             }
             if (Utils.isNullOrEmpty(filtroVenda.getDataCompra().toString())) {
-                pstm.setDate(count++, filtroVenda.getDataCompra());
+                pstm.setDate(count++, (Date) filtroVenda.getDataCompra().getTime());
             }
             if (Utils.isNullOrZero(filtroVenda.getTipoVenda().getId())) {
                 pstm.setInt(count++, filtroVenda.getTipoVenda().getId());
@@ -387,14 +391,14 @@ public class VendaDAO {
                 venda.setIdProduto(rs.getLong("id_produto"));
                 venda.setIdVendedor(rs.getLong("id_vendedor"));
                 venda.setIdCliente(rs.getLong("id_cliente"));
-                venda.setDataCompra(rs.getDate("data_compra"));
+                venda.getDataCompra().setTime(rs.getDate("data_compra"));
                 venda.setTipoVenda(rs.getInt("tipo_venda"));
                 venda.setFormaPagamento(rs.getInt("forma_pagamento"));
                 venda.setGerouNotaFiscal(rs.getString("gerou_nfs"));
                 venda.setObservacao(rs.getString("observacao"));
                 venda.setCancelada(rs.getString("cancelada"));
                 venda.setProdDevolvido(rs.getString("prod_devolvido"));
-                venda.setDataCancela(rs.getDate("data_cancela"));
+                venda.getDataCancela().setTime(rs.getDate("data_cancela"));
                 venda.setDtaInc(rs.getString("dta_inc"));
                 venda.setLoginInc(rs.getString("login_inc"));
                 venda.setDtaAlt(rs.getString("dta_alt"));
