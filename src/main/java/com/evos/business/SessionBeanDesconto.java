@@ -61,7 +61,7 @@ public class SessionBeanDesconto {
 
         if (descontos != null) {
             for (DescontoProduto desconto : descontos) {
-                Produto produto = sessionBeanProduto.recuperarProdutoPorId(desconto.getIdProduto());
+                ProdutoVO produto = sessionBeanProduto.recuperarProdutoPorId(desconto.getIdProduto());
                 descontosVO.add(preencherVO(desconto, produto));
             }
             return descontosVO;
@@ -84,7 +84,7 @@ public class SessionBeanDesconto {
 
     public DescontoProdutoVO recuperarDescontoProdutoPorProduto(ProdutoVO produtoVO) {
         DescontoProduto descontoProduto = descontoDAO.recuperarDescontoPorProduto(produtoVO);
-        Produto produto = sessionBeanProduto.recuperarProdutoPorId(descontoProduto.getIdProduto());
+        ProdutoVO produto = sessionBeanProduto.recuperarProdutoPorId(descontoProduto.getIdProduto());
 
         if (descontoProduto != null) {
             return preencherVO(descontoProduto, produto);
@@ -101,11 +101,11 @@ public class SessionBeanDesconto {
         return null;
     }
 
-    public DescontoProdutoVO preencherVO(DescontoProduto desconto, Produto produto) {
+    public DescontoProdutoVO preencherVO(DescontoProduto desconto, ProdutoVO produto) {
         DescontoProdutoVO descontoProdutoVO = new DescontoProdutoVO();
         descontoProdutoVO.setId(desconto.getId());
         if (produto != null) {
-            descontoProdutoVO.setProduto(sessionBeanProduto.preencherVO(produto));
+            descontoProdutoVO.setProduto(produto);
         }
         descontoProdutoVO.setQtdMinima(desconto.getQtdMinima());
         descontoProdutoVO.setTipoDesconto(TipoDesconto.get(desconto.getTipoDesconto()));

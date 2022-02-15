@@ -7,6 +7,7 @@ import com.evos.model.vo.CargoVO;
 import com.evos.model.vo.UsuarioVO;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class SessionBeanCargo {
 
     public void cadastrarCargo(CargoVO cargo, UsuarioVO userLogado) {
         cargo.setLoginInc(userLogado.getNome());
-        cargo.setDtaInc(new Date().toString());
+        cargo.setDtaInc(Calendar.getInstance().toString());
         cargoDAO.cadastrarCargo(cargo);
     }
 
@@ -53,12 +54,14 @@ public class SessionBeanCargo {
         List<Cargo> cargos = cargoDAO.recuperarCargos();
         List<CargoVO> cargosVO = new ArrayList<CargoVO>();
 
-        for (Cargo cargo : cargos) {
-            CargoVO cargoVO = preencherVO(cargo);
-            cargosVO.add(cargoVO);
+        if (cargos != null) {
+            for (Cargo cargo : cargos) {
+                CargoVO cargoVO = preencherVO(cargo);
+                cargosVO.add(cargoVO);
+            }
+            return cargosVO;
         }
-
-        return cargosVO;
+        return null;
     }
 
     public CargoVO recuperarCargoPorId(long id) {
