@@ -8,57 +8,72 @@ import com.evos.model.entity.Cargo;
 import com.evos.model.entity.Login;
 import com.evos.model.entity.Usuario;
 import com.evos.model.vo.CargoVO;
+import com.evos.model.vo.LoginVO;
 import com.evos.model.vo.UsuarioVO;
+import com.evos.util.Utils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 public class SessionBeanUsuario {
 
-    UsuarioDAO usuarioDAO;
-    LoginDAO loginDAO;
-    CargoDAO cargoDAO;
-    SessionBeanCargo sessionBeanCargo;
+    private UsuarioDAO usuarioDAO;
+    private SessionBeanCargo sessionBeanCargo;
+    private SessionBeanLogin sessionBeanLogin;
 
-    public void cadastrarUsuario(UsuarioVO userCadastro, Login loginCadastro, UsuarioVO userLogado) {
-        usuarioDAO.cadastrarUsuario(userCadastro, userLogado);
-        loginDAO.cadastrarLogin(loginCadastro);
+    public void cadastrarUsuario(UsuarioVO userCadastro, LoginVO loginCadastro, UsuarioVO userLogado) {
+        userCadastro.setLoginInc(userLogado.getNome());
+        userCadastro.setDtaInc(Calendar.getInstance().toString());
+        usuarioDAO.cadastrarUsuario(userCadastro);
+        sessionBeanLogin.cadastrarLogin(loginCadastro, userLogado);
     }
 
     public void alterarUsuario(UsuarioVO userAlt, UsuarioVO userLogado) {
-        usuarioDAO.alterarUsuario(userAlt, userLogado);
+        userAlt.setLoginAlt(userLogado.getNome());
+        userAlt.setDtaAlt(Calendar.getInstance().toString());
+        usuarioDAO.alterarUsuario(userAlt);
+    }
+
+    public void deletarUsuario(UsuarioVO usuario) {
+        usuarioDAO.deletarUsuario(usuario.getId());
     }
 
     public List<UsuarioVO> recuperarTodosUsuarios() {
         List<Usuario> usuarios = usuarioDAO.recuperarUsuarios();
         List<UsuarioVO> usuariosVO = new ArrayList<UsuarioVO>();
 
-        for (Usuario usuario : usuarios) {
-            UsuarioVO usuarioVO = preencherVO(usuario, cargoDAO.recuperarCargoPorId(usuario.getIdCargo()));
-            usuariosVO.add(usuarioVO);
+        if (usuarios != null) {
+            for (Usuario usuario : usuarios) {
+                CargoVO cargoVO = sessionBeanCargo.recuperarCargoPorId(usuario.getIdCargo());
+                usuariosVO.add(preencherVO(usuario, cargoVO));
+            }
+            return usuariosVO;
         }
-
-        return usuariosVO;
+        return null;
     }
 
     public UsuarioVO recuperarUsuarioPorId(long id) {
         Usuario usuario = usuarioDAO.recuperarUsuarioPorId(id);
-        Cargo cargo = cargoDAO.recuperarCargoPorId(usuario.getIdCargo());
 
-        UsuarioVO usuarioVO = preencherVO(usuario, cargo);
-
-        return usuarioVO;
+        if (usuario != null) {
+            CargoVO cargoVO = sessionBeanCargo.recuperarCargoPorId(usuario.getIdCargo());
+            return preencherVO(usuario, cargoVO);
+        }
+        return null;
     }
 
-    public UsuarioVO preencherVO(Usuario usuario, Cargo cargo) {
+    public UsuarioVO preencherVO(Usuario usuario, CargoVO cargoVO) {
         UsuarioVO usuarioVO = new UsuarioVO();
         usuarioVO.setId(usuario.getId());
         usuarioVO.setNome(usuario.getNome());
-        if (cargo != null) {
-            usuarioVO.setCargo(sessionBeanCargo.preencherVO(cargo));
+        if (cargoVO != null) {
+            usuarioVO.setCargo(cargoVO);
         }
-        usuarioVO.setTipoUsuario(TipoUsuario.get(usuario.getTipoUsuario()));
+        if (!Utils.isNullOrZero(usuario.getTipoUsuario())) {
+            usuarioVO.setTipoUsuario(TipoUsuario.get(usuario.getTipoUsuario()));
+        }
         usuarioVO.setDataAdmissao(usuario.getDataAdmissao());
         usuarioVO.setCpf(usuario.getCpf());
         usuarioVO.setDataNascimento(usuario.getDataNascimento());

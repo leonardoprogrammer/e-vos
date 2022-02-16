@@ -3,16 +3,26 @@ package com.evos.business;
 import com.evos.model.dao.EmpresaDAO;
 import com.evos.model.entity.Empresa;
 import com.evos.model.vo.EmpresaVO;
+import com.evos.model.vo.UsuarioVO;
+
+import java.util.Calendar;
 
 public class SessionBeanEmpresa {
 
-    EmpresaDAO empresaDAO;
+    private EmpresaDAO empresaDAO;
 
     public EmpresaVO recuperarEmpresa() {
-        return preencherVO(empresaDAO.recuperarEmpresa());
+        Empresa empresa = empresaDAO.recuperarEmpresa();
+
+        if (empresa != null) {
+            return preencherVO(empresa);
+        }
+        return null;
     }
 
-    public void alterarEmpresa(EmpresaVO empresa) {
+    public void alterarEmpresa(EmpresaVO empresa, UsuarioVO userLogado) {
+        empresa.setLoginAlt(userLogado.getNome());
+        empresa.setDtaAlt(Calendar.getInstance().toString());
         empresaDAO.alterarEmpresa(empresa);
     }
 

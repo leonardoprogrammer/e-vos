@@ -4,8 +4,10 @@ import com.evos.enums.TipoProduto;
 import com.evos.model.dao.ProdutoDAO;
 import com.evos.model.entity.Categoria;
 import com.evos.model.entity.Produto;
+import com.evos.model.vo.CategoriaVO;
 import com.evos.model.vo.ProdutoVO;
 import com.evos.model.vo.UsuarioVO;
+import com.evos.util.Utils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -38,9 +40,8 @@ public class SessionBeanProduto {
 
         if (produtos != null) {
             for (Produto produto : produtos) {
-                Categoria categoria = sessionBeanCategoria.recuperarCategoriaPorId(produto.getId());
-                ProdutoVO produtoVO = preencherVO(produto, categoria);
-                produtosVO.add(produtoVO);
+                CategoriaVO categoriaVO = sessionBeanCategoria.recuperarCategoriaPorId(produto.getId());
+                produtosVO.add(preencherVO(produto, categoriaVO));
             }
             return produtosVO;
         }
@@ -49,19 +50,23 @@ public class SessionBeanProduto {
 
     public ProdutoVO recuperarProdutoPorId(long id) {
         Produto produto = produtoDAO.recuperarProdutoPorId(id);
-        Categoria categoria = sessionBeanCategoria.recuperarCategoriaPorId(produto.getIdCategoria());
-        ProdutoVO produtoVO = preencherVO(produto, categoria);
 
-        return produtoVO;
+        if (produto != null) {
+            CategoriaVO categoria = sessionBeanCategoria.recuperarCategoriaPorId(produto.getIdCategoria());
+            return preencherVO(produto, categoria);
+        }
+        return null;
     }
 
-    public ProdutoVO preencherVO(Produto produto, Categoria categoria) {
+    public ProdutoVO preencherVO(Produto produto, CategoriaVO categoria) {
         ProdutoVO produtoVO = new ProdutoVO();
         produtoVO.setId(produto.getId());
         produtoVO.setNome(produto.getNome());
-        produtoVO.setTipoProduto(TipoProduto.get(produto.getTipoProduto()));
+        if (Utils.isNullOrZero(produto.getTipoProduto())) {
+            produtoVO.setTipoProduto(TipoProduto.get(produto.getTipoProduto()));
+        }
         if (categoria != null) {
-            produtoVO.setCategoria(sessionBeanCategoria.preencherVO(categoria));
+            produtoVO.setCategoria(categoria);
         }
         produtoVO.setValor(produto.getValor());
         produtoVO.setAtivo(produto.getAtivo().equals("S") ? true : false);

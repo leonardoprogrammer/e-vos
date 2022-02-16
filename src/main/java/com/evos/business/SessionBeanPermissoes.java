@@ -4,8 +4,10 @@ import com.evos.enums.TipoProduto;
 import com.evos.model.dao.ProdutoDAO;
 import com.evos.model.entity.Categoria;
 import com.evos.model.entity.Produto;
+import com.evos.model.vo.CategoriaVO;
 import com.evos.model.vo.ProdutoVO;
 import com.evos.model.vo.UsuarioVO;
+import com.evos.util.Utils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -38,7 +40,7 @@ public class SessionBeanPermissoes {
 
         if (produtos != null) {
             for (Produto produto : produtos) {
-                Categoria categoria = sessionBeanCategoria.recuperarCategoriaPorId(produto.getIdCategoria());
+                CategoriaVO categoria = sessionBeanCategoria.recuperarCategoriaPorId(produto.getIdCategoria());
                 produtosVO.add(preencherVO(produto, categoria));
             }
             return produtosVO;
@@ -50,18 +52,22 @@ public class SessionBeanPermissoes {
         Produto produto = produtoDAO.recuperarProdutoPorId(id);
 
         if (produto != null) {
-            Categoria categoria = sessionBeanCategoria.recuperarCategoriaPorId(produto.getIdCategoria());
+            CategoriaVO categoria = sessionBeanCategoria.recuperarCategoriaPorId(produto.getIdCategoria());
             return preencherVO(produto, categoria);
         }
         return null;
     }
 
-    public ProdutoVO preencherVO(Produto produto, Categoria categoria) {
+    public ProdutoVO preencherVO(Produto produto, CategoriaVO categoria) {
         ProdutoVO produtoVO = new ProdutoVO();
         produtoVO.setId(produto.getId());
         produtoVO.setNome(produto.getNome());
-        produtoVO.setTipoProduto(TipoProduto.get(produto.getTipoProduto()));
-        produtoVO.setCategoria(sessionBeanCategoria.preencherVO(categoria));
+        if (Utils.isNullOrZero(produto.getTipoProduto())) {
+            produtoVO.setTipoProduto(TipoProduto.get(produto.getTipoProduto()));
+        }
+        if (categoria != null) {
+            produtoVO.setCategoria(categoria);
+        }
         produtoVO.setValor(produto.getValor());
         produtoVO.setAtivo(produto.getAtivo().equals("S") ? true : false);
         produtoVO.setDtaInc(produto.getDtaInc());

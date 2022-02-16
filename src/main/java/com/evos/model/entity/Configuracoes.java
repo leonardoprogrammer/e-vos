@@ -1,6 +1,6 @@
 package com.evos.model.entity;
 
-public class ConfiguracoesGerais {
+public class Configuracoes {
     // VENDAS
     private String enviarEmailVenda;
     // APLICATIVO
@@ -12,11 +12,11 @@ public class ConfiguracoesGerais {
     private String dtaAlt;
     private String loginAlt;
 
-    public ConfiguracoesGerais() {
+    public Configuracoes() {
 
     }
 
-    public ConfiguracoesGerais(String enviarEmailVenda, String enviarNotifVendaApp, String enviarNotifMetaApp, String dtaInc, String loginInc, String dtaAlt, String loginAlt) {
+    public Configuracoes(String enviarEmailVenda, String enviarNotifVendaApp, String enviarNotifMetaApp, String dtaInc, String loginInc, String dtaAlt, String loginAlt) {
         this.enviarEmailVenda = enviarEmailVenda;
         this.enviarNotifVendaApp = enviarNotifVendaApp;
         this.enviarNotifMetaApp = enviarNotifMetaApp;

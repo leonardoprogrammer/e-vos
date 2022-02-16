@@ -1,7 +1,8 @@
 package com.evos.model.dao;
 
 import com.evos.ConnectionFactory;
-import com.evos.model.entity.ConfiguracoesGerais;
+import com.evos.model.entity.Configuracoes;
+import com.evos.model.vo.ConfiguracoesVO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,9 +10,42 @@ import java.sql.ResultSet;
 
 public class ConfiguracoesDAO {
 
-    public ConfiguracoesGerais recuperarConfiguracoes() {
+    public void alterarConfiguracoes(ConfiguracoesVO configuracoes) {
+        StringBuilder query = new StringBuilder("UPDATE CONFIGURACOESGERAIS SET");
+        query.append(" enviar_email_venda = ?, enviar_notif_venda_app = ?, enviar_notif_meta_app = ?");
+
+        Connection conn = null;
+        PreparedStatement pstm = null;
+
+        try {
+            conn = ConnectionFactory.createConnectionToMySql();
+            pstm = conn.prepareStatement(query.toString());
+
+            pstm.setString(1, configuracoes.isEnviarEmailVenda() ? "S" : "N");
+            pstm.setString(2, configuracoes.isEnviarNotifVendaApp() ? "S" : "N");
+            pstm.setString(3, configuracoes.isEnviarNotifMetaApp() ? "S" : "N");
+
+            pstm.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+
+                if (pstm != null) {
+                    pstm.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public Configuracoes recuperarConfiguracoes() {
         String query = "SELECT * FROM CONFIGURACOESGERAIS";
-        ConfiguracoesGerais configuracoes = new ConfiguracoesGerais();
+        Configuracoes configuracoes = new Configuracoes();
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -25,7 +59,7 @@ public class ConfiguracoesDAO {
 
             // Enquanto existir dados no banco, faça
             while (rs.next()) {
-                configuracoes = new ConfiguracoesGerais();
+                configuracoes = new Configuracoes();
 
                 // Recupera os dados do banco e atribui ao objeto
                 configuracoes.setEnviarEmailVenda(rs.getString("enviar_email_venda"));

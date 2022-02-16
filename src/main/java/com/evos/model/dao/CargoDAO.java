@@ -17,8 +17,8 @@ public class CargoDAO {
 
     public void cadastrarCargo(CargoVO cargo) {
         StringBuilder query = new StringBuilder("INSERT INTO CARGO");
-        query.append("(nome, data_cadastro, ativo, dta_inc, login_inc, dta_alt, login_alt)");
-        query.append(" VALUES(?, ?, ?, ?, ?, ?, ?)");
+        query.append("(nome, ativo, dta_inc, login_inc)");
+        query.append(" VALUES(?, ?, ?, ?)");
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -32,12 +32,9 @@ public class CargoDAO {
 
             // Adiciona os valores como parâmetros
             pstm.setString(1, cargo.getNome());
-            pstm.setDate(2, (Date) cargo.getDataCadastro().getTime());
-            pstm.setString(3, cargo.isAtivo() ? "S" : "N");
+            pstm.setString(3, "S");
             pstm.setString(4, cargo.getDtaInc());
             pstm.setString(5, cargo.getLoginInc());
-            pstm.setString(6, cargo.getDtaAlt());
-            pstm.setString(7, cargo.getLoginAlt());
 
             // Executa a query para inserção dos dados
             pstm.execute();
@@ -60,8 +57,7 @@ public class CargoDAO {
 
     public void alterarCargo(CargoVO cargo) {
         StringBuilder query = new StringBuilder("UPDATE CARGO SET");
-        query.append(" nome = ?, data_cadastro = ?, ativo = ?,");
-        query.append(" dta_inc = ?, login_inc = ?, dta_alt = ?, login_alt = ?");
+        query.append(" nome = ?, ativo = ?, dta_alt = ?, login_alt = ?");
         query.append(" WHERE id = ?");
 
         Connection conn = null;
@@ -72,10 +68,7 @@ public class CargoDAO {
             pstm = conn.prepareStatement(query.toString());
 
             pstm.setString(1, cargo.getNome());
-            pstm.setDate(2, (Date) cargo.getDataCadastro().getTime());
             pstm.setString(3, cargo.isAtivo() ? "S" : "N");
-            pstm.setString(4, cargo.getDtaInc());
-            pstm.setString(5, cargo.getLoginInc());
             pstm.setString(6, cargo.getDtaAlt());
             pstm.setString(7, cargo.getLoginAlt());
             pstm.setLong(8, cargo.getId());
@@ -182,7 +175,13 @@ public class CargoDAO {
                 Cargo cargo = new Cargo();
 
                 // Recupera os dados do banco e atribui ao objeto
-
+                cargo.setId(rs.getLong("id"));
+                cargo.setNome(rs.getString("nome"));
+                cargo.setAtivo(rs.getString("ativo"));
+                cargo.setDtaInc(rs.getString("dta_inc"));
+                cargo.setLoginInc(rs.getString("login_inc"));
+                cargo.setDtaAlt(rs.getString("dta_alt"));
+                cargo.setLoginAlt(rs.getString("login_alt"));
 
                 // Adiciona o objeto atual à lista
                 cargos.add(cargo);
@@ -197,6 +196,10 @@ public class CargoDAO {
 
                 if (conn != null) {
                     conn.close();
+                }
+
+                if (rs != null) {
+                    rs.close();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -220,13 +223,29 @@ public class CargoDAO {
 
             while (rs.next()) {
                 cargo = new Cargo();
-
+                cargo.setId(rs.getLong("id"));
+                cargo.setNome(rs.getString("nome"));
+                cargo.setAtivo(rs.getString("ativo"));
+                cargo.setDtaInc(rs.getString("dta_inc"));
+                cargo.setLoginInc(rs.getString("login_inc"));
+                cargo.setDtaAlt(rs.getString("dta_alt"));
+                cargo.setLoginAlt(rs.getString("login_alt"));
             }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             try {
+                if (conn != null) {
+                    conn.close();
+                }
 
+                if (pstm != null) {
+                    pstm.close();
+                }
+
+                if (rs != null) {
+                    rs.close();
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }

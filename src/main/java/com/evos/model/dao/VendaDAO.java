@@ -20,8 +20,8 @@ public class VendaDAO {
     public void registrarVenda(VendaVO venda) {
         StringBuilder query = new StringBuilder("INSERT INTO VENDA");
         query.append("(id_produto, id_vendedor, id_cliente, data_compra, tipo_venda, forma_pagamento,");
-        query.append(" gerou_nfs, observacao, cancelada, prod_devolvido, data_cancela, dta_inc, login_inc, dta_alt, login_alt)");
-        query.append(" VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?");
+        query.append(" gerou_nfs, observacao, cancelada, prod_devolvido, data_cancela, dta_inc, login_inc)");
+        query.append(" VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?");
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -47,8 +47,6 @@ public class VendaDAO {
             pstm.setDate(11, null);
             pstm.setString(12, venda.getDtaInc());
             pstm.setString(13, venda.getLoginInc());
-            pstm.setString(14, venda.getDtaAlt());
-            pstm.setString(15, venda.getLoginAlt());
 
             // Executa a query para inserção dos dados
             pstm.execute();
@@ -72,7 +70,7 @@ public class VendaDAO {
     public void alterarVenda(VendaVO venda) {
         StringBuilder query = new StringBuilder("UPDATE VENDA SET");
         query.append(" id_produto = ?, id_vendedor = ?, id_cliente = ?, data_compra = ?, tipo_venda = ?, forma_pagamento = ?,");
-        query.append(" gerou_nfs = ?, observacao = ?, cancelada = ?, prod_devolvido = ?, data_cancela = ?, dta_inc = ?, login_inc = ?, dta_alt = ?, login_alt = ?");
+        query.append(" gerou_nfs = ?, observacao = ?, cancelada = ?, prod_devolvido = ?, data_cancela = ?, dta_alt = ?, login_alt = ?");
         query.append(" WHERE id = ?");
 
         Connection conn = null;
@@ -93,11 +91,9 @@ public class VendaDAO {
             pstm.setString(9, venda.isCancelada() ? "S" : "N");
             pstm.setString(10, venda.isProdDevolvido() ? "S" : "N");
             pstm.setDate(11, (Date) venda.getDataCancela().getTime());
-            pstm.setString(12, venda.getDtaInc());
-            pstm.setString(13, venda.getLoginInc());
-            pstm.setString(14, venda.getDtaAlt());
-            pstm.setString(15, venda.getLoginAlt());
-            pstm.setLong(16, venda.getId());
+            pstm.setString(12, venda.getDtaAlt());
+            pstm.setString(13, venda.getLoginAlt());
+            pstm.setLong(14, venda.getId());
 
             pstm.execute();
         } catch (Exception e) {
@@ -162,7 +158,7 @@ public class VendaDAO {
         }
     }
 
-    public void deletarVenda(VendaVO venda) {
+    public void deletarVenda(long id) {
         String query = "DELETE FROM VENDA WHERE id = ?";
 
         Connection conn = null;
@@ -172,7 +168,7 @@ public class VendaDAO {
             conn = ConnectionFactory.createConnectionToMySql();
             pstm = conn.prepareStatement(query);
 
-            pstm.setLong(1, venda.getId());
+            pstm.setLong(1, id);
 
             pstm.execute();
         } catch (Exception e) {

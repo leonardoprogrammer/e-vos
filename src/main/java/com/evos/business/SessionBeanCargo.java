@@ -13,7 +13,7 @@ import java.util.List;
 
 public class SessionBeanCargo {
 
-    CargoDAO cargoDAO;
+    private CargoDAO cargoDAO;
 
     public void cadastrarCargo(CargoVO cargo, UsuarioVO userLogado) {
         cargo.setLoginInc(userLogado.getNome());
@@ -23,7 +23,7 @@ public class SessionBeanCargo {
 
     public void alterarCargo(CargoVO cargo, UsuarioVO userLogado) {
         cargo.setLoginAlt(userLogado.getNome());
-        cargo.setDtaAlt(new Date().toString());
+        cargo.setDtaAlt(Calendar.getInstance().toString());
         cargoDAO.alterarCargo(cargo);
     }
 
@@ -32,20 +32,19 @@ public class SessionBeanCargo {
     }
 
     public void substituirCargoPorExistente(CargoVO cargo, CargoVO cargoExistente, int opcao, UsuarioVO userLogado) {
-        // Alterar toda tabela que tiver o cargo
+        // TODO: Alterar toda tabela que tiver o cargo antigo, excete relatórios
         cargoDAO.substituirCargoUsuario(cargo, cargoExistente, userLogado);
 
         // opcao: 1 Manter / 2 Desativar / 3 Excluir
         switch (opcao) {
-            case 1:
-                // mantém
-                break;
             case 2:
                 cargo.setAtivo(false);
                 alterarCargo(cargo, userLogado);
                 break;
             case 3:
                 cargoDAO.deletarCargo(cargo.getId());
+                break;
+            default:
                 break;
         }
     }
@@ -56,8 +55,7 @@ public class SessionBeanCargo {
 
         if (cargos != null) {
             for (Cargo cargo : cargos) {
-                CargoVO cargoVO = preencherVO(cargo);
-                cargosVO.add(cargoVO);
+                cargosVO.add(preencherVO(cargo));
             }
             return cargosVO;
         }
@@ -66,16 +64,17 @@ public class SessionBeanCargo {
 
     public CargoVO recuperarCargoPorId(long id) {
         Cargo cargo = cargoDAO.recuperarCargoPorId(id);
-        CargoVO cargoVO = preencherVO(cargo);
 
-        return cargoVO;
+        if (cargo != null) {
+            return preencherVO(cargo);
+        }
+        return null;
     }
 
     public CargoVO preencherVO(Cargo cargo) {
         CargoVO cargoVO = new CargoVO();
         cargoVO.setId(cargo.getId());
         cargoVO.setNome(cargo.getNome());
-        cargoVO.setDataCadastro(cargo.getDataCadastro());
         cargoVO.setAtivo(cargo.getAtivo().equals("S") ? true : false);
         cargoVO.setDtaInc(cargo.getDtaInc());
         cargoVO.setLoginInc(cargo.getLoginInc());

@@ -14,13 +14,11 @@ import java.util.List;
 
 public class UsuarioDAO {
 
-    public void cadastrarUsuario(UsuarioVO usuario, UsuarioVO userLogado) {
+    public void cadastrarUsuario(UsuarioVO usuario) {
         StringBuilder query = new StringBuilder("INSERT INTO USUARIO");
-        query.append("(");
-        query.append("nome, id_cargo, tipo_usuario, data_admissao, cpf, data_nasc, email, ativo, ");
-        query.append("dta_inc, login_inc, dta_alt, login_alt");
-        query.append(")");
-        query.append(" VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        query.append("(nome, id_cargo, tipo_usuario, data_admissao, cpf, data_nasc, email, ativo,");
+        query.append(" dta_inc, login_inc)");
+        query.append(" VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -40,11 +38,9 @@ public class UsuarioDAO {
             pstm.setString(5, usuario.getCpf());
             pstm.setDate(6, (Date) usuario.getDataNascimento().getTime());
             pstm.setString(7, usuario.getEmail());
-            pstm.setString(8, usuario.isAtivo() ? "S" : "N");
-            pstm.setDate(9, (Date) Calendar.getInstance().getTime());
-            pstm.setString(10, userLogado.getNome());
-            pstm.setDate(11, (Date) Calendar.getInstance().getTime());
-            pstm.setString(12, userLogado.getNome());
+            pstm.setString(8, "S");
+            pstm.setString(9, usuario.getDtaInc());
+            pstm.setString(10, usuario.getLoginInc());
 
             // Executa a query para inserção dos dados
             pstm.execute();
@@ -97,11 +93,11 @@ public class UsuarioDAO {
         }
     }
 
-    public void alterarUsuario(UsuarioVO usuario, UsuarioVO userLogado) {
+    public void alterarUsuario(UsuarioVO usuario) {
         StringBuilder query = new StringBuilder("UPDATE USUARIO SET");
         query.append(" nome = ?, id_cargo = ?, tipo_usuario = ?, data_admissao = ?,");
         query.append(" cpf = ?, data_nasc = ?, email = ?, ativo = ?,");
-        query.append(" dta_inc = ?, login_inc = ?, dta_alt, login_alt = ?");
+        query.append(" dta_alt = ?, login_alt = ?");
         query.append(" WHERE id = ?");
 
         Connection conn = null;
@@ -119,11 +115,9 @@ public class UsuarioDAO {
             pstm.setDate(6, (Date) usuario.getDataNascimento().getTime());
             pstm.setString(7, usuario.getEmail());
             pstm.setString(8, usuario.isAtivo() ? "S" : "N");
-            pstm.setString(9, usuario.getDtaInc());
-            pstm.setString(10, usuario.getLoginInc());
-            pstm.setDate(11, (Date) Calendar.getInstance().getTime());
-            pstm.setString(12, userLogado.getNome());
-            pstm.setLong(13, usuario.getId());
+            pstm.setString(9, usuario.getDtaAlt());
+            pstm.setString(10, usuario.getLoginAlt());
+            pstm.setLong(11, usuario.getId());
 
             pstm.execute();
         } catch (Exception e) {
@@ -187,6 +181,10 @@ public class UsuarioDAO {
                 if (conn != null) {
                     conn.close();
                 }
+
+                if (rs != null) {
+                    rs.close();
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -240,6 +238,10 @@ public class UsuarioDAO {
 
                 if (conn != null) {
                     conn.close();
+                }
+
+                if (rs != null) {
+                    rs.close();
                 }
             } catch (Exception e) {
                 e.printStackTrace();

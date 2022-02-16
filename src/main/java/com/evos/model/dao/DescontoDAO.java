@@ -18,8 +18,8 @@ public class DescontoDAO {
     public void cadastrarDescontoProduto(DescontoProdutoVO desconto) {
         StringBuilder query = new StringBuilder("INSERT INTO DESCONTOPRODUTO");
         query.append("(id_produto, qtd_minima, tipo_desconto, porcentagem, valor, apenas_um,");
-        query.append(" ativo, dta_inc, login_inc, dta_alt, login_alt)");
-        query.append(" VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        query.append(" ativo, dta_inc, login_inc)");
+        query.append(" VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -41,8 +41,6 @@ public class DescontoDAO {
              pstm.setString(7, desconto.isAtivo() ? "S" : "N");
              pstm.setString(8, desconto.getDtaInc());
              pstm.setString(9, desconto.getLoginInc());
-             pstm.setString(10, desconto.getDtaAlt());
-             pstm.setString(11, desconto.getLoginAlt());
 
              // Executa a query para inserção dos dados
              pstm.execute();
@@ -66,8 +64,8 @@ public class DescontoDAO {
     public void cadastrarDescontoCompra(DescontoCompraVO desconto) {
         StringBuilder query = new StringBuilder("INSERT INTO DESCONTOCOMPRA");
         query.append("(qtd_minima, tipo_desconto, porcentagem, valor, ativo,");
-        query.append(" dta_inc, login_inc, dta_alt, login_alt)");
-        query.append(" VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        query.append(" dta_inc, login_inc)");
+        query.append(" VALUES(?, ?, ?, ?, ?, ?, ?)");
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -83,8 +81,6 @@ public class DescontoDAO {
             pstm.setString(5, desconto.isAtivo() ? "S" : "N");
             pstm.setString(6, desconto.getDtaInc());
             pstm.setString(7, desconto.getLoginInc());
-            pstm.setString(8, desconto.getDtaAlt());
-            pstm.setString(9, desconto.getLoginAlt());
 
             pstm.execute();
         } catch (Exception e) {
@@ -107,7 +103,7 @@ public class DescontoDAO {
     public void alterarDescontoProduto(DescontoProdutoVO desconto) {
         StringBuilder query = new StringBuilder("UPDATE DESCONTOPRODUTO SET");
         query.append(" id_produto = ?, qtd_minima = ?, tipo_desconto = ?, porcentagem = ?,");
-        query.append(" valor = ?, apenas_um = ?, ativo = ?, dta_inc = ?, login_inc = ?, dta_alt = ?, login_alt = ?");
+        query.append(" valor = ?, apenas_um = ?, ativo = ?, dta_alt = ?, login_alt = ?");
         query.append(" WHERE id = ?");
 
         Connection conn = null;
@@ -124,11 +120,9 @@ public class DescontoDAO {
             pstm.setDouble(5, desconto.getValor());
             pstm.setString(6, desconto.isApenasUmDesconto() ? "S" : "N");
             pstm.setString(7, desconto.isAtivo() ? "S" : "N");
-            pstm.setString(8, desconto.getDtaInc());
-            pstm.setString(9, desconto.getLoginInc());
-            pstm.setString(10, desconto.getDtaAlt());
-            pstm.setString(11, desconto.getLoginAlt());
-            pstm.setLong(12, desconto.getId());
+            pstm.setString(8, desconto.getDtaAlt());
+            pstm.setString(9, desconto.getLoginAlt());
+            pstm.setLong(10, desconto.getId());
 
             pstm.execute();
         } catch (Exception e) {
@@ -151,7 +145,7 @@ public class DescontoDAO {
     public void alterarDescontoCompra(DescontoCompraVO desconto) {
         StringBuilder query = new StringBuilder("UPDATE DESCONTOCOMPRA SET");
         query.append(" qtd_minima = ?, tipo_desconto = ?, porcentagem = ?, valor = ?,");
-        query.append(" ativo = ?, dta_inc = ?, login_inc = ?, dta_alt = ?, login_alt = ?");
+        query.append(" ativo = ?, dta_alt = ?, login_alt = ?");
         query.append(" WHERE id = ?");
 
         Connection conn = null;
@@ -166,11 +160,9 @@ public class DescontoDAO {
             pstm.setDouble(3, desconto.getPorcentagem());
             pstm.setDouble(4, desconto.getValor());
             pstm.setString(5, desconto.isAtivo() ? "S" : "N");
-            pstm.setString(6, desconto.getDtaInc());
-            pstm.setString(7, desconto.getLoginInc());
-            pstm.setString(8, desconto.getDtaAlt());
-            pstm.setString(9, desconto.getLoginAlt());
-            pstm.setLong(10, desconto.getId());
+            pstm.setString(6, desconto.getDtaAlt());
+            pstm.setString(7, desconto.getLoginAlt());
+            pstm.setLong(8, desconto.getId());
 
             pstm.execute();
         } catch (Exception e) {
@@ -364,6 +356,10 @@ public class DescontoDAO {
                 if (conn != null) {
                     conn.close();
                 }
+
+                if (rs != null) {
+                    rs.close();
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -410,6 +406,10 @@ public class DescontoDAO {
 
                 if (conn != null) {
                     conn.close();
+                }
+
+                if (rs != null) {
+                    rs.close();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -460,6 +460,10 @@ public class DescontoDAO {
                 if (conn != null) {
                     conn.close();
                 }
+
+                if (rs != null) {
+                    rs.close();
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -507,6 +511,10 @@ public class DescontoDAO {
 
                 if (conn != null) {
                     conn.close();
+                }
+
+                if (rs != null) {
+                    rs.close();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -556,6 +564,10 @@ public class DescontoDAO {
 
                 if (conn != null) {
                     conn.close();
+                }
+
+                if (rs != null) {
+                    rs.close();
                 }
             } catch (Exception e) {
                 e.printStackTrace();

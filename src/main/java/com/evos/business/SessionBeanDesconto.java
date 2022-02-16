@@ -9,6 +9,7 @@ import com.evos.model.vo.DescontoCompraVO;
 import com.evos.model.vo.DescontoProdutoVO;
 import com.evos.model.vo.ProdutoVO;
 import com.evos.model.vo.UsuarioVO;
+import com.evos.util.Utils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -16,18 +17,18 @@ import java.util.List;
 
 public class SessionBeanDesconto {
 
-    DescontoDAO descontoDAO;
-    SessionBeanProduto sessionBeanProduto;
+    private DescontoDAO descontoDAO;
+    private SessionBeanProduto sessionBeanProduto;
 
     public void cadastrarDescontoProduto(DescontoProdutoVO descontoProduto, UsuarioVO userLogado) {
-        descontoProduto.setDtaInc(Calendar.getInstance().toString());
         descontoProduto.setLoginInc(userLogado.getNome());
+        descontoProduto.setDtaInc(Calendar.getInstance().toString());
         descontoDAO.cadastrarDescontoProduto(descontoProduto);
     }
 
     public void cadastrarDescontoCompra(DescontoCompraVO descontoCompra, UsuarioVO userLogado) {
-        descontoCompra.setDtaInc(Calendar.getInstance().toString());
         descontoCompra.setLoginInc(userLogado.getNome());
+        descontoCompra.setDtaInc(Calendar.getInstance().toString());
         descontoDAO.cadastrarDescontoCompra(descontoCompra);
     }
 
@@ -84,10 +85,9 @@ public class SessionBeanDesconto {
 
     public DescontoProdutoVO recuperarDescontoProdutoPorProduto(ProdutoVO produtoVO) {
         DescontoProduto descontoProduto = descontoDAO.recuperarDescontoPorProduto(produtoVO);
-        ProdutoVO produto = sessionBeanProduto.recuperarProdutoPorId(descontoProduto.getIdProduto());
 
         if (descontoProduto != null) {
-            return preencherVO(descontoProduto, produto);
+            return preencherVO(descontoProduto, produtoVO);
         }
         return null;
     }
@@ -108,7 +108,9 @@ public class SessionBeanDesconto {
             descontoProdutoVO.setProduto(produto);
         }
         descontoProdutoVO.setQtdMinima(desconto.getQtdMinima());
-        descontoProdutoVO.setTipoDesconto(TipoDesconto.get(desconto.getTipoDesconto()));
+        if (!Utils.isNullOrZero(desconto.getTipoDesconto())) {
+            descontoProdutoVO.setTipoDesconto(TipoDesconto.get(desconto.getTipoDesconto()));
+        }
         descontoProdutoVO.setPorcentagem(desconto.getPorcentagem());
         descontoProdutoVO.setValor(desconto.getValor());
         descontoProdutoVO.setApenasUmDesconto(desconto.getApenasUmDesconto().equals("S") ? true : false);
@@ -124,7 +126,9 @@ public class SessionBeanDesconto {
         DescontoCompraVO descontoCompraVO = new DescontoCompraVO();
         descontoCompraVO.setId(desconto.getId());
         descontoCompraVO.setQtdMininaProdutos(desconto.getQtdMininaProduto());
-        descontoCompraVO.setTipoDesconto(TipoDesconto.get(desconto.getTipoDesconto()));
+        if (!Utils.isNullOrZero(desconto.getTipoDesconto())) {
+            descontoCompraVO.setTipoDesconto(TipoDesconto.get(desconto.getTipoDesconto()));
+        }
         descontoCompraVO.setPorcentagem(desconto.getPorcentagem());
         descontoCompraVO.setValor(desconto.getValor());
         descontoCompraVO.setAtivo(desconto.getAtivo().equals("S") ? true : false);

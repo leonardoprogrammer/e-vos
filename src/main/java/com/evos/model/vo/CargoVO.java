@@ -1,11 +1,8 @@
 package com.evos.model.vo;
 
-import java.util.Calendar;
-
 public class CargoVO {
     private long id;
     private String nome;
-    private Calendar dataCadastro;
     private boolean ativo;
     private String dtaInc;
     private String loginInc;
@@ -16,10 +13,9 @@ public class CargoVO {
 
     }
 
-    public CargoVO(long id, String nome, Calendar dataCadastro, boolean ativo, String dtaInc, String loginInc, String dtaAlt, String loginAlt) {
+    public CargoVO(long id, String nome, boolean ativo, String dtaInc, String loginInc, String dtaAlt, String loginAlt) {
         this.id = id;
         this.nome = nome;
-        this.dataCadastro = dataCadastro;
         this.ativo = ativo;
         this.dtaInc = dtaInc;
         this.loginInc = loginInc;
@@ -41,14 +37,6 @@ public class CargoVO {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public Calendar getDataCadastro() {
-        return dataCadastro;
-    }
-
-    public void setDataCadastro(Calendar dataCadastro) {
-        this.dataCadastro = dataCadastro;
     }
 
     public boolean isAtivo() {

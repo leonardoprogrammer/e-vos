@@ -1,11 +1,8 @@
 package com.evos.model.entity;
 
-import java.util.Calendar;
-
 public class Cargo {
     private long id;
     private String nome;
-    private Calendar dataCadastro;
     private String ativo;
     private String dtaInc;
     private String loginInc;
@@ -16,10 +13,9 @@ public class Cargo {
 
     }
 
-    public Cargo(long id, String nome, Calendar dataCadastro, String ativo, String dtaInc, String loginInc, String dtaAlt, String loginAlt) {
+    public Cargo(long id, String nome, String ativo, String dtaInc, String loginInc, String dtaAlt, String loginAlt) {
         this.id = id;
         this.nome = nome;
-        this.dataCadastro = dataCadastro;
         this.ativo = ativo;
         this.dtaInc = dtaInc;
         this.loginInc = loginInc;
@@ -41,14 +37,6 @@ public class Cargo {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public Calendar getDataCadastro() {
-        return dataCadastro;
-    }
-
-    public void setDataCadastro(Calendar dataCadastro) {
-        this.dataCadastro = dataCadastro;
     }
 
     public String getAtivo() {

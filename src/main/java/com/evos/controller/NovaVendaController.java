@@ -1,6 +1,7 @@
 package com.evos.controller;
 
 import com.evos.model.vo.VendaVO;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
 import java.net.URL;
@@ -12,6 +13,11 @@ public class NovaVendaController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+    }
+
+    @FXML
+    public void registrarVenda() {
         venda = new VendaVO();
     }
 }
