@@ -67,7 +67,19 @@ public class SessionBeanVenda {
     }
 
     public List<VendaVO> recuperarVendasPorFiltro(FiltroVendaVO filtroVendaVO) {
-        // TODO: Terminar
+        List<Venda> vendas = vendaDAO.recuperarVendasPorFiltro(filtroVendaVO);
+        List<VendaVO> vendasVO = new ArrayList<VendaVO>();
+
+        if (vendas != null) {
+            for (Venda venda : vendas) {
+                ProdutoVO produtoVO = sessionBeanProduto.recuperarProdutoPorId(venda.getIdProduto());
+                UsuarioVO vendedorVO = sessionBeanUsuario.recuperarUsuarioPorId(venda.getIdVendedor());
+                ClienteVO clienteVO = sessionBeanCliente.recuperarClientePorId(venda.getIdCliente());
+                vendasVO.add(preencherVO(venda, produtoVO, vendedorVO, clienteVO));
+            }
+            return vendasVO;
+        }
+        return null;
     }
 
     public VendaVO preencherVO(Venda venda, ProdutoVO produtoVO, UsuarioVO vendedor, ClienteVO clienteVO) {
