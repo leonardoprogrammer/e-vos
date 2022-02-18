@@ -62,7 +62,7 @@ public class SessionBeanPermissoes {
         ProdutoVO produtoVO = new ProdutoVO();
         produtoVO.setId(produto.getId());
         produtoVO.setNome(produto.getNome());
-        if (Utils.isNullOrZero(produto.getTipoProduto())) {
+        if (!Utils.isNullOrZero(produto.getTipoProduto())) {
             produtoVO.setTipoProduto(TipoProduto.get(produto.getTipoProduto()));
         }
         if (categoria != null) {

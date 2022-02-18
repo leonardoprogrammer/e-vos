@@ -219,6 +219,9 @@ public class CargoDAO {
         try {
             conn = ConnectionFactory.createConnectionToMySql();
             pstm = conn.prepareStatement(query);
+
+            pstm.setLong(1, id);
+
             rs = pstm.executeQuery();
 
             while (rs.next()) {

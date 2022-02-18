@@ -10,7 +10,8 @@ public class ClienteVO {
     private Calendar dataNascimento;
     private String email;
     private String endereco;
-    private List<String> telefones;
+    private String telefoneUm;
+    private String telefoneDois;
     private boolean enviaEmail; //envia email ao realizar compra
     private String dtaInc;
     private String loginInc;
@@ -21,14 +22,15 @@ public class ClienteVO {
 
     }
 
-    public ClienteVO(long id, String nome, String cpfCnpj, Calendar dataNascimento, String email, String endereco, List<String> telefones, boolean enviaEmail, String dtaInc, String loginInc, String dtaAlt, String loginAlt) {
+    public ClienteVO(long id, String nome, String cpfCnpj, Calendar dataNascimento, String email, String endereco, String telefoneUm, String telefoneDois, boolean enviaEmail, String dtaInc, String loginInc, String dtaAlt, String loginAlt) {
         this.id = id;
         this.nome = nome;
         this.cpfCnpj = cpfCnpj;
         this.dataNascimento = dataNascimento;
         this.email = email;
         this.endereco = endereco;
-        this.telefones = telefones;
+        this.telefoneUm = telefoneUm;
+        this.telefoneDois = telefoneDois;
         this.enviaEmail = enviaEmail;
         this.dtaInc = dtaInc;
         this.loginInc = loginInc;
@@ -84,12 +86,20 @@ public class ClienteVO {
         this.endereco = endereco;
     }
 
-    public List<String> getTelefones() {
-        return telefones;
+    public String getTelefoneUm() {
+        return telefoneUm;
     }
 
-    public void setTelefones(List<String> telefones) {
-        this.telefones = telefones;
+    public void setTelefoneUm(String telefoneUm) {
+        this.telefoneUm = telefoneUm;
+    }
+
+    public String getTelefoneDois() {
+        return telefoneDois;
+    }
+
+    public void setTelefoneDois(String telefoneDois) {
+        this.telefoneDois = telefoneDois;
     }
 
     public boolean isEnviaEmail() {
