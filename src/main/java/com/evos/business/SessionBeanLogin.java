@@ -55,7 +55,7 @@ public class SessionBeanLogin {
     }
 
     public boolean verificarLogin(LoginVO login) {
-        return loginDAO.verificarLogin(login.getUsername(), login.getSenha());
+        return loginDAO.verificarLogin(login.getUsername().trim(), login.getSenha().trim());
     }
 
     public LoginVO recuperarLoginPorLogin(LoginVO loginVO) {
