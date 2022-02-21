@@ -4,6 +4,7 @@ import com.evos.ConnectionFactory;
 import com.evos.model.entity.Cargo;
 import com.evos.model.vo.CargoVO;
 import com.evos.model.vo.UsuarioVO;
+import javafx.scene.control.Alert;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -40,6 +41,10 @@ public class CargoDAO {
             pstm.execute();
         } catch (Exception e) {
             e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro ao cadastrar cargo!");
+            alert.setContentText(e.toString());
+            alert.show();
         } finally {
             try {
                 if (pstm != null) {
@@ -76,6 +81,10 @@ public class CargoDAO {
             pstm.execute();
         } catch (Exception e) {
             e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro ao alterar cargo!");
+            alert.setContentText(e.toString());
+            alert.show();
         } finally {
             try {
                 if (pstm != null) {
@@ -106,6 +115,10 @@ public class CargoDAO {
             pstm.execute();
         } catch (Exception e) {
             e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro ao deletar cargo!");
+            alert.setContentText(e.toString());
+            alert.show();
         } finally {
             try {
                 if (pstm != null) {
@@ -141,6 +154,10 @@ public class CargoDAO {
             pstm.execute();
         } catch (Exception e) {
             e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro ao substituir cargo!");
+            alert.setContentText(e.toString());
+            alert.show();
         } finally {
             try {
                 if (pstm != null) {
@@ -188,6 +205,10 @@ public class CargoDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro ao recuperar cargos!");
+            alert.setContentText(e.toString());
+            alert.show();
         } finally {
             try {
                 if (pstm != null) {
@@ -236,6 +257,10 @@ public class CargoDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro ao recuperar cargo!");
+            alert.setContentText(e.toString());
+            alert.show();
         } finally {
             try {
                 if (conn != null) {

@@ -3,6 +3,7 @@ package com.evos.model.dao;
 import com.evos.ConnectionFactory;
 import com.evos.model.entity.Configuracoes;
 import com.evos.model.vo.ConfiguracoesVO;
+import javafx.scene.control.Alert;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -28,6 +29,10 @@ public class ConfiguracoesDAO {
             pstm.execute();
         } catch (Exception e) {
             e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro ao alterar configurações!");
+            alert.setContentText(e.toString());
+            alert.show();
         } finally {
             try {
                 if (conn != null) {
@@ -68,6 +73,10 @@ public class ConfiguracoesDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro ao recuperar configurações!");
+            alert.setContentText(e.toString());
+            alert.show();
         } finally {
             try {
                 // Fecha as conexões

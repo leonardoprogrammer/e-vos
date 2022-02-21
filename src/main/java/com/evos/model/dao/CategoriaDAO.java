@@ -3,6 +3,7 @@ package com.evos.model.dao;
 import com.evos.ConnectionFactory;
 import com.evos.model.entity.Categoria;
 import com.evos.model.vo.CategoriaVO;
+import javafx.scene.control.Alert;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -38,6 +39,10 @@ public class CategoriaDAO {
             pstm.execute();
         } catch (Exception e) {
             e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro ao cadastrar categoria!");
+            alert.setContentText(e.toString());
+            alert.show();
         } finally {
             try {
                 if (conn != null) {
@@ -73,6 +78,10 @@ public class CategoriaDAO {
             pstm.execute();
         } catch (Exception e) {
             e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro ao alterar categoria!");
+            alert.setContentText(e.toString());
+            alert.show();
         } finally {
             try {
                 if (conn != null) {

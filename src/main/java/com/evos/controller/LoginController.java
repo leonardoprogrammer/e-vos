@@ -50,7 +50,7 @@ public class LoginController implements Initializable {
                 UsuarioVO usuario = login.getUsuario();
                 // TODO: Inicar painel principal do sistema
             } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("");
                 alert.setContentText("DADOS INCORRETOS!");
             }

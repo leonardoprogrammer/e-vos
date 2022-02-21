@@ -6,6 +6,7 @@ import com.evos.model.vo.FiltroVendaVO;
 import com.evos.model.vo.UsuarioVO;
 import com.evos.model.vo.VendaVO;
 import com.evos.util.Utils;
+import javafx.scene.control.Alert;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -52,6 +53,10 @@ public class VendaDAO {
             pstm.execute();
         } catch (Exception e) {
             e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro ao registrar venda!");
+            alert.setContentText(e.toString());
+            alert.show();
         } finally {
             try {
                 if (pstm != null) {
@@ -98,6 +103,10 @@ public class VendaDAO {
             pstm.execute();
         } catch (Exception e) {
             e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro ao alterar venda!");
+            alert.setContentText(e.toString());
+            alert.show();
         } finally {
             try {
                 if (pstm != null) {
@@ -143,6 +152,10 @@ public class VendaDAO {
             pstm.execute();
         } catch (Exception e) {
             e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro ao cancelar venda!");
+            alert.setContentText(e.toString());
+            alert.show();
         } finally {
             try {
                 if (pstm != null) {
@@ -173,6 +186,10 @@ public class VendaDAO {
             pstm.execute();
         } catch (Exception e) {
             e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro ao deletar venda!");
+            alert.setContentText(e.toString());
+            alert.show();
         } finally {
             try {
                 if (pstm != null) {
@@ -225,6 +242,10 @@ public class VendaDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro ao recuperar vendas!");
+            alert.setContentText(e.toString());
+            alert.show();
         } finally {
             try {
                 if (pstm != null) {
@@ -278,6 +299,10 @@ public class VendaDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro ao recuperar venda!");
+            alert.setContentText(e.toString());
+            alert.show();
         } finally {
             try {
                 if (pstm != null) {
@@ -404,6 +429,10 @@ public class VendaDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro ao recuperar vendas por filtro!");
+            alert.setContentText(e.toString());
+            alert.show();
         } finally {
             try {
                 if (pstm != null) {

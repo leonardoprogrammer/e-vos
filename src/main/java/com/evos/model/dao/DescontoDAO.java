@@ -6,6 +6,7 @@ import com.evos.model.entity.DescontoProduto;
 import com.evos.model.vo.DescontoCompraVO;
 import com.evos.model.vo.DescontoProdutoVO;
 import com.evos.model.vo.ProdutoVO;
+import javafx.scene.control.Alert;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -46,6 +47,10 @@ public class DescontoDAO {
              pstm.execute();
          } catch (Exception e) {
              e.printStackTrace();
+             Alert alert = new Alert(Alert.AlertType.ERROR);
+             alert.setTitle("Erro ao cadastrar desconto de produto!");
+             alert.setContentText(e.toString());
+             alert.show();
          } finally {
              try {
                  if (pstm != null) {
@@ -85,6 +90,10 @@ public class DescontoDAO {
             pstm.execute();
         } catch (Exception e) {
             e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro ao cadastrar desconto de compra!");
+            alert.setContentText(e.toString());
+            alert.show();
         } finally {
             try {
                 if (pstm != null) {
@@ -127,6 +136,10 @@ public class DescontoDAO {
             pstm.execute();
         } catch (Exception e) {
             e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro ao alterar desconto de produto!");
+            alert.setContentText(e.toString());
+            alert.show();
         } finally {
             try {
                 if (pstm != null) {
@@ -167,6 +180,10 @@ public class DescontoDAO {
             pstm.execute();
         } catch (Exception e) {
             e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro ao alterar de desconto de compra!");
+            alert.setContentText(e.toString());
+            alert.show();
         } finally {
             try {
                 if (pstm != null) {
@@ -203,6 +220,10 @@ public class DescontoDAO {
             pstm.execute();
         } catch (Exception e) {
             e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro ao ativar/desativar desconto de produto!");
+            alert.setContentText(e.toString());
+            alert.show();
         } finally {
             try {
                 if (pstm != null) {
@@ -239,6 +260,10 @@ public class DescontoDAO {
             pstm.execute();
         } catch (Exception e) {
             e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro ao ativar/desativar desconto de compra!");
+            alert.setContentText(e.toString());
+            alert.show();
         } finally {
             try {
                 if (pstm != null) {
@@ -269,6 +294,10 @@ public class DescontoDAO {
             pstm.execute();
         } catch (Exception e) {
             e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro ao deletar desconto de produto!");
+            alert.setContentText(e.toString());
+            alert.show();
         } finally {
             try {
                 if (pstm != null) {
@@ -299,6 +328,10 @@ public class DescontoDAO {
             pstm.execute();
         } catch (Exception e) {
             e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro ao deletar desconto de compra!");
+            alert.setContentText(e.toString());
+            alert.show();
         } finally {
             try {
                 if (pstm != null) {
@@ -347,6 +380,10 @@ public class DescontoDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro ao recuperar descontos de produto!");
+            alert.setContentText(e.toString());
+            alert.show();
         } finally {
             try {
                 if (pstm != null) {
@@ -398,6 +435,10 @@ public class DescontoDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro ao descontos de compra!");
+            alert.setContentText(e.toString());
+            alert.show();
         } finally {
             try {
                 if (pstm != null) {
@@ -451,6 +492,10 @@ public class DescontoDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro ao recuperar desconto de produto!");
+            alert.setContentText(e.toString());
+            alert.show();
         } finally {
             try {
                 if (pstm != null) {
@@ -503,6 +548,10 @@ public class DescontoDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro ao desconto de compra!");
+            alert.setContentText(e.toString());
+            alert.show();
         } finally {
             try {
                 if (pstm != null) {
@@ -556,6 +605,10 @@ public class DescontoDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro ao recuperar desconto de produto!");
+            alert.setContentText(e.toString());
+            alert.show();
         } finally {
             try {
                 if (pstm != null) {

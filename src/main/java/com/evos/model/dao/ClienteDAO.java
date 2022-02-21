@@ -3,6 +3,7 @@ package com.evos.model.dao;
 import com.evos.ConnectionFactory;
 import com.evos.model.entity.Cliente;
 import com.evos.model.vo.ClienteVO;
+import javafx.scene.control.Alert;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -46,6 +47,10 @@ public class ClienteDAO {
             pstm.execute();
         } catch (Exception e) {
             e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro ao cadastrar cliente!");
+            alert.setContentText(e.toString());
+            alert.show();
         } finally {
             try {
                 if (conn != null) {
@@ -90,6 +95,10 @@ public class ClienteDAO {
             pstm.execute();
         } catch (Exception e) {
             e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro ao alterar cliente!");
+            alert.setContentText(e.toString());
+            alert.show();
         } finally {
             try {
                 if (conn != null) {
@@ -120,6 +129,10 @@ public class ClienteDAO {
             pstm.execute();
         } catch (Exception e) {
             e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro ao deletar cliente!");
+            alert.setContentText(e.toString());
+            alert.show();
         } finally {
             try {
                 if (conn != null) {
@@ -172,6 +185,10 @@ public class ClienteDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro ao recuperar clientes!");
+            alert.setContentText(e.toString());
+            alert.show();
         } finally {
             try {
                 if (conn != null) {
@@ -225,6 +242,10 @@ public class ClienteDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro ao recuperar cliente!");
+            alert.setContentText(e.toString());
+            alert.show();
         } finally {
             try {
                 if (conn != null) {

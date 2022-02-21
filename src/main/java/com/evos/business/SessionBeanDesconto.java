@@ -56,6 +56,14 @@ public class SessionBeanDesconto {
         descontoDAO.ativarDesativarDescontoCompra(descontoCompra, opcao);
     }
 
+    public void deletarDescontoProduto(DescontoProdutoVO descontoProduto) {
+        descontoDAO.deletarDescontoProduto(descontoProduto);
+    }
+
+    public void deletarDescontoCompra(DescontoCompraVO descontoCompra) {
+        descontoDAO.deletarDescontoCompra(descontoCompra);
+    }
+
     public List<DescontoProdutoVO> recuperarTodosDescontosProdutos() {
         List<DescontoProduto> descontos = descontoDAO.recuperarDescontosProduto();
         List<DescontoProdutoVO> descontosVO = new ArrayList<DescontoProdutoVO>();

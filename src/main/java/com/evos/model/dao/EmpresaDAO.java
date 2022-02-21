@@ -3,6 +3,7 @@ package com.evos.model.dao;
 import com.evos.ConnectionFactory;
 import com.evos.model.entity.Empresa;
 import com.evos.model.vo.EmpresaVO;
+import javafx.scene.control.Alert;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -27,12 +28,22 @@ public class EmpresaDAO {
             // Enquanto existir dados no banco, faça
             while (rs.next()) {
                 empresa = new Empresa();
-
-                // Recupera os dados do banco e atribui ao objeto
-                // TODO: preencher objeto Empresa
+                empresa.setId(rs.getLong("id"));
+                empresa.setNome(rs.getString("nome"));
+                empresa.setCnpj(rs.getString("cnpj"));
+                empresa.setPossuiCnpj(rs.getString("possui_cnpj"));
+                empresa.setAtiva(rs.getString("ativa"));
+                empresa.setDtaInc(rs.getString("dta_inc"));
+                empresa.setLoginInc(rs.getString("login_inc"));
+                empresa.setDtaAlt(rs.getString("dta_alt"));
+                empresa.setLoginAlt(rs.getString("login_alt"));
             }
         } catch (Exception e) {
             e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro ao recuperar empresa!");
+            alert.setContentText(e.toString());
+            alert.show();
         } finally {
             try {
                 if (pstm != null) {
@@ -50,6 +61,45 @@ public class EmpresaDAO {
     }
 
     public void alterarEmpresa(EmpresaVO empresa) {
+        StringBuilder query = new StringBuilder("UPDATE EMPRESA SET");
+        query.append(" nome = ?, cnpj = ?, possui_cnpj = ?, ativa = ?,");
+        query.append(" dta_inc = ?, login_inc = ?, dta_alt = ?, login_alt = ?");
 
+        Connection conn = null;
+        PreparedStatement pstm = null;
+
+        try {
+            conn = ConnectionFactory.createConnectionToMySql();
+            pstm = conn.prepareStatement(query.toString());
+
+            pstm.setString(1, empresa.getNome());
+            pstm.setString(2, empresa.getCnpj());
+            pstm.setString(3, empresa.isPossuiCnpj() ? "S" : "N");
+            pstm.setString(4, empresa.isAtiva() ? "S" : "N");
+            pstm.setString(5, empresa.getDtaInc());
+            pstm.setString(6, empresa.getLoginInc());
+            pstm.setString(7, empresa.getDtaAlt());
+            pstm.setString(8, empresa.getLoginAlt());
+
+            pstm.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro ao alterar empresa!");
+            alert.setContentText(e.toString());
+            alert.show();
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+
+                if (pstm != null) {
+                    pstm.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

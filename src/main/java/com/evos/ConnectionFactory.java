@@ -9,7 +9,7 @@ public class ConnectionFactory {
     private static final String DB_PASSWORD = "root";
 
     // jdbc:[banco]://[ip ou caminho]:[porta]/[nome do banco]
-    private static final String DB_URL = "jdbc:mysql://127.0.0.1:3055/C:/E-vos/data/db/dbevos";
+    private static final String DB_URL = "jdbc:mysql://127.0.0.1:3055/C:/Evos/data/db/dbevos";
 
     public static Connection createConnectionToMySql() throws Exception {
         Class.forName("com.mysql.jdbc.Driver"); // Faz com que a classe seja carregada

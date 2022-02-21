@@ -3,6 +3,7 @@ package com.evos.model.dao;
 import com.evos.ConnectionFactory;
 import com.evos.model.entity.Login;
 import com.evos.model.vo.LoginVO;
+import javafx.scene.control.Alert;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -38,6 +39,10 @@ public class LoginDAO {
             pstm.execute();
         } catch (Exception e) {
             e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro ao cadastrar login!");
+            alert.setContentText(e.toString());
+            alert.show();
         } finally {
             try {
                 // Fecha as conexões
@@ -76,6 +81,10 @@ public class LoginDAO {
             pstm.execute();
         } catch (Exception e) {
             e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro ao alterar login!");
+            alert.setContentText(e.toString());
+            alert.show();
         } finally {
             try {
                 if (pstm != null) {
@@ -106,6 +115,10 @@ public class LoginDAO {
             pstm.execute();
         } catch (Exception e) {
             e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro ao deletar login!");
+            alert.setContentText(e.toString());
+            alert.show();
         } finally {
             try {
                 if (pstm != null) {
@@ -150,6 +163,10 @@ public class LoginDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro ao recuperar login!");
+            alert.setContentText(e.toString());
+            alert.show();
         } finally {
             try {
                 if (pstm != null) {
@@ -199,6 +216,10 @@ public class LoginDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro ao recuperar logins!");
+            alert.setContentText(e.toString());
+            alert.show();
         } finally {
             try {
                 if (pstm != null) {
@@ -243,6 +264,10 @@ public class LoginDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro ao verificar login!");
+            alert.setContentText(e.toString());
+            alert.show();
         } finally {
             try {
                 if (conn != null) {
@@ -293,6 +318,10 @@ public class LoginDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro ao recuperar login!");
+            alert.setContentText(e.toString());
+            alert.show();
         } finally {
             try {
                 if (conn != null) {
