@@ -4,6 +4,7 @@ import com.evos.model.dao.LoginDAO;
 import com.evos.model.entity.Login;
 import com.evos.model.vo.LoginVO;
 import com.evos.model.vo.UsuarioVO;
+import com.evos.util.Exception.EvosException;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -14,23 +15,23 @@ public class SessionBeanLogin {
     private LoginDAO loginDAO;
     private SessionBeanUsuario sessionBeanUsuario;
 
-    public void cadastrarLogin(LoginVO login, UsuarioVO userLogado) {
+    public void cadastrarLogin(LoginVO login, UsuarioVO userLogado) throws EvosException {
         login.setLoginInc(userLogado.getNome());
         login.setDtaInc(Calendar.getInstance().toString());
         loginDAO.cadastrarLogin(login);
     }
 
-    public void alterarLogin(LoginVO login, UsuarioVO userLogado) {
+    public void alterarLogin(LoginVO login, UsuarioVO userLogado) throws EvosException {
         login.setLoginAlt(userLogado.getNome());
         login.setDtaAlt(Calendar.getInstance().toString());
         loginDAO.alterarLogin(login);
     }
 
-    public void deletarLogin(LoginVO login) {
+    public void deletarLogin(LoginVO login) throws EvosException {
         loginDAO.deletarLogin(login);
     }
 
-    public List<LoginVO> recuperarTodosLogins() {
+    public List<LoginVO> recuperarTodosLogins() throws EvosException {
         List<Login> logins = loginDAO.recuperarLogins();
         List<LoginVO> loginsVO = new ArrayList<LoginVO>();
 
@@ -44,7 +45,7 @@ public class SessionBeanLogin {
         return null;
     }
 
-    public LoginVO recuperarLoginPorId(long id) {
+    public LoginVO recuperarLoginPorId(long id) throws EvosException {
         Login login = loginDAO.recuperarLoginPorId(id);
 
         if (login != null) {
@@ -54,12 +55,12 @@ public class SessionBeanLogin {
         return null;
     }
 
-    public boolean verificarLogin(LoginVO login) {
+    public boolean verificarLogin(LoginVO login) throws EvosException {
         return loginDAO.verificarLogin(login.getUsername().trim(), login.getSenha().trim());
     }
 
-    public LoginVO recuperarLoginPorLogin(LoginVO loginVO) {
-        Login login = loginDAO.recuperarLoginPorLogin(loginVO);
+    public LoginVO recuperarLoginPorCredenciais(LoginVO loginVO) throws EvosException {
+        Login login = loginDAO.recuperarLoginPorCredenciais(loginVO);
 
         if (login != null) {
             UsuarioVO usuarioVO = sessionBeanUsuario.recuperarUsuarioPorId(login.getIdUsuario());

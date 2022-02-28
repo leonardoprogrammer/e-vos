@@ -3,6 +3,7 @@ package com.evos.model.dao;
 import com.evos.ConnectionFactory;
 import com.evos.model.entity.Categoria;
 import com.evos.model.vo.CategoriaVO;
+import com.evos.util.Exception.EvosException;
 import javafx.scene.control.Alert;
 
 import java.sql.Connection;
@@ -14,7 +15,7 @@ import java.util.List;
 
 public class CategoriaDAO {
 
-    public void cadastrarCategoria(CategoriaVO categoria) {
+    public void cadastrarCategoria(CategoriaVO categoria) throws EvosException {
         StringBuilder query = new StringBuilder("INSERT INTO CATEGORIA");
         query.append("(nome, ativo, dta_inc, login_inc)");
         query.append(" VALUES (?, ?, ?, ?)");
@@ -39,10 +40,7 @@ public class CategoriaDAO {
             pstm.execute();
         } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erro ao cadastrar categoria!");
-            alert.setContentText(e.toString());
-            alert.show();
+            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao cadastrar categoria!");
         } finally {
             try {
                 if (conn != null) {
@@ -58,7 +56,7 @@ public class CategoriaDAO {
         }
     }
 
-    public void alterarCategoria(CategoriaVO categoria) {
+    public void alterarCategoria(CategoriaVO categoria) throws EvosException {
         StringBuilder query = new StringBuilder("UPDATE CATEGORIA SET");
         query.append(" nome = ?, ativo = ?, dta_alt = ?, login_alt = ?");
         query.append(" WHERE id = ?");
@@ -78,10 +76,7 @@ public class CategoriaDAO {
             pstm.execute();
         } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erro ao alterar categoria!");
-            alert.setContentText(e.toString());
-            alert.show();
+            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao alterar categoria!", e.toString());
         } finally {
             try {
                 if (conn != null) {
@@ -97,7 +92,7 @@ public class CategoriaDAO {
         }
     }
 
-    public void deletarCategoria(long id) {
+    public void deletarCategoria(long id) throws EvosException {
         String query = "DELETE FROM CATEGORIA WHERE id = ?";
 
         Connection conn = null;
@@ -112,6 +107,7 @@ public class CategoriaDAO {
             pstm.execute();
         } catch (Exception e) {
             e.printStackTrace();
+            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao deletar categoria!", e.toString());
         } finally {
             try {
                 if (conn != null) {
@@ -127,7 +123,7 @@ public class CategoriaDAO {
         }
     }
 
-    public List<Categoria> recuperarCategorias() {
+    public List<Categoria> recuperarCategorias() throws EvosException {
         String query = "SELECT * FROM CATEGORIA";
         List<Categoria> categorias = new ArrayList<Categoria>();
 
@@ -156,6 +152,7 @@ public class CategoriaDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao recuperar categorias!", e.toString());
         } finally {
             try {
                 if (conn != null) {
@@ -176,7 +173,7 @@ public class CategoriaDAO {
         return categorias;
     }
 
-    public Categoria recuperarCategoriaPorId(long id) {
+    public Categoria recuperarCategoriaPorId(long id) throws EvosException {
         String query = "SELECT * FROM CATEGORIA WHERE id = ?";
         Categoria categoria = new Categoria();
 
@@ -204,6 +201,7 @@ public class CategoriaDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao recuperar categoria!", e.toString());
         } finally {
             try {
                 if (conn != null) {

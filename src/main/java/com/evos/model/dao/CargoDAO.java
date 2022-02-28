@@ -4,6 +4,7 @@ import com.evos.ConnectionFactory;
 import com.evos.model.entity.Cargo;
 import com.evos.model.vo.CargoVO;
 import com.evos.model.vo.UsuarioVO;
+import com.evos.util.Exception.EvosException;
 import javafx.scene.control.Alert;
 
 import java.sql.Connection;
@@ -16,7 +17,7 @@ import java.util.List;
 
 public class CargoDAO {
 
-    public void cadastrarCargo(CargoVO cargo) {
+    public void cadastrarCargo(CargoVO cargo) throws EvosException {
         StringBuilder query = new StringBuilder("INSERT INTO CARGO");
         query.append("(nome, ativo, dta_inc, login_inc)");
         query.append(" VALUES(?, ?, ?, ?)");
@@ -41,10 +42,7 @@ public class CargoDAO {
             pstm.execute();
         } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erro ao cadastrar cargo!");
-            alert.setContentText(e.toString());
-            alert.show();
+            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao cadastrar cargo!", e.toString());
         } finally {
             try {
                 if (pstm != null) {
@@ -60,7 +58,7 @@ public class CargoDAO {
         }
     }
 
-    public void alterarCargo(CargoVO cargo) {
+    public void alterarCargo(CargoVO cargo) throws EvosException {
         StringBuilder query = new StringBuilder("UPDATE CARGO SET");
         query.append(" nome = ?, ativo = ?, dta_alt = ?, login_alt = ?");
         query.append(" WHERE id = ?");
@@ -81,10 +79,7 @@ public class CargoDAO {
             pstm.execute();
         } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erro ao alterar cargo!");
-            alert.setContentText(e.toString());
-            alert.show();
+            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao alterar cargo!", e.toString());
         } finally {
             try {
                 if (pstm != null) {
@@ -100,7 +95,7 @@ public class CargoDAO {
         }
     }
 
-    public void deletarCargo(long id) {
+    public void deletarCargo(long id) throws EvosException {
         String query = "DELETE FROM CARGO WHERE id = ?";
 
         Connection conn = null;
@@ -115,10 +110,7 @@ public class CargoDAO {
             pstm.execute();
         } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erro ao deletar cargo!");
-            alert.setContentText(e.toString());
-            alert.show();
+            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao deletar cargo!", e.toString());
         } finally {
             try {
                 if (pstm != null) {
@@ -134,7 +126,7 @@ public class CargoDAO {
         }
     }
 
-    public void substituirCargoUsuario(CargoVO cargoRemover, CargoVO cargoSubstituto, UsuarioVO userLogado) {
+    public void substituirCargoUsuario(CargoVO cargoRemover, CargoVO cargoSubstituto, UsuarioVO userLogado) throws EvosException {
         StringBuilder query = new StringBuilder("UPDATE USUARIO SET");
         query.append(" id_cargo = ?, dta_alt = ?, login_alt = ?");
         query.append(" WHERE id = ?");
@@ -154,10 +146,7 @@ public class CargoDAO {
             pstm.execute();
         } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erro ao substituir cargo!");
-            alert.setContentText(e.toString());
-            alert.show();
+            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao substituir cargo!", e.toString());
         } finally {
             try {
                 if (pstm != null) {
@@ -173,7 +162,7 @@ public class CargoDAO {
         }
     }
 
-    public List<Cargo> recuperarCargos() {
+    public List<Cargo> recuperarCargos() throws EvosException {
         String query = "SELECT * FROM CARGO";
         List<Cargo> cargos = new ArrayList<Cargo>();
 
@@ -205,10 +194,7 @@ public class CargoDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erro ao recuperar cargos!");
-            alert.setContentText(e.toString());
-            alert.show();
+            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao recuperar cargos!", e.toString());
         } finally {
             try {
                 if (pstm != null) {
@@ -229,7 +215,7 @@ public class CargoDAO {
         return cargos;
     }
 
-    public Cargo recuperarCargoPorId(long id) {
+    public Cargo recuperarCargoPorId(long id) throws EvosException {
         String query = "SELECT * FROM CARGO WHERE id = ?";
         Cargo cargo = new Cargo();
 
@@ -257,10 +243,7 @@ public class CargoDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erro ao recuperar cargo!");
-            alert.setContentText(e.toString());
-            alert.show();
+            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao recuperar cargo!", e.toString());
         } finally {
             try {
                 if (conn != null) {

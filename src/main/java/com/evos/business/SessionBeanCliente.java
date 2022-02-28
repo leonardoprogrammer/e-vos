@@ -4,6 +4,7 @@ import com.evos.model.dao.ClienteDAO;
 import com.evos.model.entity.Cliente;
 import com.evos.model.vo.ClienteVO;
 import com.evos.model.vo.UsuarioVO;
+import com.evos.util.Exception.EvosException;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -13,23 +14,23 @@ public class SessionBeanCliente {
 
     private ClienteDAO clienteDAO;
 
-    public void cadastrarCliente(ClienteVO cliente, UsuarioVO userLogado) {
+    public void cadastrarCliente(ClienteVO cliente, UsuarioVO userLogado) throws EvosException {
         cliente.setLoginInc(userLogado.getNome());
         cliente.setDtaInc(Calendar.getInstance().toString());
         clienteDAO.cadastrarCliente(cliente);
     }
 
-    public void alterarCliente(ClienteVO cliente, UsuarioVO userLogado) {
+    public void alterarCliente(ClienteVO cliente, UsuarioVO userLogado) throws EvosException {
         cliente.setLoginAlt(userLogado.getNome());
         cliente.setDtaAlt(Calendar.getInstance().toString());
         clienteDAO.alterarCliente(cliente);
     }
 
-    public void deletarCliente(ClienteVO cliente) {
+    public void deletarCliente(ClienteVO cliente) throws EvosException {
         clienteDAO.deletarCliente(cliente.getId());
     }
 
-    public List<ClienteVO> recuperarTodosClientes() {
+    public List<ClienteVO> recuperarTodosClientes() throws EvosException {
         List<Cliente> clientes = clienteDAO.recuperarClientes();
         List<ClienteVO> clientesVO = new ArrayList<ClienteVO>();
 
@@ -42,7 +43,7 @@ public class SessionBeanCliente {
         return null;
     }
 
-    public ClienteVO recuperarClientePorId(long id) {
+    public ClienteVO recuperarClientePorId(long id) throws EvosException {
         Cliente cliente = clienteDAO.recuperarClientePorId(id);
 
         if (cliente != null) {

@@ -3,6 +3,7 @@ package com.evos.model.dao;
 import com.evos.ConnectionFactory;
 import com.evos.model.entity.Empresa;
 import com.evos.model.vo.EmpresaVO;
+import com.evos.util.Exception.EvosException;
 import javafx.scene.control.Alert;
 
 import java.sql.Connection;
@@ -11,7 +12,7 @@ import java.sql.ResultSet;
 
 public class EmpresaDAO {
 
-    public Empresa recuperarEmpresa() {
+    public Empresa recuperarEmpresa() throws EvosException {
         String query = "SELECT * FROM EMPRESA";
         Empresa empresa = new Empresa();
 
@@ -40,10 +41,7 @@ public class EmpresaDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erro ao recuperar empresa!");
-            alert.setContentText(e.toString());
-            alert.show();
+            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao recuperar empresa!", e.toString());
         } finally {
             try {
                 if (pstm != null) {
@@ -60,7 +58,7 @@ public class EmpresaDAO {
         return empresa;
     }
 
-    public void alterarEmpresa(EmpresaVO empresa) {
+    public void alterarEmpresa(EmpresaVO empresa) throws EvosException {
         StringBuilder query = new StringBuilder("UPDATE EMPRESA SET");
         query.append(" nome = ?, cnpj = ?, possui_cnpj = ?, ativa = ?,");
         query.append(" dta_inc = ?, login_inc = ?, dta_alt = ?, login_alt = ?");
@@ -84,10 +82,7 @@ public class EmpresaDAO {
             pstm.execute();
         } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erro ao alterar empresa!");
-            alert.setContentText(e.toString());
-            alert.show();
+            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao alterar empresa!", e.toString());
         } finally {
             try {
                 if (conn != null) {

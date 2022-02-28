@@ -4,6 +4,7 @@ import com.evos.business.SessionBeanLogin;
 import com.evos.business.SessionBeanUsuario;
 import com.evos.model.vo.LoginVO;
 import com.evos.model.vo.UsuarioVO;
+import com.evos.util.Exception.EvosException;
 import com.evos.util.Utils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,6 +17,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
+
+    private URL url;
+    private ResourceBundle resourceBundle;
 
     private LoginVO login;
     private SessionBeanLogin sessionBeanLogin;
@@ -37,16 +41,18 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        login = new LoginVO();
+        this.login = new LoginVO();
+        this.url = url;
+        this.resourceBundle = resourceBundle;
     }
 
     @FXML
-    public void entrar() {
+    public void entrar() throws EvosException {
         if (camposValidos()) {
             login = new LoginVO(txtUsername.toString(), txtPassword.toString());
             boolean loginTrue = sessionBeanLogin.verificarLogin(login);
             if (loginTrue) {
-                login = sessionBeanLogin.recuperarLoginPorLogin(login);
+                login = sessionBeanLogin.recuperarLoginPorCredenciais(login);
                 UsuarioVO usuario = login.getUsuario();
                 // TODO: Inicar painel principal do sistema
             } else {

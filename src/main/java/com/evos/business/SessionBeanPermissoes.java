@@ -7,6 +7,7 @@ import com.evos.model.entity.Produto;
 import com.evos.model.vo.CategoriaVO;
 import com.evos.model.vo.ProdutoVO;
 import com.evos.model.vo.UsuarioVO;
+import com.evos.util.Exception.EvosException;
 import com.evos.util.Utils;
 
 import java.util.ArrayList;
@@ -18,23 +19,23 @@ public class SessionBeanPermissoes {
     private ProdutoDAO produtoDAO;
     private SessionBeanCategoria sessionBeanCategoria;
 
-    public void cadastrarProduto(ProdutoVO produto, UsuarioVO userLogado) {
+    public void cadastrarProduto(ProdutoVO produto, UsuarioVO userLogado) throws EvosException {
         produto.setDtaInc(Calendar.getInstance().toString());
         produto.setLoginInc(userLogado.getNome());
         produtoDAO.cadastrarProduto(produto);
     }
 
-    public void alterarProduto(ProdutoVO produto, UsuarioVO userLogado) {
+    public void alterarProduto(ProdutoVO produto, UsuarioVO userLogado) throws EvosException {
         produto.setDtaAlt(Calendar.getInstance().toString());
         produto.setLoginAlt(userLogado.getNome());
         produtoDAO.alterarProduto(produto);
     }
 
-    public void deletarProduto(ProdutoVO produto) {
+    public void deletarProduto(ProdutoVO produto) throws EvosException {
         produtoDAO.deletarProduto(produto);
     }
 
-    public List<ProdutoVO> recuperarTodosProdutos() {
+    public List<ProdutoVO> recuperarTodosProdutos() throws EvosException {
         List<Produto> produtos = produtoDAO.recuperarProdutos();
         List<ProdutoVO> produtosVO = new ArrayList<ProdutoVO>();
 
@@ -48,7 +49,7 @@ public class SessionBeanPermissoes {
         return null;
     }
 
-    public ProdutoVO recuperarProdutoPorId(long id) {
+    public ProdutoVO recuperarProdutoPorId(long id) throws EvosException {
         Produto produto = produtoDAO.recuperarProdutoPorId(id);
 
         if (produto != null) {

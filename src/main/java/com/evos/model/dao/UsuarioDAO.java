@@ -3,6 +3,7 @@ package com.evos.model.dao;
 import com.evos.ConnectionFactory;
 import com.evos.model.entity.Usuario;
 import com.evos.model.vo.UsuarioVO;
+import com.evos.util.Exception.EvosException;
 import javafx.scene.control.Alert;
 
 import java.sql.Connection;
@@ -15,7 +16,7 @@ import java.util.List;
 
 public class UsuarioDAO {
 
-    public void cadastrarUsuario(UsuarioVO usuario) {
+    public void cadastrarUsuario(UsuarioVO usuario) throws EvosException {
         StringBuilder query = new StringBuilder("INSERT INTO USUARIO");
         query.append("(nome, id_cargo, tipo_usuario, data_admissao, cpf, data_nasc, email, ativo,");
         query.append(" dta_inc, login_inc)");
@@ -48,10 +49,7 @@ public class UsuarioDAO {
 
         } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erro ao cadastrar usuário!");
-            alert.setContentText(e.toString());
-            alert.show();
+            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao cadastrar usuários!", e.toString());
         } finally {
             // Fecha as conexões
             try {
@@ -68,7 +66,7 @@ public class UsuarioDAO {
         }
     }
 
-    public void deletarUsuario(long id) {
+    public void deletarUsuario(long id) throws EvosException {
         String query = "DELETE FROM USUARIO WHERE id = ?";
 
         Connection conn = null;
@@ -83,10 +81,7 @@ public class UsuarioDAO {
             pstm.execute();
         } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erro ao deletar usuário!");
-            alert.setContentText(e.toString());
-            alert.show();
+            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao deletar usuário!", e.toString());
         } finally {
             try {
                 if (pstm != null) {
@@ -102,7 +97,7 @@ public class UsuarioDAO {
         }
     }
 
-    public void alterarUsuario(UsuarioVO usuario) {
+    public void alterarUsuario(UsuarioVO usuario) throws EvosException {
         StringBuilder query = new StringBuilder("UPDATE USUARIO SET");
         query.append(" nome = ?, id_cargo = ?, tipo_usuario = ?, data_admissao = ?,");
         query.append(" cpf = ?, data_nasc = ?, email = ?, ativo = ?,");
@@ -131,10 +126,7 @@ public class UsuarioDAO {
             pstm.execute();
         } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erro ao alterar usuário!");
-            alert.setContentText(e.toString());
-            alert.show();
+            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao alterar usuário!", e.toString());
         } finally {
             try {
                 if (pstm != null) {
@@ -150,7 +142,7 @@ public class UsuarioDAO {
         }
     }
 
-    public Usuario recuperarUsuarioPorId(long id) {
+    public Usuario recuperarUsuarioPorId(long id) throws EvosException {
         String query = "SELECT * FROM USUARIO WHERE id = ?";
         Usuario usuario = new Usuario();
 
@@ -185,10 +177,7 @@ public class UsuarioDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erro ao recuperar usuário!");
-            alert.setContentText(e.toString());
-            alert.show();
+            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao recuperar usuário!", e.toString());
         } finally {
             try {
                 if (pstm != null) {
@@ -209,7 +198,7 @@ public class UsuarioDAO {
         return usuario;
     }
 
-    public List<Usuario> recuperarUsuarios() {
+    public List<Usuario> recuperarUsuarios() throws EvosException {
         String query = "SELECT * FROM USUARIO";
         List<Usuario> usuarios = new ArrayList<Usuario>();
 
@@ -247,10 +236,7 @@ public class UsuarioDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erro ao recuperar usuários!");
-            alert.setContentText(e.toString());
-            alert.show();
+            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao recuperar usuários!", e.toString());
         } finally {
             try {
                 if (pstm != null) {

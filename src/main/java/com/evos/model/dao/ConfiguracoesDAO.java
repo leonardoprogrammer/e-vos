@@ -3,6 +3,7 @@ package com.evos.model.dao;
 import com.evos.ConnectionFactory;
 import com.evos.model.entity.Configuracoes;
 import com.evos.model.vo.ConfiguracoesVO;
+import com.evos.util.Exception.EvosException;
 import javafx.scene.control.Alert;
 
 import java.sql.Connection;
@@ -11,7 +12,7 @@ import java.sql.ResultSet;
 
 public class ConfiguracoesDAO {
 
-    public void alterarConfiguracoes(ConfiguracoesVO configuracoes) {
+    public void alterarConfiguracoes(ConfiguracoesVO configuracoes) throws EvosException {
         StringBuilder query = new StringBuilder("UPDATE CONFIGURACOESGERAIS SET");
         query.append(" enviar_email_venda = ?, enviar_notif_venda_app = ?, enviar_notif_meta_app = ?");
 
@@ -29,10 +30,7 @@ public class ConfiguracoesDAO {
             pstm.execute();
         } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erro ao alterar configurações!");
-            alert.setContentText(e.toString());
-            alert.show();
+            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao alterar configurações!", e.toString());
         } finally {
             try {
                 if (conn != null) {
@@ -48,7 +46,7 @@ public class ConfiguracoesDAO {
         }
     }
 
-    public Configuracoes recuperarConfiguracoes() {
+    public Configuracoes recuperarConfiguracoes() throws EvosException {
         String query = "SELECT * FROM CONFIGURACOESGERAIS";
         Configuracoes configuracoes = new Configuracoes();
 
@@ -73,10 +71,7 @@ public class ConfiguracoesDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erro ao recuperar configurações!");
-            alert.setContentText(e.toString());
-            alert.show();
+            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao recuperar configurações!", e.toString());
         } finally {
             try {
                 // Fecha as conexões

@@ -5,6 +5,7 @@ import com.evos.business.SessionBeanEmpresa;
 import com.evos.model.vo.ConfiguracoesVO;
 import com.evos.model.vo.EmpresaVO;
 import com.evos.model.vo.UsuarioVO;
+import com.evos.util.Exception.EvosException;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
@@ -34,12 +35,16 @@ public class ConfiguracoesController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         usuario = new UsuarioVO();
-        empresa = sessionBeanEmpresa.recuperarEmpresa();
-        configuracoes = sessionBeanConfiguracoes.recuperarConfiguracoes();
+        try {
+            empresa = sessionBeanEmpresa.recuperarEmpresa();
+            configuracoes = sessionBeanConfiguracoes.recuperarConfiguracoes();
+        } catch (EvosException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
-    public void salvarConfiguracoes() {
+    public void salvarConfiguracoes() throws EvosException {
         configuracoes = new ConfiguracoesVO();
         configuracoes.setEnviarEmailVenda(checkEnviarEmailVenda.isSelected());
         configuracoes.setEnviarNotifVendaApp(checkEnviarNotifVendaApp.isSelected());

@@ -3,6 +3,7 @@ package com.evos.model.dao;
 import com.evos.ConnectionFactory;
 import com.evos.model.entity.Produto;
 import com.evos.model.vo.ProdutoVO;
+import com.evos.util.Exception.EvosException;
 import javafx.scene.control.Alert;
 
 import java.sql.Connection;
@@ -13,7 +14,7 @@ import java.util.List;
 
 public class ProdutoDAO {
 
-    public void cadastrarProduto(ProdutoVO produto) {
+    public void cadastrarProduto(ProdutoVO produto) throws EvosException {
         StringBuilder query = new StringBuilder("INSERT INTO PRODUTO");
         query.append("(nome, tipo_produto, id_categoria, valor, ativo,");
         query.append(" dta_inc, login_inc, dta_alt, login_alt)");
@@ -44,10 +45,7 @@ public class ProdutoDAO {
             pstm.execute();
         } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erro ao cadastrar produto!");
-            alert.setContentText(e.toString());
-            alert.show();
+            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao cadastrar produto!", e.toString());
         } finally {
             try {
                 if (conn != null) {
@@ -63,7 +61,7 @@ public class ProdutoDAO {
         }
     }
 
-    public void alterarProduto(ProdutoVO produto) {
+    public void alterarProduto(ProdutoVO produto) throws EvosException {
         StringBuilder query = new StringBuilder("UPDATE PRODUTO SET");
         query.append(" nome = ?, tipo_produto = ?, id_categoria = ?, valor = ?, ativo = ?,");
         query.append(" dta_alt = ?, login_alt = ?");
@@ -86,10 +84,7 @@ public class ProdutoDAO {
             pstm.execute();
         } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erro ao alterar produto!");
-            alert.setContentText(e.toString());
-            alert.show();
+            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao alterar produto!", e.toString());
         } finally {
             try {
                 if (conn != null) {
@@ -105,7 +100,7 @@ public class ProdutoDAO {
         }
     }
 
-    public void deletarProduto(ProdutoVO produto) {
+    public void deletarProduto(ProdutoVO produto) throws EvosException {
         String query = "DELETE FROM PRODUTO WHERE id = ?";
 
         Connection conn = null;
@@ -120,10 +115,7 @@ public class ProdutoDAO {
             pstm.execute();
         } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erro ao deletar produto!");
-            alert.setContentText(e.toString());
-            alert.show();
+            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao deletar produto!", e.toString());
         } finally {
             try {
                 if (conn != null) {
@@ -139,7 +131,7 @@ public class ProdutoDAO {
         }
     }
 
-    public List<Produto> recuperarProdutos() {
+    public List<Produto> recuperarProdutos() throws EvosException {
         String query = "SELECT * FROM PRODUTO";
         List<Produto> produtos = new ArrayList<Produto>();
 
@@ -170,10 +162,7 @@ public class ProdutoDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erro ao recuperar produtos!");
-            alert.setContentText(e.toString());
-            alert.show();
+            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao recuperar produtos!", e.toString());
         } finally {
             try {
                 if (conn != null) {
@@ -190,7 +179,7 @@ public class ProdutoDAO {
         return produtos;
     }
 
-    public Produto recuperarProdutoPorId(long id) {
+    public Produto recuperarProdutoPorId(long id) throws EvosException {
         String query = "SELECY * FROM PRODUTO WHERE id = ?";
         Produto produto = new Produto();
 
@@ -221,10 +210,7 @@ public class ProdutoDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erro ao recuperar produto!");
-            alert.setContentText(e.toString());
-            alert.show();
+            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao recuperar produto!", e.toString());
         } finally {
             try {
                 if (conn != null) {

@@ -4,6 +4,7 @@ import com.evos.model.dao.CategoriaDAO;
 import com.evos.model.entity.Categoria;
 import com.evos.model.vo.CategoriaVO;
 import com.evos.model.vo.UsuarioVO;
+import com.evos.util.Exception.EvosException;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -13,23 +14,23 @@ public class SessionBeanCategoria {
 
     private CategoriaDAO categoriaDAO;
 
-    public void cadastrarCategoria(CategoriaVO categoria, UsuarioVO userLogado) {
+    public void cadastrarCategoria(CategoriaVO categoria, UsuarioVO userLogado) throws EvosException {
         categoria.setLoginInc(userLogado.getNome());
         categoria.setDtaInc(Calendar.getInstance().toString());
         categoriaDAO.cadastrarCategoria(categoria);
     }
 
-    public void alterarCategoria(CategoriaVO categoria, UsuarioVO userLogado) {
+    public void alterarCategoria(CategoriaVO categoria, UsuarioVO userLogado) throws EvosException {
         categoria.setLoginAlt(userLogado.getNome());
         categoria.setDtaAlt(Calendar.getInstance().toString());
         categoriaDAO.alterarCategoria(categoria);
     }
 
-    public void deletarCategoria(CategoriaVO categoria) {
+    public void deletarCategoria(CategoriaVO categoria) throws EvosException {
         categoriaDAO.deletarCategoria(categoria.getId());
     }
 
-    public List<CategoriaVO> recuperarTodasCategorias() {
+    public List<CategoriaVO> recuperarTodasCategorias() throws EvosException {
         List<Categoria> categorias = categoriaDAO.recuperarCategorias();
         List<CategoriaVO> categoriasVO = new ArrayList<CategoriaVO>();
 
@@ -42,7 +43,7 @@ public class SessionBeanCategoria {
         return null;
     }
 
-    public CategoriaVO recuperarCategoriaPorId(long id) {
+    public CategoriaVO recuperarCategoriaPorId(long id) throws EvosException {
         Categoria categoria = categoriaDAO.recuperarCategoriaPorId(id);
 
         if (categoria != null) {

@@ -6,6 +6,7 @@ import com.evos.model.entity.DescontoProduto;
 import com.evos.model.vo.DescontoCompraVO;
 import com.evos.model.vo.DescontoProdutoVO;
 import com.evos.model.vo.ProdutoVO;
+import com.evos.util.Exception.EvosException;
 import javafx.scene.control.Alert;
 
 import java.sql.Connection;
@@ -16,7 +17,7 @@ import java.util.List;
 
 public class DescontoDAO {
 
-    public void cadastrarDescontoProduto(DescontoProdutoVO desconto) {
+    public void cadastrarDescontoProduto(DescontoProdutoVO desconto) throws EvosException {
         StringBuilder query = new StringBuilder("INSERT INTO DESCONTOPRODUTO");
         query.append("(id_produto, qtd_minima, tipo_desconto, porcentagem, valor, apenas_um,");
         query.append(" ativo, dta_inc, login_inc)");
@@ -47,10 +48,7 @@ public class DescontoDAO {
              pstm.execute();
          } catch (Exception e) {
              e.printStackTrace();
-             Alert alert = new Alert(Alert.AlertType.ERROR);
-             alert.setTitle("Erro ao cadastrar desconto de produto!");
-             alert.setContentText(e.toString());
-             alert.show();
+             throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao cadastrar desconto de produto!", e.toString());
          } finally {
              try {
                  if (pstm != null) {
@@ -66,7 +64,7 @@ public class DescontoDAO {
          }
     }
 
-    public void cadastrarDescontoCompra(DescontoCompraVO desconto) {
+    public void cadastrarDescontoCompra(DescontoCompraVO desconto) throws EvosException {
         StringBuilder query = new StringBuilder("INSERT INTO DESCONTOCOMPRA");
         query.append("(qtd_minima, tipo_desconto, porcentagem, valor, ativo,");
         query.append(" dta_inc, login_inc)");
@@ -90,10 +88,7 @@ public class DescontoDAO {
             pstm.execute();
         } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erro ao cadastrar desconto de compra!");
-            alert.setContentText(e.toString());
-            alert.show();
+            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao cadastrar desconto de compra!", e.toString());
         } finally {
             try {
                 if (pstm != null) {
@@ -109,7 +104,7 @@ public class DescontoDAO {
         }
     }
 
-    public void alterarDescontoProduto(DescontoProdutoVO desconto) {
+    public void alterarDescontoProduto(DescontoProdutoVO desconto) throws EvosException {
         StringBuilder query = new StringBuilder("UPDATE DESCONTOPRODUTO SET");
         query.append(" id_produto = ?, qtd_minima = ?, tipo_desconto = ?, porcentagem = ?,");
         query.append(" valor = ?, apenas_um = ?, ativo = ?, dta_alt = ?, login_alt = ?");
@@ -136,10 +131,7 @@ public class DescontoDAO {
             pstm.execute();
         } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erro ao alterar desconto de produto!");
-            alert.setContentText(e.toString());
-            alert.show();
+            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao alterar desconto de produto!", e.toString());
         } finally {
             try {
                 if (pstm != null) {
@@ -155,7 +147,7 @@ public class DescontoDAO {
         }
     }
 
-    public void alterarDescontoCompra(DescontoCompraVO desconto) {
+    public void alterarDescontoCompra(DescontoCompraVO desconto) throws EvosException {
         StringBuilder query = new StringBuilder("UPDATE DESCONTOCOMPRA SET");
         query.append(" qtd_minima = ?, tipo_desconto = ?, porcentagem = ?, valor = ?,");
         query.append(" ativo = ?, dta_alt = ?, login_alt = ?");
@@ -180,10 +172,7 @@ public class DescontoDAO {
             pstm.execute();
         } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erro ao alterar de desconto de compra!");
-            alert.setContentText(e.toString());
-            alert.show();
+            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao alterar de desconto de compra!", e.toString());
         } finally {
             try {
                 if (pstm != null) {
@@ -199,7 +188,7 @@ public class DescontoDAO {
         }
     }
 
-    public void ativarDesativarDescontoProduto(DescontoProdutoVO desconto, int opcao) {
+    public void ativarDesativarDescontoProduto(DescontoProdutoVO desconto, int opcao) throws EvosException {
         String query = "UPDATE DESCONTOPRODUTO SET ativo = ? WHERE id = ?";
 
         Connection conn = null;
@@ -220,10 +209,7 @@ public class DescontoDAO {
             pstm.execute();
         } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erro ao ativar/desativar desconto de produto!");
-            alert.setContentText(e.toString());
-            alert.show();
+            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao ativar/desativar desconto de produto!", e.toString());
         } finally {
             try {
                 if (pstm != null) {
@@ -239,7 +225,7 @@ public class DescontoDAO {
         }
     }
 
-    public void ativarDesativarDescontoCompra(DescontoCompraVO desconto, int opcao) {
+    public void ativarDesativarDescontoCompra(DescontoCompraVO desconto, int opcao) throws EvosException {
         String query = "UPDATE DESCONTOCOMPRA SET ativo = ? WHERE id = ?";
 
         Connection conn = null;
@@ -260,10 +246,7 @@ public class DescontoDAO {
             pstm.execute();
         } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erro ao ativar/desativar desconto de compra!");
-            alert.setContentText(e.toString());
-            alert.show();
+            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao ativar/desativar desconto de compra!", e.toString());
         } finally {
             try {
                 if (pstm != null) {
@@ -279,7 +262,7 @@ public class DescontoDAO {
         }
     }
 
-    public void deletarDescontoProduto(DescontoProdutoVO desconto) {
+    public void deletarDescontoProduto(DescontoProdutoVO desconto) throws EvosException {
         String query = "DELETE FROM DESCONTOPRODUTO WHERE id = ?";
 
         Connection conn = null;
@@ -294,10 +277,7 @@ public class DescontoDAO {
             pstm.execute();
         } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erro ao deletar desconto de produto!");
-            alert.setContentText(e.toString());
-            alert.show();
+            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao deletar desconto de produto!", e.toString());
         } finally {
             try {
                 if (pstm != null) {
@@ -313,7 +293,7 @@ public class DescontoDAO {
         }
     }
 
-    public void deletarDescontoCompra(DescontoCompraVO desconto) {
+    public void deletarDescontoCompra(DescontoCompraVO desconto) throws EvosException {
         String query = "DELETE FROM DESCONTOCOMPRA WHERE id = ?";
 
         Connection conn = null;
@@ -328,10 +308,7 @@ public class DescontoDAO {
             pstm.execute();
         } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erro ao deletar desconto de compra!");
-            alert.setContentText(e.toString());
-            alert.show();
+            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao deletar desconto de compra!", e.toString());
         } finally {
             try {
                 if (pstm != null) {
@@ -347,7 +324,7 @@ public class DescontoDAO {
         }
     }
 
-    public List<DescontoProduto> recuperarDescontosProduto() {
+    public List<DescontoProduto> recuperarDescontosProduto() throws EvosException {
         String query = "SELECT * FROM DESCONTOPRODUTO";
         List<DescontoProduto> descontos = new ArrayList<DescontoProduto>();
 
@@ -380,10 +357,7 @@ public class DescontoDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erro ao recuperar descontos de produto!");
-            alert.setContentText(e.toString());
-            alert.show();
+            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao recuperar descontos de produto!", e.toString());
         } finally {
             try {
                 if (pstm != null) {
@@ -404,7 +378,7 @@ public class DescontoDAO {
         return descontos;
     }
 
-    public List<DescontoCompra> recuperarDescontosCompra() {
+    public List<DescontoCompra> recuperarDescontosCompra() throws EvosException {
         String query = "SELECT * FROM DESCONTOCOMPRA";
         List<DescontoCompra> descontos = new ArrayList<DescontoCompra>();
 
@@ -435,10 +409,7 @@ public class DescontoDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erro ao descontos de compra!");
-            alert.setContentText(e.toString());
-            alert.show();
+            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao descontos de compra!", e.toString());
         } finally {
             try {
                 if (pstm != null) {
@@ -459,7 +430,7 @@ public class DescontoDAO {
         return descontos;
     }
 
-    public DescontoProduto recuperarDescontoProdutoPorId(long id) {
+    public DescontoProduto recuperarDescontoProdutoPorId(long id) throws EvosException {
         String query = "SELECT * FROM DESCONTOPRODUTO WHERE id = ?";
         DescontoProduto desconto = new DescontoProduto();
 
@@ -492,10 +463,7 @@ public class DescontoDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erro ao recuperar desconto de produto!");
-            alert.setContentText(e.toString());
-            alert.show();
+            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao recuperar desconto de produto!", e.toString());
         } finally {
             try {
                 if (pstm != null) {
@@ -516,7 +484,7 @@ public class DescontoDAO {
         return desconto;
     }
 
-    public DescontoCompra recuperarDescontoCompraPorId(long id) {
+    public DescontoCompra recuperarDescontoCompraPorId(long id) throws EvosException {
         String query = "SELECT * FROM DESCONTOCOMPRA WHERE id = ?";
         DescontoCompra desconto = new DescontoCompra();
 
@@ -548,10 +516,7 @@ public class DescontoDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erro ao desconto de compra!");
-            alert.setContentText(e.toString());
-            alert.show();
+            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao desconto de compra!", e.toString());
         } finally {
             try {
                 if (pstm != null) {
@@ -572,7 +537,7 @@ public class DescontoDAO {
         return desconto;
     }
 
-    public DescontoProduto recuperarDescontoPorProduto(ProdutoVO produto) {
+    public DescontoProduto recuperarDescontoPorProduto(ProdutoVO produto) throws EvosException {
         String query = "SELECT * FROM DESCONTOPRODUTO WHERE id_produto = ?";
         DescontoProduto desconto = new DescontoProduto();
 
@@ -605,10 +570,7 @@ public class DescontoDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erro ao recuperar desconto de produto!");
-            alert.setContentText(e.toString());
-            alert.show();
+            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao recuperar desconto de produto!", e.toString());
         } finally {
             try {
                 if (pstm != null) {

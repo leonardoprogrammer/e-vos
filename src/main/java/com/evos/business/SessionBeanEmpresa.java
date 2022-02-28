@@ -4,6 +4,7 @@ import com.evos.model.dao.EmpresaDAO;
 import com.evos.model.entity.Empresa;
 import com.evos.model.vo.EmpresaVO;
 import com.evos.model.vo.UsuarioVO;
+import com.evos.util.Exception.EvosException;
 
 import java.util.Calendar;
 
@@ -11,7 +12,7 @@ public class SessionBeanEmpresa {
 
     private EmpresaDAO empresaDAO;
 
-    public EmpresaVO recuperarEmpresa() {
+    public EmpresaVO recuperarEmpresa() throws EvosException {
         Empresa empresa = empresaDAO.recuperarEmpresa();
 
         if (empresa != null) {
@@ -20,7 +21,7 @@ public class SessionBeanEmpresa {
         return null;
     }
 
-    public void alterarEmpresa(EmpresaVO empresa, UsuarioVO userLogado) {
+    public void alterarEmpresa(EmpresaVO empresa, UsuarioVO userLogado) throws EvosException {
         empresa.setLoginAlt(userLogado.getNome());
         empresa.setDtaAlt(Calendar.getInstance().toString());
         empresaDAO.alterarEmpresa(empresa);

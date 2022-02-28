@@ -5,6 +5,7 @@ import com.evos.enums.TipoVenda;
 import com.evos.model.dao.VendaDAO;
 import com.evos.model.entity.Venda;
 import com.evos.model.vo.*;
+import com.evos.util.Exception.EvosException;
 import com.evos.util.Utils;
 
 import java.util.ArrayList;
@@ -18,27 +19,27 @@ public class SessionBeanVenda {
     private SessionBeanUsuario sessionBeanUsuario;
     private SessionBeanCliente sessionBeanCliente;
 
-    public void registrarVenda(VendaVO venda, UsuarioVO userLogado) {
+    public void registrarVenda(VendaVO venda, UsuarioVO userLogado) throws EvosException {
         venda.setLoginInc(userLogado.getNome());
         venda.setDtaInc(Calendar.getInstance().toString());
         vendaDAO.registrarVenda(venda);
     }
 
-    public void alterarVenda(VendaVO venda, UsuarioVO userLogado) {
+    public void alterarVenda(VendaVO venda, UsuarioVO userLogado) throws EvosException {
         venda.setLoginAlt(userLogado.getNome());
         venda.setDtaAlt(Calendar.getInstance().toString());
         vendaDAO.alterarVenda(venda);
     }
 
-    public void cancelarVenda(VendaVO venda, UsuarioVO userLogado) {
+    public void cancelarVenda(VendaVO venda, UsuarioVO userLogado) throws EvosException {
         vendaDAO.cancelarVenda(venda.getId(), venda.isProdDevolvido(), venda.getObservacao(), userLogado);
     }
 
-    public void deletarVenda(VendaVO venda) {
+    public void deletarVenda(VendaVO venda) throws EvosException {
         vendaDAO.deletarVenda(venda.getId());
     }
 
-    public List<VendaVO> recuperarTodasVendas() {
+    public List<VendaVO> recuperarTodasVendas() throws EvosException {
         List<Venda> vendas = vendaDAO.recuperarVendas();
         List<VendaVO> vendasVO = new ArrayList<VendaVO>();
 
@@ -54,7 +55,7 @@ public class SessionBeanVenda {
         return null;
     }
 
-    public VendaVO recuperarVendaPorId(long id) {
+    public VendaVO recuperarVendaPorId(long id) throws EvosException {
         Venda venda = vendaDAO.recuperarVendaPorId(id);
 
         if (venda != null) {
@@ -66,7 +67,7 @@ public class SessionBeanVenda {
         return null;
     }
 
-    public List<VendaVO> recuperarVendasPorFiltro(FiltroVendaVO filtroVendaVO) {
+    public List<VendaVO> recuperarVendasPorFiltro(FiltroVendaVO filtroVendaVO) throws EvosException {
         List<Venda> vendas = vendaDAO.recuperarVendasPorFiltro(filtroVendaVO);
         List<VendaVO> vendasVO = new ArrayList<VendaVO>();
 

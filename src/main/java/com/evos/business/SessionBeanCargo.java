@@ -5,6 +5,7 @@ import com.evos.model.entity.Cargo;
 import com.evos.model.entity.Usuario;
 import com.evos.model.vo.CargoVO;
 import com.evos.model.vo.UsuarioVO;
+import com.evos.util.Exception.EvosException;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -15,23 +16,23 @@ public class SessionBeanCargo {
 
     private CargoDAO cargoDAO;
 
-    public void cadastrarCargo(CargoVO cargo, UsuarioVO userLogado) {
+    public void cadastrarCargo(CargoVO cargo, UsuarioVO userLogado) throws EvosException {
         cargo.setLoginInc(userLogado.getNome());
         cargo.setDtaInc(Calendar.getInstance().toString());
         cargoDAO.cadastrarCargo(cargo);
     }
 
-    public void alterarCargo(CargoVO cargo, UsuarioVO userLogado) {
+    public void alterarCargo(CargoVO cargo, UsuarioVO userLogado) throws EvosException {
         cargo.setLoginAlt(userLogado.getNome());
         cargo.setDtaAlt(Calendar.getInstance().toString());
         cargoDAO.alterarCargo(cargo);
     }
 
-    public void deletarCargo(CargoVO cargo) {
+    public void deletarCargo(CargoVO cargo) throws EvosException {
         cargoDAO.deletarCargo(cargo.getId());
     }
 
-    public void substituirCargoPorExistente(CargoVO cargo, CargoVO cargoExistente, int opcao, UsuarioVO userLogado) {
+    public void substituirCargoPorExistente(CargoVO cargo, CargoVO cargoExistente, int opcao, UsuarioVO userLogado) throws EvosException {
         // TODO: Alterar toda tabela que tiver o cargo antigo, excete relatórios
         cargoDAO.substituirCargoUsuario(cargo, cargoExistente, userLogado);
 
@@ -49,7 +50,7 @@ public class SessionBeanCargo {
         }
     }
 
-    public List<CargoVO> recuperarTodosCargo() {
+    public List<CargoVO> recuperarTodosCargo() throws EvosException {
         List<Cargo> cargos = cargoDAO.recuperarCargos();
         List<CargoVO> cargosVO = new ArrayList<CargoVO>();
 
@@ -62,7 +63,7 @@ public class SessionBeanCargo {
         return null;
     }
 
-    public CargoVO recuperarCargoPorId(long id) {
+    public CargoVO recuperarCargoPorId(long id) throws EvosException {
         Cargo cargo = cargoDAO.recuperarCargoPorId(id);
 
         if (cargo != null) {

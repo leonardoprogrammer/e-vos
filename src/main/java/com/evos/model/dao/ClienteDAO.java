@@ -3,6 +3,7 @@ package com.evos.model.dao;
 import com.evos.ConnectionFactory;
 import com.evos.model.entity.Cliente;
 import com.evos.model.vo.ClienteVO;
+import com.evos.util.Exception.EvosException;
 import javafx.scene.control.Alert;
 
 import java.sql.Connection;
@@ -14,7 +15,7 @@ import java.util.List;
 
 public class ClienteDAO {
 
-    public void cadastrarCliente(ClienteVO cliente) {
+    public void cadastrarCliente(ClienteVO cliente) throws EvosException {
         StringBuilder query = new StringBuilder("INSERT INTO CLIENTE");
         query.append("(nome, cpf_cnpj, data_nasc, email, endereco, telefone_um, telefone_dois,");
         query.append(" envia_email, dta_inc, login_inc)");
@@ -47,10 +48,7 @@ public class ClienteDAO {
             pstm.execute();
         } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erro ao cadastrar cliente!");
-            alert.setContentText(e.toString());
-            alert.show();
+            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao cadastrar cliente!", e.toString());
         } finally {
             try {
                 if (conn != null) {
@@ -66,7 +64,7 @@ public class ClienteDAO {
         }
     }
 
-    public void alterarCliente(ClienteVO cliente) {
+    public void alterarCliente(ClienteVO cliente) throws EvosException {
         StringBuilder query = new StringBuilder("UPDATE CLIENTE SET");
         query.append(" nome = ?, cpf_cnpj = ?, data_nasc = ?, email = ?, endereco = ?,");
         query.append(" telefone_um = ?, telefone_dois = ?, envia_email = ?, dta_alt = ?, login_alt = ?");
@@ -95,10 +93,7 @@ public class ClienteDAO {
             pstm.execute();
         } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erro ao alterar cliente!");
-            alert.setContentText(e.toString());
-            alert.show();
+            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao alterar cliente!", e.toString());
         } finally {
             try {
                 if (conn != null) {
@@ -114,7 +109,7 @@ public class ClienteDAO {
         }
     }
 
-    public void deletarCliente(long id) {
+    public void deletarCliente(long id) throws EvosException {
         String query = "DELETE FROM CLIENTE WHERE id = ?";
 
         Connection conn = null;
@@ -129,10 +124,7 @@ public class ClienteDAO {
             pstm.execute();
         } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erro ao deletar cliente!");
-            alert.setContentText(e.toString());
-            alert.show();
+            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao deletar cliente!", e.toString());
         } finally {
             try {
                 if (conn != null) {
@@ -148,7 +140,7 @@ public class ClienteDAO {
         }
     }
 
-    public List<Cliente> recuperarClientes() {
+    public List<Cliente> recuperarClientes() throws EvosException {
         String query = "SELECT * FROM CLIENTE";
         List<Cliente> clientes = new ArrayList<Cliente>();
 
@@ -185,10 +177,7 @@ public class ClienteDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erro ao recuperar clientes!");
-            alert.setContentText(e.toString());
-            alert.show();
+            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao recuperar clientes!", e.toString());
         } finally {
             try {
                 if (conn != null) {
@@ -209,7 +198,7 @@ public class ClienteDAO {
         }
     }
 
-    public Cliente recuperarClientePorId(long id) {
+    public Cliente recuperarClientePorId(long id) throws EvosException {
         String query = "SELECT * FROM CLIENTE WHERE id = ?";
         Cliente cliente = new Cliente();
 
@@ -242,10 +231,7 @@ public class ClienteDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erro ao recuperar cliente!");
-            alert.setContentText(e.toString());
-            alert.show();
+            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao recuperar cliente!", e.toString());
         } finally {
             try {
                 if (conn != null) {

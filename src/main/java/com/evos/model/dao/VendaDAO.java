@@ -5,6 +5,7 @@ import com.evos.model.entity.Venda;
 import com.evos.model.vo.FiltroVendaVO;
 import com.evos.model.vo.UsuarioVO;
 import com.evos.model.vo.VendaVO;
+import com.evos.util.Exception.EvosException;
 import com.evos.util.Utils;
 import javafx.scene.control.Alert;
 
@@ -18,7 +19,7 @@ import java.util.List;
 
 public class VendaDAO {
 
-    public void registrarVenda(VendaVO venda) {
+    public void registrarVenda(VendaVO venda) throws EvosException {
         StringBuilder query = new StringBuilder("INSERT INTO VENDA");
         query.append("(id_produto, id_vendedor, id_cliente, data_compra, tipo_venda, forma_pagamento,");
         query.append(" gerou_nfs, observacao, cancelada, prod_devolvido, data_cancela, dta_inc, login_inc)");
@@ -53,10 +54,7 @@ public class VendaDAO {
             pstm.execute();
         } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erro ao registrar venda!");
-            alert.setContentText(e.toString());
-            alert.show();
+            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao registrar venda!", e.toString());
         } finally {
             try {
                 if (pstm != null) {
@@ -72,7 +70,7 @@ public class VendaDAO {
         }
     }
 
-    public void alterarVenda(VendaVO venda) {
+    public void alterarVenda(VendaVO venda) throws EvosException {
         StringBuilder query = new StringBuilder("UPDATE VENDA SET");
         query.append(" id_produto = ?, id_vendedor = ?, id_cliente = ?, data_compra = ?, tipo_venda = ?, forma_pagamento = ?,");
         query.append(" gerou_nfs = ?, observacao = ?, cancelada = ?, prod_devolvido = ?, data_cancela = ?, dta_alt = ?, login_alt = ?");
@@ -103,10 +101,7 @@ public class VendaDAO {
             pstm.execute();
         } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erro ao alterar venda!");
-            alert.setContentText(e.toString());
-            alert.show();
+            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao alterar venda!", e.toString());
         } finally {
             try {
                 if (pstm != null) {
@@ -122,7 +117,7 @@ public class VendaDAO {
         }
     }
 
-    public void cancelarVenda(long id, boolean prodDevolvido, String observacao, UsuarioVO userLogado) {
+    public void cancelarVenda(long id, boolean prodDevolvido, String observacao, UsuarioVO userLogado) throws EvosException {
         StringBuilder query = new StringBuilder("UPDATE VENDA SET");
         query.append(" cancelada = ?, prod_devolvido, data_cancela = ?,");
         query.append(" dta_alt = ?, login_alt = ?");
@@ -152,10 +147,7 @@ public class VendaDAO {
             pstm.execute();
         } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erro ao cancelar venda!");
-            alert.setContentText(e.toString());
-            alert.show();
+            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao cancelar venda!", e.toString());
         } finally {
             try {
                 if (pstm != null) {
@@ -171,7 +163,7 @@ public class VendaDAO {
         }
     }
 
-    public void deletarVenda(long id) {
+    public void deletarVenda(long id) throws EvosException {
         String query = "DELETE FROM VENDA WHERE id = ?";
 
         Connection conn = null;
@@ -186,10 +178,7 @@ public class VendaDAO {
             pstm.execute();
         } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erro ao deletar venda!");
-            alert.setContentText(e.toString());
-            alert.show();
+            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao deletar venda!", e.toString());
         } finally {
             try {
                 if (pstm != null) {
@@ -205,7 +194,7 @@ public class VendaDAO {
         }
     }
 
-    public List<Venda> recuperarVendas() {
+    public List<Venda> recuperarVendas() throws EvosException {
         String query = "SELECT * FROM VENDA";
         List<Venda> vendas = new ArrayList<Venda>();
 
@@ -242,10 +231,7 @@ public class VendaDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erro ao recuperar vendas!");
-            alert.setContentText(e.toString());
-            alert.show();
+            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao recuperar vendas!", e.toString());
         } finally {
             try {
                 if (pstm != null) {
@@ -262,7 +248,7 @@ public class VendaDAO {
         return vendas;
     }
 
-    public Venda recuperarVendaPorId(long id) {
+    public Venda recuperarVendaPorId(long id) throws EvosException {
         String query = "SELECT * FROM VENDA WHERE id = ?";
         Venda venda = new Venda();
 
@@ -299,10 +285,7 @@ public class VendaDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erro ao recuperar venda!");
-            alert.setContentText(e.toString());
-            alert.show();
+            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao recuperar venda!", e.toString());
         } finally {
             try {
                 if (pstm != null) {
@@ -319,7 +302,7 @@ public class VendaDAO {
         return venda;
     }
 
-    public List<Venda> recuperarVendasPorFiltro(FiltroVendaVO filtroVenda) {
+    public List<Venda> recuperarVendasPorFiltro(FiltroVendaVO filtroVenda) throws EvosException {
         StringBuilder query = new StringBuilder("SELECT * FROM VENDA");
         int count = 0;
 
@@ -429,10 +412,7 @@ public class VendaDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erro ao recuperar vendas por filtro!");
-            alert.setContentText(e.toString());
-            alert.show();
+            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao recuperar vendas por filtro!", e.toString());
         } finally {
             try {
                 if (pstm != null) {

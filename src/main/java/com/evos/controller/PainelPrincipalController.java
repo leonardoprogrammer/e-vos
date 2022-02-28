@@ -1,5 +1,6 @@
 package com.evos.controller;
 
+import com.evos.model.vo.UsuarioVO;
 import javafx.fxml.Initializable;
 
 import java.net.URL;
