@@ -3,6 +3,7 @@ package com.evos.model.vo;
 public class CargoVO {
     private long id;
     private String nome;
+    private PermissoesVO permissoes;
     private boolean ativo;
     private String dtaInc;
     private String loginInc;
@@ -16,6 +17,17 @@ public class CargoVO {
     public CargoVO(long id, String nome, boolean ativo, String dtaInc, String loginInc, String dtaAlt, String loginAlt) {
         this.id = id;
         this.nome = nome;
+        this.ativo = ativo;
+        this.dtaInc = dtaInc;
+        this.loginInc = loginInc;
+        this.dtaAlt = dtaAlt;
+        this.loginAlt = loginAlt;
+    }
+
+    public CargoVO(long id, String nome, PermissoesVO permissoes, boolean ativo, String dtaInc, String loginInc, String dtaAlt, String loginAlt) {
+        this.id = id;
+        this.nome = nome;
+        this.permissoes = permissoes;
         this.ativo = ativo;
         this.dtaInc = dtaInc;
         this.loginInc = loginInc;
@@ -37,6 +49,14 @@ public class CargoVO {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public PermissoesVO getPermissoes() {
+        return permissoes;
+    }
+
+    public void setPermissoes(PermissoesVO permissoes) {
+        this.permissoes = permissoes;
     }
 
     public boolean isAtivo() {

@@ -1,6 +1,7 @@
 package com.evos.model.entity;
 
 public class Configuracoes {
+    // SOMENTE 'ADMIN' PODE ALTERAR AS CONFIGURACOES
     // VENDAS
     private String enviarEmailVenda;
     // APLICATIVO

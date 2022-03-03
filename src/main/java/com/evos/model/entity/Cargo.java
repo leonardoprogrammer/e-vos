@@ -3,6 +3,7 @@ package com.evos.model.entity;
 public class Cargo {
     private long id;
     private String nome;
+    private long idPermissoes;
     private String ativo;
     private String dtaInc;
     private String loginInc;
@@ -16,6 +17,17 @@ public class Cargo {
     public Cargo(long id, String nome, String ativo, String dtaInc, String loginInc, String dtaAlt, String loginAlt) {
         this.id = id;
         this.nome = nome;
+        this.ativo = ativo;
+        this.dtaInc = dtaInc;
+        this.loginInc = loginInc;
+        this.dtaAlt = dtaAlt;
+        this.loginAlt = loginAlt;
+    }
+
+    public Cargo(long id, String nome, long idPermissoes, String ativo, String dtaInc, String loginInc, String dtaAlt, String loginAlt) {
+        this.id = id;
+        this.nome = nome;
+        this.idPermissoes = idPermissoes;
         this.ativo = ativo;
         this.dtaInc = dtaInc;
         this.loginInc = loginInc;
@@ -37,6 +49,14 @@ public class Cargo {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public long getIdPermissoes() {
+        return idPermissoes;
+    }
+
+    public void setIdPermissoes(long idPermissoes) {
+        this.idPermissoes = idPermissoes;
     }
 
     public String getAtivo() {
