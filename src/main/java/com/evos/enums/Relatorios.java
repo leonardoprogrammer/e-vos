@@ -3,7 +3,9 @@ package com.evos.enums;
 public enum Relatorios {
 
     VENDAS(1, "Relatóris de Vendas"),
-    ESTOQUE(2, "Relatórios de Estoque");
+    ESTOQUE(2, "Relatórios de Estoque"),
+    FUNCIONARIOS(3, "Relatórios de Funcionários"),
+    CLIENTES(4, "Relatórios de Clientes");
 
     private final int id;
     private final String descricao;

@@ -1,11 +1,8 @@
 package com.evos.business;
 
-import com.evos.enums.TipoProduto;
-import com.evos.model.dao.ProdutoDAO;
-import com.evos.model.entity.Categoria;
-import com.evos.model.entity.Produto;
-import com.evos.model.vo.CategoriaVO;
-import com.evos.model.vo.ProdutoVO;
+import com.evos.model.dao.PermissoesDAO;
+import com.evos.model.entity.Permissoes;
+import com.evos.model.vo.PermissoesVO;
 import com.evos.model.vo.UsuarioVO;
 import com.evos.util.Exception.EvosException;
 import com.evos.util.Utils;
@@ -16,65 +13,89 @@ import java.util.List;
 
 public class SessionBeanPermissoes {
 
-    private ProdutoDAO produtoDAO;
-    private SessionBeanCategoria sessionBeanCategoria;
+    private PermissoesDAO permissoesDAO;
 
-    public void cadastrarProduto(ProdutoVO produto, UsuarioVO userLogado) throws EvosException {
-        produto.setDtaInc(Calendar.getInstance().toString());
-        produto.setLoginInc(userLogado.getNome());
-        produtoDAO.cadastrarProduto(produto);
+    public void cadastrarPermissoes(PermissoesVO permissoesVO, UsuarioVO userLogado) throws EvosException {
+        permissoesVO.setLoginInc(userLogado.getNome());
+        permissoesVO.setDtaInc(Calendar.getInstance().toString());
+        permissoesDAO.cadastrarPermissoes(permissoesVO);
     }
 
-    public void alterarProduto(ProdutoVO produto, UsuarioVO userLogado) throws EvosException {
-        produto.setDtaAlt(Calendar.getInstance().toString());
-        produto.setLoginAlt(userLogado.getNome());
-        produtoDAO.alterarProduto(produto);
+    public void alterarPermissoes(PermissoesVO permissoesVO, UsuarioVO userLogado) throws EvosException {
+        permissoesVO.setLoginAlt(userLogado.getNome());
+        permissoesVO.setDtaAlt(Calendar.getInstance().toString());
+        permissoesDAO.alterarPermissoes(permissoesVO);
     }
 
-    public void deletarProduto(ProdutoVO produto) throws EvosException {
-        produtoDAO.deletarProduto(produto);
+    public void deletarPermissoes(PermissoesVO permissoesVO) throws EvosException {
+        permissoesDAO.deletarPermissoes(permissoesVO.getId());
     }
 
-    public List<ProdutoVO> recuperarTodosProdutos() throws EvosException {
-        List<Produto> produtos = produtoDAO.recuperarProdutos();
-        List<ProdutoVO> produtosVO = new ArrayList<ProdutoVO>();
+    public List<PermissoesVO> recuperarTodasPermissoes() throws EvosException {
+        List<Permissoes> permissoes = permissoesDAO.recuperarPermissoes();
+        List<PermissoesVO> permissoesVO = new ArrayList<PermissoesVO>();
 
-        if (produtos != null) {
-            for (Produto produto : produtos) {
-                CategoriaVO categoria = sessionBeanCategoria.recuperarCategoriaPorId(produto.getIdCategoria());
-                produtosVO.add(preencherVO(produto, categoria));
+        if (permissoes != null) {
+            for (Permissoes permissao : permissoes) {
+                permissoesVO.add(preencherVO(permissao));
             }
-            return produtosVO;
+            return permissoesVO;
         }
         return null;
     }
 
-    public ProdutoVO recuperarProdutoPorId(long id) throws EvosException {
-        Produto produto = produtoDAO.recuperarProdutoPorId(id);
+    public PermissoesVO recuperarPermissoesPorId(long id) throws EvosException {
+        Permissoes permissoes = permissoesDAO.recuperarPermissoesPorId(id);
 
-        if (produto != null) {
-            CategoriaVO categoria = sessionBeanCategoria.recuperarCategoriaPorId(produto.getIdCategoria());
-            return preencherVO(produto, categoria);
+        if (permissoes != null) {
+            return preencherVO(permissoes);
         }
         return null;
     }
 
-    public ProdutoVO preencherVO(Produto produto, CategoriaVO categoria) {
-        ProdutoVO produtoVO = new ProdutoVO();
-        produtoVO.setId(produto.getId());
-        produtoVO.setNome(produto.getNome());
-        if (!Utils.isNullOrZero(produto.getTipoProduto())) {
-            produtoVO.setTipoProduto(TipoProduto.get(produto.getTipoProduto()));
+    public PermissoesVO preencherVO(Permissoes permissoes) {
+        PermissoesVO permissoesVO = new PermissoesVO();
+        permissoesVO.setId(permissoesVO.getId());
+        if (!Utils.isNullOrEmpty(permissoes.getRegistraVenda())) {
+            permissoesVO.setRegistraVenda(permissoes.getRegistraVenda().equalsIgnoreCase("S") ? true : false);
         }
-        if (categoria != null) {
-            produtoVO.setCategoria(categoria);
+        if (!Utils.isNullOrEmpty(permissoes.getAlteraCategoria())) {
+            permissoesVO.setAlteraVenda(permissoes.getAlteraVenda().equalsIgnoreCase("S") ? true : false);
         }
-        produtoVO.setValor(produto.getValor());
-        produtoVO.setAtivo(produto.getAtivo().equals("S") ? true : false);
-        produtoVO.setDtaInc(produto.getDtaInc());
-        produtoVO.setLoginInc(produto.getLoginInc());
-        produtoVO.setDtaAlt(produto.getLoginAlt());
-        produtoVO.setLoginAlt(produto.getLoginAlt());
-        return produtoVO;
+        if (!Utils.isNullOrEmpty(permissoes.getCadastraProduto())) {
+            permissoesVO.setCadastraProduto(permissoes.getCadastraProduto().equalsIgnoreCase("S") ? true : false);
+        }
+        if (!Utils.isNullOrEmpty(permissoes.getAlteraProduto())) {
+            permissoesVO.setAlteraProduto(permissoes.getAlteraProduto().equalsIgnoreCase("S") ? true : false);
+        }
+        if (!Utils.isNullOrEmpty(permissoes.getCadastraCategoria())) {
+            permissoesVO.setCadastraCategoria(permissoes.getCadastraCategoria().equalsIgnoreCase("S") ? true : false);
+        }
+        if (!Utils.isNullOrEmpty(permissoes.getAlteraCategoria())) {
+            permissoesVO.setAlterarCategoria(permissoes.getAlteraCategoria().equalsIgnoreCase("S") ? true : false);
+        }
+        if (!Utils.isNullOrEmpty(permissoes.getCadastraUsuario())) {
+            permissoesVO.setCadastraUsuario(permissoes.getCadastraUsuario().equalsIgnoreCase("S") ? true : false);
+        }
+        if (!Utils.isNullOrEmpty(permissoes.getAlteraUsuario())) {
+            permissoesVO.setAlteraUsuario(permissoes.getAlteraUsuario().equalsIgnoreCase("S") ? true : false);
+        }
+        if (!Utils.isNullOrEmpty(permissoes.getCadastraCliente())) {
+            permissoesVO.setCadastraCliente(permissoes.getCadastraCliente().equalsIgnoreCase("S") ? true : false);
+        }
+        if (!Utils.isNullOrEmpty(permissoes.getAlteraCliente())) {
+            permissoesVO.setAlteraCliente(permissoes.getAlteraCliente().equalsIgnoreCase("S") ? true : false);
+        }
+        if (!Utils.isNullOrEmpty(permissoes.getCadastraDesconto())) {
+            permissoesVO.setCadastraDesconto(permissoes.getCadastraDesconto().equalsIgnoreCase("S") ? true : false);
+        }
+        if (!Utils.isNullOrEmpty(permissoes.getAlteraDesconto())) {
+            permissoesVO.setAlteraDesconto(permissoes.getAlteraDesconto().equalsIgnoreCase("S") ? true : false);
+        }
+        permissoesVO.setDtaInc(permissoes.getDtaInc());
+        permissoesVO.setLoginInc(permissoes.getLoginInc());
+        permissoesVO.setDtaAlt(permissoes.getDtaAlt());
+        permissoesVO.setLoginAlt(permissoes.getLoginAlt());
+        return permissoesVO;
     }
 }

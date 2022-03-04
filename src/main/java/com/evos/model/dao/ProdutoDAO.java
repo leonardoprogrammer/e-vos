@@ -17,8 +17,8 @@ public class ProdutoDAO {
     public void cadastrarProduto(ProdutoVO produto) throws EvosException {
         StringBuilder query = new StringBuilder("INSERT INTO PRODUTO");
         query.append("(nome, tipo_produto, id_categoria, valor, ativo,");
-        query.append(" dta_inc, login_inc, dta_alt, login_alt)");
-        query.append(" VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        query.append(" dta_inc, login_inc)");
+        query.append(" VALUES(?, ?, ?, ?, ?, ?, ?)");
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -38,8 +38,6 @@ public class ProdutoDAO {
             pstm.setString(5, produto.isAtivo() ? "S" : "N");
             pstm.setString(6, produto.getDtaInc());
             pstm.setString(7, produto.getLoginInc());
-            pstm.setString(8, produto.getDtaAlt());
-            pstm.setString(9, produto.getLoginAlt());
 
             // Executa a query para inserção dos dados
             pstm.execute();
@@ -52,8 +50,8 @@ public class ProdutoDAO {
                     conn.close();
                 }
 
-                if (conn != null) {
-                    conn.close();
+                if (pstm != null) {
+                    pstm.close();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -65,6 +63,7 @@ public class ProdutoDAO {
         StringBuilder query = new StringBuilder("UPDATE PRODUTO SET");
         query.append(" nome = ?, tipo_produto = ?, id_categoria = ?, valor = ?, ativo = ?,");
         query.append(" dta_alt = ?, login_alt = ?");
+        query.append(" WHERE id = ?");
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -80,6 +79,7 @@ public class ProdutoDAO {
             pstm.setString(5, produto.isAtivo() ? "S" : "N");
             pstm.setString(6, produto.getDtaAlt());
             pstm.setString(7, produto.getLoginAlt());
+            pstm.setLong(8, produto.getId());
 
             pstm.execute();
         } catch (Exception e) {
