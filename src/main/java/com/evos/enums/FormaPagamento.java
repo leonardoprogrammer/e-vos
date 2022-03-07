@@ -1,5 +1,8 @@
 package com.evos.enums;
 
+/**
+ * @author leonardo.silva
+ */
 public enum FormaPagamento {
 
     AVISTA_DINHEIRO(1, "Á vista - Dinheiro"),

@@ -1,5 +1,8 @@
 package com.evos.model.entity;
 
+/**
+ * @author leonardo.silva
+ */
 public class Permissoes {
     private long id;
     // VENDAS

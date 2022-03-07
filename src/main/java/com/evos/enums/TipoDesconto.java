@@ -1,5 +1,8 @@
 package com.evos.enums;
 
+/**
+ * @author leonardo.silva
+ */
 public enum TipoDesconto {
 
     PORCENTAGEM(1, "Porcentagem (%)"),

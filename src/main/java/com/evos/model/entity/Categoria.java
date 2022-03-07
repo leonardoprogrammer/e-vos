@@ -1,5 +1,8 @@
 package com.evos.model.entity;
 
+/**
+ * @author leonardo.silva
+ */
 public class Categoria {
     private long id;
     private String nome;

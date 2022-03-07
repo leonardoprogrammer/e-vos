@@ -1,5 +1,8 @@
 package com.evos.model.entity;
 
+/**
+ * @author leonardo.silva
+ */
 public class Login {
     // SOMENTE 'ADMIN' PODE ALTERAR DADOS DE LOGIN
     private long id;

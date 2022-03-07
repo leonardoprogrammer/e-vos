@@ -10,6 +10,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+/**
+ * @author leonardo.silva
+ */
 public class ConfiguracoesDAO {
 
     public void alterarConfiguracoes(ConfiguracoesVO configuracoes) throws EvosException {

@@ -1,5 +1,8 @@
 package com.evos.model.vo;
 
+/**
+ * @author leonardo.silva
+ */
 public class LoginVO {
     private long id;
     private UsuarioVO usuario;

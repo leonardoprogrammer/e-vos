@@ -2,6 +2,9 @@ package com.evos.model.entity;
 
 import java.util.Calendar;
 
+/**
+ * @author leonardo.silva
+ */
 public class Venda {
     private long id;
     private long idProduto;

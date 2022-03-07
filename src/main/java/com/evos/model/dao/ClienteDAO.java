@@ -13,6 +13,9 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author leonardo.silva
+ */
 public class ClienteDAO {
 
     public void cadastrarCliente(ClienteVO cliente) throws EvosException {

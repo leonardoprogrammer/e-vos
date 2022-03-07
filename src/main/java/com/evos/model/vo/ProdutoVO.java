@@ -2,6 +2,9 @@ package com.evos.model.vo;
 
 import com.evos.enums.TipoProduto;
 
+/**
+ * @author leonardo.silva
+ */
 public class ProdutoVO {
     private long id;
     private String nome;

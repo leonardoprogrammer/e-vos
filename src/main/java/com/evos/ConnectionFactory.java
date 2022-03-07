@@ -3,6 +3,9 @@ package com.evos;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+/**
+ * @author leonardo.silva
+ */
 public class ConnectionFactory {
 
     private static final String DB_USERNAME = "root";

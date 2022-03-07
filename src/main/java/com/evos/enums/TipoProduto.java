@@ -1,5 +1,8 @@
 package com.evos.enums;
 
+/**
+ * @author leonardo.silva
+ */
 public enum TipoProduto {
 
     FISICO(1, "Produto Físico"),

@@ -2,6 +2,9 @@ package com.evos.util.Exception;
 
 import javafx.scene.control.Alert;
 
+/**
+ * @author leonardo.silva
+ */
 public class EvosException extends Exception {
 
     /**

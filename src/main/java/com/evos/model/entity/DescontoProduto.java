@@ -1,5 +1,8 @@
 package com.evos.model.entity;
 
+/**
+ * @author leonardo.silva
+ */
 public class DescontoProduto {
     private long id;
     private long idProduto;

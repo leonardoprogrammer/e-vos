@@ -13,6 +13,9 @@ import javafx.scene.control.CheckBox;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * @author leonardo.silva
+ */
 public class ConfiguracoesController implements Initializable {
 
     private EmpresaVO empresa;

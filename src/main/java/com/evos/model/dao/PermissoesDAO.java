@@ -11,6 +11,9 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author leonardo.silva
+ */
 public class PermissoesDAO {
 
     public void cadastrarPermissoes(PermissoesVO permissoes) throws EvosException {

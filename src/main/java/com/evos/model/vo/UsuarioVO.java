@@ -4,6 +4,9 @@ import com.evos.enums.TipoUsuario;
 
 import java.util.Calendar;
 
+/**
+ * @author leonardo.silva
+ */
 public class UsuarioVO {
     private long id;
     private String nome;

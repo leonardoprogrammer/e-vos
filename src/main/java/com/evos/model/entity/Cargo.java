@@ -1,5 +1,8 @@
 package com.evos.model.entity;
 
+/**
+ * @author leonardo.silva
+ */
 public class Cargo {
     private long id;
     private String nome;

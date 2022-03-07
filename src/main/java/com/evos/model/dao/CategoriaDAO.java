@@ -13,6 +13,9 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author leonardo.silva
+ */
 public class CategoriaDAO {
 
     public void cadastrarCategoria(CategoriaVO categoria) throws EvosException {

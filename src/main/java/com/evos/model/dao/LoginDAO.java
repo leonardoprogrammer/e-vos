@@ -12,6 +12,9 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author leonardo.silva
+ */
 public class LoginDAO {
 
     public void cadastrarLogin(LoginVO user) throws EvosException {

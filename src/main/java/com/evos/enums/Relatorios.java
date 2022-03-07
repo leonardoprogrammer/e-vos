@@ -1,5 +1,8 @@
 package com.evos.enums;
 
+/**
+ * @author leonardo.silva
+ */
 public enum Relatorios {
 
     VENDAS(1, "Relatóris de Vendas"),

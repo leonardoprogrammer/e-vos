@@ -1,5 +1,8 @@
 package com.evos.enums;
 
+/**
+ * @author leonardo.silva
+ */
 public enum TipoUsuario {
 
     ADMIN(1, "Administrador"),

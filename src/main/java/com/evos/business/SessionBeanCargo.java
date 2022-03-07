@@ -14,6 +14,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * @author leonardo.silva
+ */
 public class SessionBeanCargo {
 
     private CargoDAO cargoDAO;

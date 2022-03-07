@@ -1,5 +1,8 @@
 package com.evos.model.entity;
 
+/**
+ * @author leonardo.silva
+ */
 public class Configuracoes {
     // SOMENTE 'ADMIN' PODE ALTERAR AS CONFIGURACOES
     // VENDAS

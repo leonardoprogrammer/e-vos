@@ -2,6 +2,9 @@ package com.evos.model.entity;
 
 import java.util.Calendar;
 
+/**
+ * @author leonardo.silva
+ */
 public class Cliente {
     private long id;
     private String nome;

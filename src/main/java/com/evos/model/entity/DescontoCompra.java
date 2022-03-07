@@ -1,5 +1,8 @@
 package com.evos.model.entity;
 
+/**
+ * @author leonardo.silva
+ */
 public class DescontoCompra {
     private long id;
     private int qtdMininaProduto;

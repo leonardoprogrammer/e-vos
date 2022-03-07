@@ -2,6 +2,9 @@ package com.evos.model.vo;
 
 import java.util.List;
 
+/**
+ * @author leonardo.silva
+ */
 public class ConfiguracoesVO {
     // VENDAS
     private boolean enviarEmailVenda;

@@ -1,5 +1,8 @@
 package com.evos.model.vo;
 
+/**
+ * @author leonardo.silva
+ */
 public class CargoVO {
     private long id;
     private String nome;

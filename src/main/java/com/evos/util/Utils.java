@@ -3,6 +3,9 @@ package com.evos.util;
 import java.text.Collator;
 import java.util.*;
 
+/**
+ * @author leonardo.silva
+ */
 public class Utils {
 
     public static int calculaIdade(Calendar data) {

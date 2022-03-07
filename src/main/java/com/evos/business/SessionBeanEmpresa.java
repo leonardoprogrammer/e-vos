@@ -8,6 +8,9 @@ import com.evos.util.Exception.EvosException;
 
 import java.util.Calendar;
 
+/**
+ * @author leonardo.silva
+ */
 public class SessionBeanEmpresa {
 
     private EmpresaDAO empresaDAO;

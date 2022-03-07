@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+/**
+ * @author leonardo.silva
+ */
 public class SessionBeanCategoria {
 
     private CategoriaDAO categoriaDAO;

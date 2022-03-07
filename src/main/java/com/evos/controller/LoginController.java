@@ -16,6 +16,9 @@ import javafx.scene.control.TextField;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * @author leonardo.silva
+ */
 public class LoginController implements Initializable {
 
     private URL url;

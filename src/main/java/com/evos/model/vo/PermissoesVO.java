@@ -1,5 +1,8 @@
 package com.evos.model.vo;
 
+/**
+ * @author leonardo.silva
+ */
 public class PermissoesVO {
     // SOMENTE 'ADMIN' PODE ALTERAR PERMISSOES
     // o cadastro de permissões é feito automaticamente ao cadastrar cargos

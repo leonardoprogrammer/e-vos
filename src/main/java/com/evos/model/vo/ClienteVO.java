@@ -3,6 +3,9 @@ package com.evos.model.vo;
 import java.util.Calendar;
 import java.util.List;
 
+/**
+ * @author leonardo.silva
+ */
 public class ClienteVO {
     private long id;
     private String nome;

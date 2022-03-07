@@ -3,6 +3,9 @@ package com.evos;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
+/**
+ * @author leonardo.silva
+ */
 public class HelloController {
     @FXML
     private Label welcomeText;

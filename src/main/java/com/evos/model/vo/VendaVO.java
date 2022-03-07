@@ -5,6 +5,9 @@ import com.evos.enums.TipoVenda;
 
 import java.util.Calendar;
 
+/**
+ * @author leonardo.silva
+ */
 public class VendaVO {
     private long id;
     private ProdutoVO produto;
