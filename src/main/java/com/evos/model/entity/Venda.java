@@ -10,13 +10,15 @@ public class Venda {
     private long idProduto;
     private long idVendedor;
     private long idCliente;
+    private Double valorTotal;
+    private Double valorDesconto;
+    private int qtdItens;
     private Calendar dataCompra;
     private int tipoVenda;
     private int formaPagamento;
     private String gerouNotaFiscal;
     private String observacao;
     private String cancelada;
-    private String prodDevolvido;
     private Calendar dataCancela;
     private String dtaInc;
     private String loginInc;
@@ -27,18 +29,20 @@ public class Venda {
 
     }
 
-    public Venda(long id, long id_produto, long id_vendedor, long id_cliente, Calendar dataCompra, int tipoVenda, int formaPagamento, String gerouNotaFiscal, String observacao, String cancelada, String prodDevolvido, Calendar dataCancela, String dtaInc, String loginInc, String dtaAlt, String loginAlt) {
+    public Venda(long id, long idProduto, long idVendedor, long idCliente, Double valorTotal, Double valorDesconto, int qtdItens, Calendar dataCompra, int tipoVenda, int formaPagamento, String gerouNotaFiscal, String observacao, String cancelada, Calendar dataCancela, String dtaInc, String loginInc, String dtaAlt, String loginAlt) {
         this.id = id;
-        this.idProduto = id_produto;
-        this.idVendedor = id_vendedor;
-        this.idCliente = id_cliente;
+        this.idProduto = idProduto;
+        this.idVendedor = idVendedor;
+        this.idCliente = idCliente;
+        this.valorTotal = valorTotal;
+        this.valorDesconto = valorDesconto;
+        this.qtdItens = qtdItens;
         this.dataCompra = dataCompra;
         this.tipoVenda = tipoVenda;
         this.formaPagamento = formaPagamento;
         this.gerouNotaFiscal = gerouNotaFiscal;
         this.observacao = observacao;
         this.cancelada = cancelada;
-        this.prodDevolvido = prodDevolvido;
         this.dataCancela = dataCancela;
         this.dtaInc = dtaInc;
         this.loginInc = loginInc;
@@ -76,6 +80,30 @@ public class Venda {
 
     public void setIdCliente(long idCliente) {
         this.idCliente = idCliente;
+    }
+
+    public Double getValorTotal() {
+        return valorTotal;
+    }
+
+    public void setValorTotal(Double valorTotal) {
+        this.valorTotal = valorTotal;
+    }
+
+    public Double getValorDesconto() {
+        return valorDesconto;
+    }
+
+    public void setValorDesconto(Double valorDesconto) {
+        this.valorDesconto = valorDesconto;
+    }
+
+    public int getQtdItens() {
+        return qtdItens;
+    }
+
+    public void setQtdItens(int qtdItens) {
+        this.qtdItens = qtdItens;
     }
 
     public Calendar getDataCompra() {
@@ -124,14 +152,6 @@ public class Venda {
 
     public void setCancelada(String cancelada) {
         this.cancelada = cancelada;
-    }
-
-    public String getProdDevolvido() {
-        return prodDevolvido;
-    }
-
-    public void setProdDevolvido(String prodDevolvido) {
-        this.prodDevolvido = prodDevolvido;
     }
 
     public Calendar getDataCancela() {

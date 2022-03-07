@@ -4,6 +4,7 @@ import com.evos.enums.FormaPagamento;
 import com.evos.enums.TipoVenda;
 
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * @author leonardo.silva
@@ -13,13 +14,16 @@ public class VendaVO {
     private ProdutoVO produto;
     private UsuarioVO vendedor;
     private ClienteVO cliente;
+    private Double valorTotal;
+    private Double valorDesconto;
+    private int qtdItens;
+    private List<VendaItemVO> itens;
     private Calendar dataCompra;
     private TipoVenda tipoVenda;
     private FormaPagamento formaPagamento;
     private boolean gerouNotaFiscal;
     private String observacao;
     private boolean cancelada;
-    private boolean prodDevolvido;
     private Calendar dataCancela;
     private String dtaInc;
     private String loginInc;
@@ -30,18 +34,21 @@ public class VendaVO {
 
     }
 
-    public VendaVO(long id, ProdutoVO produto, UsuarioVO vendedor, ClienteVO comprador, Calendar dataCompra, TipoVenda tipoVenda, FormaPagamento formaPagamento, boolean gerouNotaFiscal, String observacao, boolean cancelada, boolean prodDevolvido, Calendar dataCancela, String dtaInc, String loginInc, String dtaAlt, String loginAlt) {
+    public VendaVO(long id, ProdutoVO produto, UsuarioVO vendedor, ClienteVO cliente, Double valorTotal, Double valorDesconto, int qtdItens, List<VendaItemVO> itens, Calendar dataCompra, TipoVenda tipoVenda, FormaPagamento formaPagamento, boolean gerouNotaFiscal, String observacao, boolean cancelada, Calendar dataCancela, String dtaInc, String loginInc, String dtaAlt, String loginAlt) {
         this.id = id;
         this.produto = produto;
         this.vendedor = vendedor;
-        this.cliente = comprador;
+        this.cliente = cliente;
+        this.valorTotal = valorTotal;
+        this.valorDesconto = valorDesconto;
+        this.qtdItens = qtdItens;
+        this.itens = itens;
         this.dataCompra = dataCompra;
         this.tipoVenda = tipoVenda;
         this.formaPagamento = formaPagamento;
         this.gerouNotaFiscal = gerouNotaFiscal;
         this.observacao = observacao;
         this.cancelada = cancelada;
-        this.prodDevolvido = prodDevolvido;
         this.dataCancela = dataCancela;
         this.dtaInc = dtaInc;
         this.loginInc = loginInc;
@@ -79,6 +86,38 @@ public class VendaVO {
 
     public void setCliente(ClienteVO cliente) {
         this.cliente = cliente;
+    }
+
+    public Double getValorTotal() {
+        return valorTotal;
+    }
+
+    public void setValorTotal(Double valorTotal) {
+        this.valorTotal = valorTotal;
+    }
+
+    public Double getValorDesconto() {
+        return valorDesconto;
+    }
+
+    public void setValorDesconto(Double valorDesconto) {
+        this.valorDesconto = valorDesconto;
+    }
+
+    public int getQtdItens() {
+        return qtdItens;
+    }
+
+    public void setQtdItens(int qtdItens) {
+        this.qtdItens = qtdItens;
+    }
+
+    public List<VendaItemVO> getItens() {
+        return itens;
+    }
+
+    public void setItens(List<VendaItemVO> itens) {
+        this.itens = itens;
     }
 
     public Calendar getDataCompra() {
@@ -127,14 +166,6 @@ public class VendaVO {
 
     public void setCancelada(boolean cancelada) {
         this.cancelada = cancelada;
-    }
-
-    public boolean isProdDevolvido() {
-        return prodDevolvido;
-    }
-
-    public void setProdDevolvido(boolean prodDevolvido) {
-        this.prodDevolvido = prodDevolvido;
     }
 
     public Calendar getDataCancela() {

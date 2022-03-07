@@ -18,10 +18,9 @@ public class FiltroVendaVO {
     private FormaPagamento formaPagamento;
     private boolean gerouNotaFiscal;
     private boolean cancelada;
-    private boolean prodDevolvido;
     private String dtaInc;
 
-    public FiltroVendaVO(long id, ProdutoVO produto, UsuarioVO vendedor, ClienteVO cliente, Calendar dataCompra, TipoVenda tipoVenda, FormaPagamento formaPagamento, boolean gerouNotaFiscal, boolean cancelada, boolean prodDevolvido, String dtaInc) {
+    public FiltroVendaVO(long id, ProdutoVO produto, UsuarioVO vendedor, ClienteVO cliente, Calendar dataCompra, TipoVenda tipoVenda, FormaPagamento formaPagamento, boolean gerouNotaFiscal, boolean cancelada, String dtaInc) {
         this.id = id;
         this.produto = produto;
         this.vendedor = vendedor;
@@ -31,7 +30,6 @@ public class FiltroVendaVO {
         this.formaPagamento = formaPagamento;
         this.gerouNotaFiscal = gerouNotaFiscal;
         this.cancelada = cancelada;
-        this.prodDevolvido = prodDevolvido;
         this.dtaInc = dtaInc;
     }
 
@@ -105,14 +103,6 @@ public class FiltroVendaVO {
 
     public void setCancelada(boolean cancelada) {
         this.cancelada = cancelada;
-    }
-
-    public boolean isProdDevolvido() {
-        return prodDevolvido;
-    }
-
-    public void setProdDevolvido(boolean prodDevolvido) {
-        this.prodDevolvido = prodDevolvido;
     }
 
     public String getDtaInc() {

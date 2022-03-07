@@ -21,6 +21,7 @@ public class SessionBeanVenda {
     private SessionBeanProduto sessionBeanProduto;
     private SessionBeanUsuario sessionBeanUsuario;
     private SessionBeanCliente sessionBeanCliente;
+    private SessionBeanVendaItem sessionBeanVendaItem;
 
     public void registrarVenda(VendaVO venda, UsuarioVO userLogado) throws EvosException {
         venda.setLoginInc(userLogado.getNome());
@@ -35,7 +36,8 @@ public class SessionBeanVenda {
     }
 
     public void cancelarVenda(VendaVO venda, UsuarioVO userLogado) throws EvosException {
-        vendaDAO.cancelarVenda(venda.getId(), venda.isProdDevolvido(), venda.getObservacao(), userLogado);
+        venda.setLoginAlt(userLogado.getNome());
+        vendaDAO.cancelarVenda(venda);
     }
 
     public void deletarVenda(VendaVO venda) throws EvosException {
@@ -51,7 +53,8 @@ public class SessionBeanVenda {
                 ProdutoVO produtoVO = sessionBeanProduto.recuperarProdutoPorId(venda.getIdProduto());
                 UsuarioVO vendedorVO = sessionBeanUsuario.recuperarUsuarioPorId(venda.getIdVendedor());
                 ClienteVO clienteVO = sessionBeanCliente.recuperarClientePorId(venda.getIdCliente());
-                vendasVO.add(preencherVO(venda, produtoVO, vendedorVO, clienteVO));
+                List<VendaItemVO> itensVO = sessionBeanVendaItem.recuperarItensPorVenda(venda.getId());
+                vendasVO.add(preencherVO(venda, produtoVO, vendedorVO, clienteVO, itensVO));
             }
             return vendasVO;
         }
@@ -65,7 +68,8 @@ public class SessionBeanVenda {
             ProdutoVO produtoVO = sessionBeanProduto.recuperarProdutoPorId(venda.getIdProduto());
             UsuarioVO vendedorVO = sessionBeanUsuario.recuperarUsuarioPorId(venda.getIdVendedor());
             ClienteVO clienteVO = sessionBeanCliente.recuperarClientePorId(venda.getIdCliente());
-            return preencherVO(venda, produtoVO, vendedorVO, clienteVO);
+            List<VendaItemVO> itensVO = sessionBeanVendaItem.recuperarItensPorVenda(venda.getId());
+            return preencherVO(venda, produtoVO, vendedorVO, clienteVO, itensVO);
         }
         return null;
     }
@@ -79,14 +83,15 @@ public class SessionBeanVenda {
                 ProdutoVO produtoVO = sessionBeanProduto.recuperarProdutoPorId(venda.getIdProduto());
                 UsuarioVO vendedorVO = sessionBeanUsuario.recuperarUsuarioPorId(venda.getIdVendedor());
                 ClienteVO clienteVO = sessionBeanCliente.recuperarClientePorId(venda.getIdCliente());
-                vendasVO.add(preencherVO(venda, produtoVO, vendedorVO, clienteVO));
+                List<VendaItemVO> itensVO = sessionBeanVendaItem.recuperarItensPorVenda(venda.getId());
+                vendasVO.add(preencherVO(venda, produtoVO, vendedorVO, clienteVO, itensVO));
             }
             return vendasVO;
         }
         return null;
     }
 
-    public VendaVO preencherVO(Venda venda, ProdutoVO produtoVO, UsuarioVO vendedor, ClienteVO clienteVO) {
+    public VendaVO preencherVO(Venda venda, ProdutoVO produtoVO, UsuarioVO vendedor, ClienteVO clienteVO, List<VendaItemVO> itensVO) {
         VendaVO vendaVO = new VendaVO();
         vendaVO.setId(venda.getId());
         if (produtoVO != null) {
@@ -98,6 +103,12 @@ public class SessionBeanVenda {
         if (clienteVO != null) {
             vendaVO.setCliente(clienteVO);
         }
+        if (itensVO != null) {
+            vendaVO.setItens(itensVO);
+        }
+        vendaVO.setValorTotal(venda.getValorTotal());
+        vendaVO.setValorDesconto(venda.getValorDesconto());
+        vendaVO.setQtdItens(venda.getQtdItens());
         vendaVO.setDataCompra(venda.getDataCompra());
         if (!Utils.isNullOrZero(venda.getTipoVenda())) {
             vendaVO.setTipoVenda(TipoVenda.get(venda.getTipoVenda()));
@@ -108,7 +119,6 @@ public class SessionBeanVenda {
         vendaVO.setGerouNotaFiscal(venda.getGerouNotaFiscal().equals("S") ? true : false);
         vendaVO.setObservacao(venda.getObservacao());
         vendaVO.setCancelada(venda.getCancelada().equals("S") ? true : false);
-        vendaVO.setProdDevolvido(venda.getProdDevolvido().equals("S") ? true : false);
         vendaVO.setDataCancela(venda.getDataCancela());
         vendaVO.setDtaInc(venda.getDtaInc());
         vendaVO.setLoginInc(venda.getLoginInc());

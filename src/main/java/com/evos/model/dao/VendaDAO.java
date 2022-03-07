@@ -24,9 +24,9 @@ public class VendaDAO {
 
     public void registrarVenda(VendaVO venda) throws EvosException {
         StringBuilder query = new StringBuilder("INSERT INTO VENDA");
-        query.append("(id_produto, id_vendedor, id_cliente, data_compra, tipo_venda, forma_pagamento,");
-        query.append(" gerou_nfs, observacao, cancelada, prod_devolvido, data_cancela, dta_inc, login_inc)");
-        query.append(" VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?");
+        query.append("(id_produto, id_vendedor, id_cliente, valor_total, valor_desconto, qtd_itens, data_compra,");
+        query.append(" tipo_venda, forma_pagamento, gerou_nfs, observacao, cancelada, data_cancela, dta_inc, login_inc)");
+        query.append(" VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -42,16 +42,19 @@ public class VendaDAO {
             pstm.setLong(1, venda.getProduto().getId());
             pstm.setLong(2, venda.getVendedor().getId());
             pstm.setLong(3, venda.getCliente().getId());
-            pstm.setDate(4, (Date) venda.getDataCompra().getTime());
-            pstm.setInt(5, venda.getTipoVenda().getId());
-            pstm.setInt(6, venda.getFormaPagamento().getId());
-            pstm.setString(7, venda.isGerouNotaFiscal() ? "S" : "N");
-            pstm.setString(8, venda.getObservacao());
-            pstm.setString(9, "N");
-            pstm.setString(10, "N");
-            pstm.setDate(11, null);
-            pstm.setString(12, venda.getDtaInc());
-            pstm.setString(13, venda.getLoginInc());
+            pstm.setDouble(4, venda.getValorTotal());
+            pstm.setDouble(5, venda.getValorDesconto());
+            pstm.setInt(6, venda.getQtdItens());
+            pstm.setDate(7, (Date) venda.getDataCompra().getTime());
+            pstm.setInt(8, venda.getTipoVenda().getId());
+            pstm.setInt(9, venda.getFormaPagamento().getId());
+            pstm.setString(10, venda.isGerouNotaFiscal() ? "S" : "N");
+            pstm.setString(11, venda.getObservacao());
+            pstm.setString(12, "N");
+            pstm.setString(13, "N");
+            pstm.setDate(14, null);
+            pstm.setString(15, venda.getDtaInc());
+            pstm.setString(16, venda.getLoginInc());
 
             // Executa a query para inserção dos dados
             pstm.execute();
@@ -75,8 +78,8 @@ public class VendaDAO {
 
     public void alterarVenda(VendaVO venda) throws EvosException {
         StringBuilder query = new StringBuilder("UPDATE VENDA SET");
-        query.append(" id_produto = ?, id_vendedor = ?, id_cliente = ?, data_compra = ?, tipo_venda = ?, forma_pagamento = ?,");
-        query.append(" gerou_nfs = ?, observacao = ?, cancelada = ?, prod_devolvido = ?, data_cancela = ?, dta_alt = ?, login_alt = ?");
+        query.append(" id_produto = ?, id_vendedor = ?, id_cliente = ?, valor_total = ?, valor_desconto = ?, qtd_itens = ?, data_compra = ?, tipo_venda = ?,");
+        query.append("  forma_pagamento = ?, gerou_nfs = ?, observacao = ?, cancelada = ?, data_cancela = ?, dta_alt = ?, login_alt = ?");
         query.append(" WHERE id = ?");
 
         Connection conn = null;
@@ -89,17 +92,19 @@ public class VendaDAO {
             pstm.setLong(1, venda.getProduto().getId());
             pstm.setLong(2, venda.getVendedor().getId());
             pstm.setLong(3, venda.getCliente().getId());
-            pstm.setDate(4, (Date) venda.getDataCompra().getTime());
-            pstm.setInt(5, venda.getTipoVenda().getId());
-            pstm.setInt(6, venda.getFormaPagamento().getId());
-            pstm.setString(7, venda.isGerouNotaFiscal() ? "S" : "N");
-            pstm.setString(8, venda.getObservacao());
-            pstm.setString(9, venda.isCancelada() ? "S" : "N");
-            pstm.setString(10, venda.isProdDevolvido() ? "S" : "N");
-            pstm.setDate(11, (Date) venda.getDataCancela().getTime());
-            pstm.setString(12, venda.getDtaAlt());
-            pstm.setString(13, venda.getLoginAlt());
-            pstm.setLong(14, venda.getId());
+            pstm.setDouble(4, venda.getValorTotal());
+            pstm.setDouble(5, venda.getValorDesconto());
+            pstm.setInt(6, venda.getQtdItens());
+            pstm.setDate(7,(Date) venda.getDataCompra().getTime());
+            pstm.setInt(8, venda.getTipoVenda().getId());
+            pstm.setInt(9, venda.getFormaPagamento().getId());
+            pstm.setString(10, venda.isGerouNotaFiscal() ? "S" : "N");
+            pstm.setString(11, venda.getObservacao());
+            pstm.setString(12, venda.isCancelada() ? "S" : "N");
+            pstm.setDate(13, (Date) venda.getDataCancela().getTime());
+            pstm.setString(14, venda.getDtaAlt());
+            pstm.setString(15, venda.getLoginAlt());
+            pstm.setLong(16, venda.getId());
 
             pstm.execute();
         } catch (Exception e) {
@@ -120,16 +125,12 @@ public class VendaDAO {
         }
     }
 
-    public void cancelarVenda(long id, boolean prodDevolvido, String observacao, UsuarioVO userLogado) throws EvosException {
+    public void cancelarVenda(VendaVO venda) throws EvosException {
         StringBuilder query = new StringBuilder("UPDATE VENDA SET");
-        query.append(" cancelada = ?, prod_devolvido, data_cancela = ?,");
+        query.append(" cancelada = ?, data_cancela = ?, observacao = ?,");
         query.append(" dta_alt = ?, login_alt = ?");
-        if (Utils.isNullOrEmpty(observacao)) {
-            query.append(", observacao = ?");
-        }
         query.append(" WHERE id = ?");
 
-        int count = 0;
         Connection conn = null;
         PreparedStatement pstm = null;
 
@@ -137,15 +138,12 @@ public class VendaDAO {
             conn = ConnectionFactory.createConnectionToMySql();
             pstm = conn.prepareStatement(query.toString());
 
-            pstm.setString(count++, "S");
-            pstm.setString(count++, prodDevolvido ? "S" : "N");
-            pstm.setDate(count++, (Date) Calendar.getInstance().getTime());
-            pstm.setString(count++, Calendar.getInstance().toString());
-            pstm.setString(count++, userLogado.getNome());
-            if (Utils.isNullOrEmpty(observacao)) {
-                pstm.setString(count++, observacao);
-            }
-            pstm.setLong(count++, id);
+            pstm.setString(1, "S");
+            pstm.setDate(2, (Date) venda.getDataCancela().getTime());
+            pstm.setString(3, venda.getObservacao());
+            pstm.setString(4, venda.getDtaAlt());
+            pstm.setString(5, venda.getLoginAlt());
+            pstm.setLong(6, venda.getId());
 
             pstm.execute();
         } catch (Exception e) {
@@ -217,13 +215,15 @@ public class VendaDAO {
                 venda.setIdProduto(rs.getLong("id_produto"));
                 venda.setIdVendedor(rs.getLong("id_vendedor"));
                 venda.setIdCliente(rs.getLong("id_cliente"));
+                venda.setValorTotal(rs.getDouble("valor_total"));
+                venda.setValorDesconto(rs.getDouble("valor_desconto"));
+                venda.setQtdItens(rs.getInt("qtd_itens"));
                 venda.getDataCompra().setTime(rs.getDate("data_compra"));
                 venda.setTipoVenda(rs.getInt("tipo_venda"));
                 venda.setFormaPagamento(rs.getInt("forma_pagamento"));
                 venda.setGerouNotaFiscal(rs.getString("gerou_nfs"));
                 venda.setObservacao(rs.getString("observacao"));
                 venda.setCancelada(rs.getString("cancelada"));
-                venda.setProdDevolvido(rs.getString("prod_devolvido"));
                 venda.getDataCancela().setTime(rs.getDate("data_cancela"));
                 venda.setDtaInc(rs.getString("dta_inc"));
                 venda.setLoginInc(rs.getString("login_inc"));
@@ -273,13 +273,15 @@ public class VendaDAO {
                 venda.setIdProduto(rs.getLong("id_produto"));
                 venda.setIdVendedor(rs.getLong("id_vendedor"));
                 venda.setIdCliente(rs.getLong("id_cliente"));
+                venda.setValorTotal(rs.getDouble("valor_total"));
+                venda.setValorDesconto(rs.getDouble("valor_desconto"));
+                venda.setQtdItens(rs.getInt("qtd_itens"));
                 venda.getDataCompra().setTime(rs.getDate("data_compra"));
                 venda.setTipoVenda(rs.getInt("tipo_venda"));
                 venda.setFormaPagamento(rs.getInt("forma_pagamento"));
                 venda.setGerouNotaFiscal(rs.getString("gerou_nfs"));
                 venda.setObservacao(rs.getString("observacao"));
                 venda.setCancelada(rs.getString("cancelada"));
-                venda.setProdDevolvido(rs.getString("prod_devolvido"));
                 venda.getDataCancela().setTime(rs.getDate("data_cancela"));
                 venda.setDtaInc(rs.getString("dta_inc"));
                 venda.setLoginInc(rs.getString("login_inc"));
@@ -339,9 +341,6 @@ public class VendaDAO {
         if (filtroVenda.isCancelada()) {
             query.append(" AND cancelada = ?");
         }
-        if (filtroVenda.isProdDevolvido()) {
-            query.append(" AND prod_devolvido = ?");
-        }
         if (Utils.isNullOrEmpty(filtroVenda.getDtaInc())) {
             query.append(" AND dta_inc = ?");
         }
@@ -383,9 +382,6 @@ public class VendaDAO {
             if (filtroVenda.isCancelada()) {
                 pstm.setString(count++, "S");
             }
-            if (filtroVenda.isProdDevolvido()) {
-                pstm.setString(count++, "S");
-            }
             if (Utils.isNullOrEmpty(filtroVenda.getDtaInc())) {
                 pstm.setString(count++, filtroVenda.getDtaInc());
             }
@@ -398,13 +394,15 @@ public class VendaDAO {
                 venda.setIdProduto(rs.getLong("id_produto"));
                 venda.setIdVendedor(rs.getLong("id_vendedor"));
                 venda.setIdCliente(rs.getLong("id_cliente"));
+                venda.setValorTotal(rs.getDouble("valor_total"));
+                venda.setValorDesconto(rs.getDouble("valor_desconto"));
+                venda.setQtdItens(rs.getInt("qtd_itens"));
                 venda.getDataCompra().setTime(rs.getDate("data_compra"));
                 venda.setTipoVenda(rs.getInt("tipo_venda"));
                 venda.setFormaPagamento(rs.getInt("forma_pagamento"));
                 venda.setGerouNotaFiscal(rs.getString("gerou_nfs"));
                 venda.setObservacao(rs.getString("observacao"));
                 venda.setCancelada(rs.getString("cancelada"));
-                venda.setProdDevolvido(rs.getString("prod_devolvido"));
                 venda.getDataCancela().setTime(rs.getDate("data_cancela"));
                 venda.setDtaInc(rs.getString("dta_inc"));
                 venda.setLoginInc(rs.getString("login_inc"));
