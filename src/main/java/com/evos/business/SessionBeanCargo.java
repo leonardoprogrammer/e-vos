@@ -56,7 +56,7 @@ public class SessionBeanCargo {
         }
     }
 
-    public List<CargoVO> recuperarTodosCargo() throws EvosException {
+    public List<CargoVO> recuperarTodosCargo() {
         List<Cargo> cargos = cargoDAO.recuperarCargos();
         List<CargoVO> cargosVO = new ArrayList<CargoVO>();
 
@@ -70,7 +70,7 @@ public class SessionBeanCargo {
         return null;
     }
 
-    public CargoVO recuperarCargoPorId(long id) throws EvosException {
+    public CargoVO recuperarCargoPorId(long id) {
         Cargo cargo = cargoDAO.recuperarCargoPorId(id);
 
         if (cargo != null) {

@@ -1,6 +1,7 @@
 package com.evos.business;
 
 import com.evos.enums.TipoProduto;
+import com.evos.filtro.FiltrosProdutos;
 import com.evos.model.dao.ProdutoDAO;
 import com.evos.model.entity.Categoria;
 import com.evos.model.entity.Produto;
@@ -38,7 +39,7 @@ public class SessionBeanProduto {
         produtoDAO.deletarProduto(produto);
     }
 
-    public List<ProdutoVO> recuperarTodosProdutos() throws EvosException {
+    public List<ProdutoVO> recuperarTodosProdutos() {
         List<Produto> produtos = produtoDAO.recuperarProdutos();
         List<ProdutoVO> produtosVO = new ArrayList<ProdutoVO>();
 
@@ -52,7 +53,21 @@ public class SessionBeanProduto {
         return null;
     }
 
-    public ProdutoVO recuperarProdutoPorId(long id) throws EvosException {
+    public List<ProdutoVO> recuperarProdutosPorFiltros(FiltrosProdutos filtros) {
+        List<Produto> produtos = produtoDAO.recuperarProdutosPorFiltros(filtros);
+        List<ProdutoVO> produtosVO = new ArrayList<>();
+
+        if (produtos != null) {
+            for (Produto produto : produtos) {
+                CategoriaVO categoriaVO = sessionBeanCategoria.recuperarCategoriaPorId(produto.getIdCategoria());
+                produtosVO.add(preencherVO(produto, categoriaVO));
+            }
+            return produtosVO;
+        }
+        return null;
+    }
+
+    public ProdutoVO recuperarProdutoPorId(long id) {
         Produto produto = produtoDAO.recuperarProdutoPorId(id);
 
         if (produto != null) {

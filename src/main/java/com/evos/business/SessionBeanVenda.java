@@ -2,6 +2,7 @@ package com.evos.business;
 
 import com.evos.enums.FormaPagamento;
 import com.evos.enums.TipoVenda;
+import com.evos.filtro.FiltrosVendas;
 import com.evos.model.dao.VendaDAO;
 import com.evos.model.entity.Venda;
 import com.evos.model.vo.*;
@@ -74,8 +75,8 @@ public class SessionBeanVenda {
         return null;
     }
 
-    public List<VendaVO> recuperarVendasPorFiltro(FiltroVendaVO filtroVendaVO) throws EvosException {
-        List<Venda> vendas = vendaDAO.recuperarVendasPorFiltro(filtroVendaVO);
+    public List<VendaVO> recuperarVendasPorFiltro(FiltrosVendas filtros) {
+        List<Venda> vendas = vendaDAO.recuperarVendasPorFiltro(filtros);
         List<VendaVO> vendasVO = new ArrayList<VendaVO>();
 
         if (vendas != null) {

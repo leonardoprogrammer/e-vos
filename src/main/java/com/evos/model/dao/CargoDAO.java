@@ -165,7 +165,7 @@ public class CargoDAO {
         }
     }
 
-    public List<Cargo> recuperarCargos() throws EvosException {
+    public List<Cargo> recuperarCargos() {
         String query = "SELECT * FROM CARGO";
         List<Cargo> cargos = new ArrayList<Cargo>();
 
@@ -197,7 +197,11 @@ public class CargoDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao recuperar cargos!", e.toString());
+            try {
+                throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao recuperar cargos!", e.toString());
+            } catch (EvosException ex) {
+                ex.printStackTrace();
+            }
         } finally {
             try {
                 if (pstm != null) {
@@ -218,7 +222,7 @@ public class CargoDAO {
         return cargos;
     }
 
-    public Cargo recuperarCargoPorId(long id) throws EvosException {
+    public Cargo recuperarCargoPorId(long id) {
         String query = "SELECT * FROM CARGO WHERE id = ?";
         Cargo cargo = new Cargo();
 
@@ -246,7 +250,11 @@ public class CargoDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao recuperar cargo!", e.toString());
+            try {
+                throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao recuperar cargo!", e.toString());
+            } catch (EvosException ex) {
+                ex.printStackTrace();
+            }
         } finally {
             try {
                 if (conn != null) {

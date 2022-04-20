@@ -141,7 +141,7 @@ public class VendaItemDAO {
          return itens;
     }
 
-    public List<VendaItem> recuperarItensPorVenda(long idVenda) throws EvosException {
+    public List<VendaItem> recuperarItensPorVenda(long idVenda) {
         String query = "SELET * FROM VENDAITEM WHERE id_venda = ?";
         List<VendaItem> itens = new ArrayList<VendaItem>();
 
@@ -173,7 +173,11 @@ public class VendaItemDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao recuperar item da venda!", e.toString());
+            try {
+                throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao recuperar item da venda!", e.toString());
+            } catch (EvosException ex) {
+                ex.printStackTrace();
+            }
         } finally {
             try {
                 if (conn != null) {

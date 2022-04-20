@@ -6,21 +6,27 @@ package com.evos.model.entity;
 public class Permissoes {
     private long id;
     // VENDAS
+    private String consultaVenda;
     private String registraVenda;
     private String alteraVenda;
     // PRODUTOS
+    private String consultaProduto;
     private String cadastraProduto;
     private String alteraProduto;
     // CATEGORIAS
+    private String consultaCategoria;
     private String cadastraCategoria;
     private String alteraCategoria;
     // USUARIOS
+    private String consultaUsuario;
     private String cadastraUsuario;
     private String alteraUsuario;
     // CLIENTES
+    private String consultaCliente;
     private String cadastraCliente;
     private String alteraCliente;
     // DESCONTOS
+    private String consultaDesconto;
     private String cadastraDesconto;
     private String alteraDesconto;
 
@@ -33,18 +39,24 @@ public class Permissoes {
 
     }
 
-    public Permissoes(long id, String registraVenda, String alteraVenda, String cadastraProduto, String alteraProduto, String cadastraCategoria, String alteraCategoria, String cadastraUsuario, String alterarUsuario, String cadastraCliente, String alteraCliente, String cadastraDesconto, String alteraDesconto, String dtaInc, String loginInc, String dtaAlt, String loginAlt) {
+    public Permissoes(long id, String consultaVenda, String registraVenda, String alteraVenda, String consultaProduto, String cadastraProduto, String alteraProduto, String consultaCategoria, String cadastraCategoria, String alteraCategoria, String consultaUsuario, String cadastraUsuario, String alteraUsuario, String consultaCliente, String cadastraCliente, String alteraCliente, String consultaDesconto, String cadastraDesconto, String alteraDesconto, String dtaInc, String loginInc, String dtaAlt, String loginAlt) {
         this.id = id;
+        this.consultaVenda = consultaVenda;
         this.registraVenda = registraVenda;
         this.alteraVenda = alteraVenda;
+        this.consultaProduto = consultaProduto;
         this.cadastraProduto = cadastraProduto;
         this.alteraProduto = alteraProduto;
+        this.consultaCategoria = consultaCategoria;
         this.cadastraCategoria = cadastraCategoria;
         this.alteraCategoria = alteraCategoria;
+        this.consultaUsuario = consultaUsuario;
         this.cadastraUsuario = cadastraUsuario;
-        this.alteraUsuario = alterarUsuario;
+        this.alteraUsuario = alteraUsuario;
+        this.consultaCliente = consultaCliente;
         this.cadastraCliente = cadastraCliente;
         this.alteraCliente = alteraCliente;
+        this.consultaDesconto = consultaDesconto;
         this.cadastraDesconto = cadastraDesconto;
         this.alteraDesconto = alteraDesconto;
         this.dtaInc = dtaInc;
@@ -59,6 +71,14 @@ public class Permissoes {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getConsultaVenda() {
+        return consultaVenda;
+    }
+
+    public void setConsultaVenda(String consultaVenda) {
+        this.consultaVenda = consultaVenda;
     }
 
     public String getRegistraVenda() {
@@ -77,6 +97,14 @@ public class Permissoes {
         this.alteraVenda = alteraVenda;
     }
 
+    public String getConsultaProduto() {
+        return consultaProduto;
+    }
+
+    public void setConsultaProduto(String consultaProduto) {
+        this.consultaProduto = consultaProduto;
+    }
+
     public String getCadastraProduto() {
         return cadastraProduto;
     }
@@ -91,6 +119,14 @@ public class Permissoes {
 
     public void setAlteraProduto(String alteraProduto) {
         this.alteraProduto = alteraProduto;
+    }
+
+    public String getConsultaCategoria() {
+        return consultaCategoria;
+    }
+
+    public void setConsultaCategoria(String consultaCategoria) {
+        this.consultaCategoria = consultaCategoria;
     }
 
     public String getCadastraCategoria() {
@@ -109,6 +145,14 @@ public class Permissoes {
         this.alteraCategoria = alteraCategoria;
     }
 
+    public String getConsultaUsuario() {
+        return consultaUsuario;
+    }
+
+    public void setConsultaUsuario(String consultaUsuario) {
+        this.consultaUsuario = consultaUsuario;
+    }
+
     public String getCadastraUsuario() {
         return cadastraUsuario;
     }
@@ -125,6 +169,14 @@ public class Permissoes {
         this.alteraUsuario = alteraUsuario;
     }
 
+    public String getConsultaCliente() {
+        return consultaCliente;
+    }
+
+    public void setConsultaCliente(String consultaCliente) {
+        this.consultaCliente = consultaCliente;
+    }
+
     public String getCadastraCliente() {
         return cadastraCliente;
     }
@@ -139,6 +191,14 @@ public class Permissoes {
 
     public void setAlteraCliente(String alteraCliente) {
         this.alteraCliente = alteraCliente;
+    }
+
+    public String getConsultaDesconto() {
+        return consultaDesconto;
+    }
+
+    public void setConsultaDesconto(String consultaDesconto) {
+        this.consultaDesconto = consultaDesconto;
     }
 
     public String getCadastraDesconto() {

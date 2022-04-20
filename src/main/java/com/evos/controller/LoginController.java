@@ -54,19 +54,16 @@ public class LoginController implements Initializable {
         if (camposValidos()) {
             login = new LoginVO(txtUsername.toString(), txtPassword.toString());
             boolean loginTrue = sessionBeanLogin.verificarLogin(login);
+
             if (loginTrue) {
                 login = sessionBeanLogin.recuperarLoginPorCredenciais(login);
                 UsuarioVO usuario = login.getUsuario();
                 // TODO: Inicar painel principal do sistema
             } else {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("");
-                alert.setContentText("DADOS INCORRETOS!");
+                makeAlert("", "DADOS INCORRETOS!", Alert.AlertType.INFORMATION);
             }
         } else {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("ATENÇÃO");
-            alert.setContentText("Preencha todos os campos!");
+            makeAlert("ATENÇÃO", "Preencha todos os campos", Alert.AlertType.INFORMATION);
         }
     }
 
@@ -76,9 +73,15 @@ public class LoginController implements Initializable {
     }
 
     public boolean camposValidos() {
-        if (!Utils.isNullOrEmpty(txtUsername.toString()) && Utils.isNullOrEmpty(txtPassword.toString())) {
+        if (!Utils.isNullOrEmpty(txtUsername.toString()) && !Utils.isNullOrEmpty(txtPassword.toString())) {
             return true;
         }
         return false;
+    }
+
+    public void makeAlert(String title, String text, Alert.AlertType type) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setContentText(text);
     }
 }

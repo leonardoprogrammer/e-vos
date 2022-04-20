@@ -201,7 +201,7 @@ public class ClienteDAO {
         }
     }
 
-    public Cliente recuperarClientePorId(long id) throws EvosException {
+    public Cliente recuperarClientePorId(long id) {
         String query = "SELECT * FROM CLIENTE WHERE id = ?";
         Cliente cliente = new Cliente();
 
@@ -234,7 +234,11 @@ public class ClienteDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao recuperar cliente!", e.toString());
+            try {
+                throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao recuperar cliente!", e.toString());
+            } catch (EvosException ex) {
+                ex.printStackTrace();
+            }
         } finally {
             try {
                 if (conn != null) {

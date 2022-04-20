@@ -8,21 +8,27 @@ public class PermissoesVO {
     // o cadastro de permissões é feito automaticamente ao cadastrar cargos
     private long id;
     // VENDAS
+    private boolean consultaVenda;
     private boolean registraVenda;
     private boolean alteraVenda; // serve para alterar, cancelar e deletar
     // PRODUTOS
+    private boolean consultaProduto;
     private boolean cadastraProduto;
     private boolean alteraProduto; // serve para alterar, ativar/desativar e deletar
     // CATEGORIAS
+    private boolean consultaCategoria;
     private boolean cadastraCategoria;
     private boolean alterarCategoria; // serve para alterar, ativar/desativar e deletar
     // USUARIOS
+    private boolean consultaUsuario;
     private boolean cadastraUsuario;
     private boolean alteraUsuario; // serve para alterar, ativar/desativar e deletar
     // CLIENTES
+    private boolean consultaCliente;
     private boolean cadastraCliente;
     private boolean alteraCliente; // serve para alterar, ativar/desativar e deletar
     // DESCONTOS
+    private boolean consultaDesconto;
     private boolean cadastraDesconto;
     private boolean alteraDesconto; // serve para alterar, ativar/desativar e deletar
 
@@ -35,18 +41,24 @@ public class PermissoesVO {
 
     }
 
-    public PermissoesVO(long id, boolean registraVenda, boolean alteraVenda, boolean cadastraProduto, boolean alteraProduto, boolean cadastraCategoria, boolean alterarCategoria, boolean cadastraUsuario, boolean alteraUsuario, boolean cadastraCliente, boolean alteraCliente, boolean cadastraDesconto, boolean alteraDesconto, String dtaInc, String loginInc, String dtaAlt, String loginAlt) {
+    public PermissoesVO(long id, boolean consultaVenda, boolean registraVenda, boolean alteraVenda, boolean consultaProduto, boolean cadastraProduto, boolean alteraProduto, boolean consultaCategoria, boolean cadastraCategoria, boolean alterarCategoria, boolean consultaUsuario, boolean cadastraUsuario, boolean alteraUsuario, boolean consultaCliente, boolean cadastraCliente, boolean alteraCliente, boolean consultaDesconto, boolean cadastraDesconto, boolean alteraDesconto, String dtaInc, String loginInc, String dtaAlt, String loginAlt) {
         this.id = id;
+        this.consultaVenda = consultaVenda;
         this.registraVenda = registraVenda;
         this.alteraVenda = alteraVenda;
+        this.consultaProduto = consultaProduto;
         this.cadastraProduto = cadastraProduto;
         this.alteraProduto = alteraProduto;
+        this.consultaCategoria = consultaCategoria;
         this.cadastraCategoria = cadastraCategoria;
         this.alterarCategoria = alterarCategoria;
+        this.consultaUsuario = consultaUsuario;
         this.cadastraUsuario = cadastraUsuario;
         this.alteraUsuario = alteraUsuario;
+        this.consultaCliente = consultaCliente;
         this.cadastraCliente = cadastraCliente;
         this.alteraCliente = alteraCliente;
+        this.consultaDesconto = consultaDesconto;
         this.cadastraDesconto = cadastraDesconto;
         this.alteraDesconto = alteraDesconto;
         this.dtaInc = dtaInc;
@@ -61,6 +73,14 @@ public class PermissoesVO {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public boolean isConsultaVenda() {
+        return consultaVenda;
+    }
+
+    public void setConsultaVenda(boolean consultaVenda) {
+        this.consultaVenda = consultaVenda;
     }
 
     public boolean isRegistraVenda() {
@@ -79,6 +99,14 @@ public class PermissoesVO {
         this.alteraVenda = alteraVenda;
     }
 
+    public boolean isConsultaProduto() {
+        return consultaProduto;
+    }
+
+    public void setConsultaProduto(boolean consultaProduto) {
+        this.consultaProduto = consultaProduto;
+    }
+
     public boolean isCadastraProduto() {
         return cadastraProduto;
     }
@@ -93,6 +121,14 @@ public class PermissoesVO {
 
     public void setAlteraProduto(boolean alteraProduto) {
         this.alteraProduto = alteraProduto;
+    }
+
+    public boolean isConsultaCategoria() {
+        return consultaCategoria;
+    }
+
+    public void setConsultaCategoria(boolean consultaCategoria) {
+        this.consultaCategoria = consultaCategoria;
     }
 
     public boolean isCadastraCategoria() {
@@ -111,6 +147,14 @@ public class PermissoesVO {
         this.alterarCategoria = alterarCategoria;
     }
 
+    public boolean isConsultaUsuario() {
+        return consultaUsuario;
+    }
+
+    public void setConsultaUsuario(boolean consultaUsuario) {
+        this.consultaUsuario = consultaUsuario;
+    }
+
     public boolean isCadastraUsuario() {
         return cadastraUsuario;
     }
@@ -127,6 +171,14 @@ public class PermissoesVO {
         this.alteraUsuario = alteraUsuario;
     }
 
+    public boolean isConsultaCliente() {
+        return consultaCliente;
+    }
+
+    public void setConsultaCliente(boolean consultaCliente) {
+        this.consultaCliente = consultaCliente;
+    }
+
     public boolean isCadastraCliente() {
         return cadastraCliente;
     }
@@ -141,6 +193,14 @@ public class PermissoesVO {
 
     public void setAlteraCliente(boolean alteraCliente) {
         this.alteraCliente = alteraCliente;
+    }
+
+    public boolean isConsultaDesconto() {
+        return consultaDesconto;
+    }
+
+    public void setConsultaDesconto(boolean consultaDesconto) {
+        this.consultaDesconto = consultaDesconto;
     }
 
     public boolean isCadastraDesconto() {

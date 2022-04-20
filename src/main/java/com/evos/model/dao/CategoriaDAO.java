@@ -126,7 +126,7 @@ public class CategoriaDAO {
         }
     }
 
-    public List<Categoria> recuperarCategorias() throws EvosException {
+    public List<Categoria> recuperarCategorias() {
         String query = "SELECT * FROM CATEGORIA";
         List<Categoria> categorias = new ArrayList<Categoria>();
 
@@ -155,7 +155,11 @@ public class CategoriaDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao recuperar categorias!", e.toString());
+            try {
+                throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao recuperar categorias!", e.toString());
+            } catch (EvosException ex) {
+                ex.printStackTrace();
+            }
         } finally {
             try {
                 if (conn != null) {
@@ -176,7 +180,7 @@ public class CategoriaDAO {
         return categorias;
     }
 
-    public Categoria recuperarCategoriaPorId(long id) throws EvosException {
+    public Categoria recuperarCategoriaPorId(long id) {
         String query = "SELECT * FROM CATEGORIA WHERE id = ?";
         Categoria categoria = new Categoria();
 
@@ -204,7 +208,11 @@ public class CategoriaDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao recuperar categoria!", e.toString());
+            try {
+                throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao recuperar categoria!", e.toString());
+            } catch (EvosException ex) {
+                ex.printStackTrace();
+            }
         } finally {
             try {
                 if (conn != null) {

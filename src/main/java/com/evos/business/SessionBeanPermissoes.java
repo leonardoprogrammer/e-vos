@@ -47,7 +47,7 @@ public class SessionBeanPermissoes {
         return null;
     }
 
-    public PermissoesVO recuperarPermissoesPorId(long id) throws EvosException {
+    public PermissoesVO recuperarPermissoesPorId(long id) {
         Permissoes permissoes = permissoesDAO.recuperarPermissoesPorId(id);
 
         if (permissoes != null) {

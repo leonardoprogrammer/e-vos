@@ -145,7 +145,7 @@ public class UsuarioDAO {
         }
     }
 
-    public Usuario recuperarUsuarioPorId(long id) throws EvosException {
+    public Usuario recuperarUsuarioPorId(long id) {
         String query = "SELECT * FROM USUARIO WHERE id = ?";
         Usuario usuario = new Usuario();
 
@@ -180,7 +180,11 @@ public class UsuarioDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao recuperar usuário!", e.toString());
+            try {
+                throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao recuperar usuário!", e.toString());
+            } catch (EvosException ex) {
+                ex.printStackTrace();
+            }
         } finally {
             try {
                 if (pstm != null) {

@@ -1,6 +1,7 @@
 package com.evos.model.dao;
 
 import com.evos.ConnectionFactory;
+import com.evos.filtro.FiltrosVendas;
 import com.evos.model.entity.Venda;
 import com.evos.model.vo.FiltroVendaVO;
 import com.evos.model.vo.UsuarioVO;
@@ -307,42 +308,36 @@ public class VendaDAO {
         return venda;
     }
 
-    public List<Venda> recuperarVendasPorFiltro(FiltroVendaVO filtroVenda) throws EvosException {
+    public List<Venda> recuperarVendasPorFiltro(FiltrosVendas filtros) {
         StringBuilder query = new StringBuilder("SELECT * FROM VENDA");
         int count = 0;
 
-        if (Utils.isNullOrZero(filtroVenda.getId())) {
+        if (!Utils.isNullOrZero(filtros.getId())) {
             query.append(" WHERE id = ?");
         } else {
             query.append(" WHERE id IS NOT NULL ");
         }
 
-        if (Utils.isNullOrZero(filtroVenda.getProduto().getId())) {
+        if (!Utils.isNullOrZero(filtros.getProduto().getId())) {
             query.append(" AND id_produto = ?");
         }
-        if (Utils.isNullOrZero(filtroVenda.getVendedor().getId())) {
-            query.append(" AND id_vendedor = ?");
+        if (!Utils.isNullOrEmpty(filtros.getComDesonto()) && filtros.getComDesonto().equals("S")) {
+            query.append(" AND valor_desconto IS NOT NULL");
         }
-        if (Utils.isNullOrZero(filtroVenda.getCliente().getId())) {
-            query.append(" AND id_cliente = ?");
-        }
-        if (Utils.isNullOrEmpty(filtroVenda.getDataCompra().toString())) {
+        if (!Utils.isNullOrEmpty(filtros.getDataCompra())) {
             query.append(" AND data_compra = ?");
         }
-        if (Utils.isNullOrZero(filtroVenda.getTipoVenda().getId())) {
+        if (!Utils.isNullOrZero(filtros.getTipoVenda().getId())) {
             query.append(" AND tipo_venda = ?");
         }
-        if (Utils.isNullOrZero(filtroVenda.getFormaPagamento().getId())) {
+        if (!Utils.isNullOrZero(filtros.getFormaPagamento().getId())) {
             query.append(" AND forma_pagamento = ?");
         }
-        if (filtroVenda.isGerouNotaFiscal()) {
+        if (!Utils.isNullOrEmpty(filtros.getGerouNotaFiscal())) {
             query.append(" AND gerou_nfs = ?");
         }
-        if (filtroVenda.isCancelada()) {
+        if (!Utils.isNullOrEmpty(filtros.getFoiCancelada())) {
             query.append(" AND cancelada = ?");
-        }
-        if (Utils.isNullOrEmpty(filtroVenda.getDtaInc())) {
-            query.append(" AND dta_inc = ?");
         }
 
         List<Venda> vendas = new ArrayList<Venda>();
@@ -355,35 +350,26 @@ public class VendaDAO {
             conn = ConnectionFactory.createConnectionToMySql();
             pstm = conn.prepareStatement(query.toString());
 
-            if (Utils.isNullOrZero(filtroVenda.getId())) {
-                pstm.setLong(count++, filtroVenda.getId());
+            if (!Utils.isNullOrZero(filtros.getId())) {
+                pstm.setLong(count++, filtros.getId());
             }
-            if (Utils.isNullOrZero(filtroVenda.getProduto().getId())) {
-                pstm.setLong(count++, filtroVenda.getProduto().getId());
+            if (!Utils.isNullOrZero(filtros.getProduto().getId())) {
+                pstm.setLong(count++, filtros.getProduto().getId());
             }
-            if (Utils.isNullOrZero(filtroVenda.getVendedor().getId())) {
-                pstm.setLong(count++, filtroVenda.getVendedor().getId());
+            if (!Utils.isNullOrEmpty(filtros.getDataCompra())) {
+                pstm.setDate(count++, Date.valueOf(filtros.getDataCompra()));
             }
-            if (Utils.isNullOrZero(filtroVenda.getCliente().getId())) {
-                pstm.setLong(count++, filtroVenda.getCliente().getId());
+            if (filtros.getTipoVenda() != null) {
+                pstm.setLong(count++, filtros.getTipoVenda().getId());
             }
-            if (Utils.isNullOrEmpty(filtroVenda.getDataCompra().toString())) {
-                pstm.setDate(count++, (Date) filtroVenda.getDataCompra().getTime());
+            if (filtros.getFormaPagamento() != null) {
+                pstm.setLong(count++, filtros.getFormaPagamento().getId());
             }
-            if (Utils.isNullOrZero(filtroVenda.getTipoVenda().getId())) {
-                pstm.setInt(count++, filtroVenda.getTipoVenda().getId());
-            }
-            if (Utils.isNullOrZero(filtroVenda.getFormaPagamento().getId())) {
-                pstm.setInt(count++, filtroVenda.getFormaPagamento().getId());
-            }
-            if (filtroVenda.isGerouNotaFiscal()) {
+            if (!Utils.isNullOrEmpty(filtros.getGerouNotaFiscal()) && filtros.getGerouNotaFiscal().equals("S")) {
                 pstm.setString(count++, "S");
             }
-            if (filtroVenda.isCancelada()) {
+            if (!Utils.isNullOrEmpty(filtros.getFoiCancelada()) && filtros.getFoiCancelada().equals("S")) {
                 pstm.setString(count++, "S");
-            }
-            if (Utils.isNullOrEmpty(filtroVenda.getDtaInc())) {
-                pstm.setString(count++, filtroVenda.getDtaInc());
             }
 
             rs = pstm.executeQuery();
@@ -413,7 +399,11 @@ public class VendaDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao recuperar vendas por filtro!", e.toString());
+            try {
+                throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao recuperar vendas por filtro!", e.toString());
+            } catch (EvosException ex) {
+                ex.printStackTrace();
+            }
         } finally {
             try {
                 if (pstm != null) {
@@ -422,6 +412,10 @@ public class VendaDAO {
 
                 if (conn != null) {
                     conn.close();
+                }
+
+                if (rs != null) {
+                    rs.close();
                 }
             } catch (Exception e) {
                 e.printStackTrace();

@@ -46,7 +46,7 @@ public class SessionBeanCliente {
         return null;
     }
 
-    public ClienteVO recuperarClientePorId(long id) throws EvosException {
+    public ClienteVO recuperarClientePorId(long id) {
         Cliente cliente = clienteDAO.recuperarClientePorId(id);
 
         if (cliente != null) {

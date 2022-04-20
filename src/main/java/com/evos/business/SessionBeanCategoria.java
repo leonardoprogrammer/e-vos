@@ -33,7 +33,7 @@ public class SessionBeanCategoria {
         categoriaDAO.deletarCategoria(categoria.getId());
     }
 
-    public List<CategoriaVO> recuperarTodasCategorias() throws EvosException {
+    public List<CategoriaVO> recuperarTodasCategorias() {
         List<Categoria> categorias = categoriaDAO.recuperarCategorias();
         List<CategoriaVO> categoriasVO = new ArrayList<CategoriaVO>();
 
@@ -46,7 +46,7 @@ public class SessionBeanCategoria {
         return null;
     }
 
-    public CategoriaVO recuperarCategoriaPorId(long id) throws EvosException {
+    public CategoriaVO recuperarCategoriaPorId(long id) {
         Categoria categoria = categoriaDAO.recuperarCategoriaPorId(id);
 
         if (categoria != null) {

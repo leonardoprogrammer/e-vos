@@ -214,7 +214,7 @@ public class PermissoesDAO {
         return permissoes;
     }
 
-    public Permissoes recuperarPermissoesPorId(long id) throws EvosException {
+    public Permissoes recuperarPermissoesPorId(long id) {
         String query = "SELECT * FROM PERMISSOES WHERE id = ?";
         Permissoes permissoes = new Permissoes();
 
@@ -252,7 +252,11 @@ public class PermissoesDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao recuperar permissões!", e.toString());
+            try {
+                throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao recuperar permissões!", e.toString());
+            } catch (EvosException ex) {
+                ex.printStackTrace();
+            }
         } finally {
             try {
                 if (conn != null) {

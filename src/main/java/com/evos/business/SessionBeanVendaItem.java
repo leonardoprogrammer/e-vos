@@ -41,7 +41,7 @@ public class SessionBeanVendaItem {
         return null;
     }
 
-    public List<VendaItemVO> recuperarItensPorVenda(long idVenda) throws EvosException {
+    public List<VendaItemVO> recuperarItensPorVenda(long idVenda) {
         List<VendaItem> itens = vendaItemDAO.recuperarItensPorVenda(idVenda);
         List<VendaItemVO> itensVO = new ArrayList<VendaItemVO>();
 

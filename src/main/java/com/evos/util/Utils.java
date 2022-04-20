@@ -1,5 +1,6 @@
 package com.evos.util;
 
+import java.io.File;
 import java.text.Collator;
 import java.util.*;
 
@@ -277,5 +278,69 @@ public class Utils {
         primeiroSemestreCal.set(primeiroSemestreCal.get(Calendar.YEAR), 0, 1, 0, 0, 0); //01/01 primeiro semestre
         primeiroSemestreCal.set(Calendar.MILLISECOND, 0);
         return primeiroSemestreCal.getTime();
+    }
+
+    public static String pegarNomeDoArquivo(String diretorio, boolean comExtensao) {
+        if (diretorio != null || diretorio.isEmpty()) {
+            return "";
+        }
+
+        String nomeArquivo = "";
+
+        if (diretorio.contains("\\")) {
+            String[] diretorioSplit = diretorio.split("\\\\");
+            if (comExtensao) {
+                nomeArquivo = diretorioSplit[diretorioSplit.length - 1];
+            } else {
+                String[] aux = diretorioSplit[diretorioSplit.length - 1].split("\\.");
+                nomeArquivo = aux[0];
+            }
+            return nomeArquivo;
+        } else {
+            return diretorio;
+        }
+    }
+
+    public static String pegarCaminhoDoArquivo(String diretorio) {
+        if (diretorio == null || diretorio.isEmpty()) {
+            return "";
+        }
+
+        String caminho = "";
+
+        if (diretorio.contains("\\")) {
+            String[] caminhoSplit = diretorio.split("\\\\");
+            for (int i = 0; i < (caminhoSplit.length - 1); i++) {
+                if (i != 0) {
+                    caminho += "\\";
+                }
+                caminho += caminhoSplit[i];
+            }
+            return caminho;
+        } else {
+            return diretorio;
+        }
+    }
+
+    public static File pegarCaminho(File arquivo) {
+        if (arquivo == null || arquivo.getPath().isEmpty()) {
+            return null;
+        }
+
+        String diretorio = arquivo.getPath();
+        String caminho = "";
+
+        if (diretorio.contains("\\")) {
+            String[] caminhoSplit = diretorio.split("\\\\");
+            for (int i = 0; i < (caminhoSplit.length - 1); i++) {
+                if (i != 0) {
+                    caminho += "\\";
+                }
+                caminho += caminhoSplit[i];
+            }
+            return new File(caminho);
+        } else {
+            return arquivo;
+        }
     }
 }

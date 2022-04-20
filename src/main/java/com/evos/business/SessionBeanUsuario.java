@@ -1,6 +1,7 @@
 package com.evos.business;
 
 import com.evos.enums.TipoUsuario;
+import com.evos.filtro.FiltrosUsuarios;
 import com.evos.model.dao.CargoDAO;
 import com.evos.model.dao.LoginDAO;
 import com.evos.model.dao.UsuarioDAO;
@@ -58,7 +59,11 @@ public class SessionBeanUsuario {
         return null;
     }
 
-    public UsuarioVO recuperarUsuarioPorId(long id) throws EvosException {
+    public List<UsuarioVO> recuperarUsuariosPorFiltros(FiltrosUsuarios filtros) {
+        return null;
+    }
+
+    public UsuarioVO recuperarUsuarioPorId(long id) {
         Usuario usuario = usuarioDAO.recuperarUsuarioPorId(id);
 
         if (usuario != null) {
