@@ -45,7 +45,7 @@ public class SessionBeanUsuario {
         usuarioDAO.deletarUsuario(usuario.getId());
     }
 
-    public List<UsuarioVO> recuperarTodosUsuarios() throws EvosException {
+    public List<UsuarioVO> recuperarTodosUsuarios() {
         List<Usuario> usuarios = usuarioDAO.recuperarUsuarios();
         List<UsuarioVO> usuariosVO = new ArrayList<UsuarioVO>();
 
@@ -60,6 +60,16 @@ public class SessionBeanUsuario {
     }
 
     public List<UsuarioVO> recuperarUsuariosPorFiltros(FiltrosUsuarios filtros) {
+        List<Usuario> usuarios = usuarioDAO.recuperarUsuariosPorFiltros(filtros);
+        List<UsuarioVO> usuariosVO = new ArrayList<UsuarioVO>();
+
+        if (usuarios != null) {
+            for (Usuario usuario : usuarios) {
+                CargoVO cargoVO = sessionBeanCargo.recuperarCargoPorId(usuario.getIdCargo());
+                usuariosVO.add(preencherVO(usuario, cargoVO));
+            }
+            return usuariosVO;
+        }
         return null;
     }
 

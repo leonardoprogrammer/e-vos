@@ -1,9 +1,11 @@
 package com.evos.model.dao;
 
 import com.evos.ConnectionFactory;
+import com.evos.filtro.FiltrosUsuarios;
 import com.evos.model.entity.Usuario;
 import com.evos.model.vo.UsuarioVO;
 import com.evos.util.Exception.EvosException;
+import com.evos.util.Utils;
 import javafx.scene.control.Alert;
 
 import java.sql.Connection;
@@ -205,7 +207,7 @@ public class UsuarioDAO {
         return usuario;
     }
 
-    public List<Usuario> recuperarUsuarios() throws EvosException {
+    public List<Usuario> recuperarUsuarios() {
         String query = "SELECT * FROM USUARIO";
         List<Usuario> usuarios = new ArrayList<Usuario>();
 
@@ -243,7 +245,11 @@ public class UsuarioDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao recuperar usuários!", e.toString());
+            try {
+                throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao recuperar usuários!", e.toString());
+            } catch (EvosException ex) {
+                ex.printStackTrace();
+            }
         } finally {
             try {
                 if (pstm != null) {
@@ -252,6 +258,127 @@ public class UsuarioDAO {
 
                 if (conn != null) {
                     conn.close();
+                }
+
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return usuarios;
+    }
+
+    public List<Usuario> recuperarUsuariosPorFiltros(FiltrosUsuarios filtros) {
+        StringBuilder query = new StringBuilder("SELECT * FROM USUARIO");
+        int count = 0;
+
+        if (!Utils.isNullOrZero(filtros.getId())) {
+            query.append(" WHERE id = ?");
+        } else {
+            query.append(" WHERE id IS NOT NULL");
+        }
+
+        if (!Utils.isNullOrEmpty(filtros.getNome())) {
+            query.append(" AND nome = ?");
+        }
+
+        if (!Utils.isNullOrEmpty(filtros.getCpf())) {
+            query.append(" AND cpf = ?");
+        }
+
+        if (filtros.getCargo() != null) {
+            query.append(" AND id_cargo = ?");
+        }
+
+        if (filtros.getTipo() != null) {
+            query.append(" AND tipo_usuario = ?");
+        }
+
+        if (!Utils.isNullOrEmpty(filtros.getDataAdmissao())) {
+            query.append(" AND data_admissao = ?");
+        }
+
+        if (!Utils.isNullOrEmpty(filtros.getAtivo())) {
+            query.append(" AND ativo = ?");
+        }
+
+        List<Usuario> usuarios = new ArrayList<Usuario>();
+
+        Connection conn = null;
+        PreparedStatement pstm = null;
+        // Classe que vai recuperar os dados do banco
+        ResultSet rs = null;
+
+        try {
+            conn = ConnectionFactory.createConnectionToMySql();
+            pstm = conn.prepareStatement(query.toString());
+
+            if (!Utils.isNullOrZero(filtros.getId())) {
+                pstm.setLong(count++, filtros.getId());
+            }
+
+            if (!Utils.isNullOrEmpty(filtros.getNome())) {
+                pstm.setString(count++, filtros.getNome());
+            }
+
+            if (!Utils.isNullOrEmpty(filtros.getCpf())) {
+                pstm.setString(count++, filtros.getCpf());
+            }
+
+            if (filtros.getCargo() != null) {
+                pstm.setLong(count++, filtros.getCargo().getId());
+            }
+
+            if (filtros.getTipo() != null) {
+                pstm.setInt(count++, filtros.getTipo().getId());
+            }
+
+            if (!Utils.isNullOrEmpty(filtros.getDataAdmissao())) {
+                pstm.setDate(count++, Date.valueOf(filtros.getDataAdmissao()));
+            }
+
+            if (!Utils.isNullOrEmpty(filtros.getAtivo())) {
+                pstm.setString(count++, filtros.getAtivo());
+            }
+
+            rs = pstm.executeQuery();
+
+            while (rs.next()) {
+                Usuario usuario = new Usuario();
+
+                usuario.setId(rs.getLong("id"));
+                usuario.setNome(rs.getString("nome"));
+                usuario.setIdCargo(rs.getLong("id_cargo"));
+                usuario.setTipoUsuario(rs.getInt("tipo_usuario"));
+                usuario.getDataAdmissao().setTime(rs.getDate("data_admissao"));
+                usuario.setCpf(rs.getString("cpf"));
+                usuario.getDataNascimento().setTime(rs.getDate("data_nasc"));
+                usuario.setEmail(rs.getString("email"));
+                usuario.setAtivo(rs.getString("ativo"));
+                usuario.setDtaInc(rs.getString("dta_inc"));
+                usuario.setLoginInc(rs.getString("login_inc"));
+                usuario.setDtaAlt(rs.getString("dta_alt"));
+                usuario.setLoginAlt(rs.getString("login_alt"));
+
+                usuarios.add(usuario);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao recuperar usuários por filtros!", e.toString());
+            } catch (EvosException ex) {
+                ex.printStackTrace();
+            }
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+
+                if (pstm != null) {
+                    pstm.close();
                 }
 
                 if (rs != null) {

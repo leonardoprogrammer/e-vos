@@ -1,5 +1,6 @@
 package com.evos.business;
 
+import com.evos.filtro.FiltrosClientes;
 import com.evos.model.dao.ClienteDAO;
 import com.evos.model.entity.Cliente;
 import com.evos.model.vo.ClienteVO;
@@ -33,8 +34,21 @@ public class SessionBeanCliente {
         clienteDAO.deletarCliente(cliente.getId());
     }
 
-    public List<ClienteVO> recuperarTodosClientes() throws EvosException {
+    public List<ClienteVO> recuperarTodosClientes() {
         List<Cliente> clientes = clienteDAO.recuperarClientes();
+        List<ClienteVO> clientesVO = new ArrayList<ClienteVO>();
+
+        if (clientes != null) {
+            for (Cliente cliente : clientes) {
+                clientesVO.add(preencherVO(cliente));
+            }
+            return clientesVO;
+        }
+        return null;
+    }
+
+    public List<ClienteVO> recuperarClientesPorFiltros(FiltrosClientes filtros) {
+        List<Cliente> clientes = clienteDAO.recuperarClientesPorFiltros(filtros);
         List<ClienteVO> clientesVO = new ArrayList<ClienteVO>();
 
         if (clientes != null) {

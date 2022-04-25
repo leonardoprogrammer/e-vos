@@ -1,9 +1,11 @@
 package com.evos.model.dao;
 
 import com.evos.ConnectionFactory;
+import com.evos.filtro.FiltrosClientes;
 import com.evos.model.entity.Cliente;
 import com.evos.model.vo.ClienteVO;
 import com.evos.util.Exception.EvosException;
+import com.evos.util.Utils;
 import javafx.scene.control.Alert;
 
 import java.sql.Connection;
@@ -143,7 +145,7 @@ public class ClienteDAO {
         }
     }
 
-    public List<Cliente> recuperarClientes() throws EvosException {
+    public List<Cliente> recuperarClientes() {
         String query = "SELECT * FROM CLIENTE";
         List<Cliente> clientes = new ArrayList<Cliente>();
 
@@ -180,7 +182,11 @@ public class ClienteDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao recuperar clientes!", e.toString());
+            try {
+                throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao recuperar clientes!", e.toString());
+            } catch (EvosException ex) {
+                ex.printStackTrace();
+            }
         } finally {
             try {
                 if (conn != null) {
@@ -199,6 +205,110 @@ public class ClienteDAO {
             }
             return clientes;
         }
+    }
+
+    public List<Cliente> recuperarClientesPorFiltros(FiltrosClientes filtros) {
+        StringBuilder query = new StringBuilder("SELECT * FROM CLIENTE");
+        int count = 0;
+
+        if (!Utils.isNullOrZero(filtros.getId())) {
+            query.append(" WHERE id = ?");
+        } else {
+            query.append(" WHERE id IS NOT NULL");
+        }
+
+        if (!Utils.isNullOrEmpty(filtros.getNome())) {
+            query.append(" AND nome = ?");
+        }
+
+        if (!Utils.isNullOrEmpty(filtros.getCpf())) {
+            query.append(" AND cpf_cnpj = ?");
+        }
+
+        if (!Utils.isNullOrEmpty(filtros.getDataCadastro())) {
+            query.append(" AND dta_inc = ?");
+        }
+
+        if (!Utils.isNullOrEmpty(filtros.getEnviaEmail())) {
+            query.append(" AND envia_email = ?");
+        }
+
+        List<Cliente> clientes = new ArrayList<Cliente>();
+
+        Connection conn = null;
+        PreparedStatement pstm = null;
+        // Classe que vai recuperar os dados do bamco
+        ResultSet rs = null;
+
+        try {
+            conn = ConnectionFactory.createConnectionToMySql();
+            pstm = conn.prepareStatement(query.toString());
+
+            if (!Utils.isNullOrZero(filtros.getId())) {
+                pstm.setLong(count++, filtros.getId());
+            }
+
+            if (!Utils.isNullOrEmpty(filtros.getNome())) {
+                pstm.setString(count++, filtros.getNome());
+            }
+
+            if (!Utils.isNullOrEmpty(filtros.getCpf())) {
+                pstm.setString(count++, filtros.getCpf());
+            }
+
+            if (!Utils.isNullOrEmpty(filtros.getDataCadastro())) {
+                pstm.setString(count++, filtros.getDataCadastro());
+            }
+
+            if (!Utils.isNullOrEmpty(filtros.getEnviaEmail())) {
+                pstm.setString(count++, filtros.getEnviaEmail());
+            }
+
+            rs = pstm.executeQuery();
+
+            while (rs.next()) {
+                Cliente cliente = new Cliente();
+
+                cliente.setId(rs.getLong("id"));
+                cliente.setNome(rs.getString("cpf_cnpj"));
+                cliente.getDataNascimento().setTime(rs.getDate("data_nasc"));
+                cliente.setEmail(rs.getString("email"));
+                cliente.setEndereco(rs.getString("endereco"));
+                cliente.setTelefoneUm(rs.getString("telefone_um"));
+                cliente.setTelefoneDois(rs.getString("telefone_dois"));
+                cliente.setEnviaEmail(rs.getString("envia_email"));
+                cliente.setDtaInc(rs.getString("dta_inc"));
+                cliente.setLoginInc(rs.getString("login_inc"));
+                cliente.setDtaAlt(rs.getString("dta_alt"));
+                cliente.setLoginAlt(rs.getString("login_alt"));
+
+                clientes.add(cliente);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                throw new EvosException(EvosException.ExceptionLevel.ERROR, "Erro ao recuperar clientes por filtros!", e.toString());
+            } catch (EvosException ex) {
+                ex.printStackTrace();
+            }
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+
+                if (pstm != null) {
+                    pstm.close();
+                }
+
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return clientes;
     }
 
     public Cliente recuperarClientePorId(long id) {
