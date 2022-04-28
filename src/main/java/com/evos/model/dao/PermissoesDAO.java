@@ -40,7 +40,7 @@ public class PermissoesDAO {
             pstm.setString(3, permissoes.isCadastraProduto() ? "S" : "N");
             pstm.setString(4, permissoes.isAlteraProduto() ? "S" : "N");
             pstm.setString(5, permissoes.isCadastraCategoria() ? "S" : "N");
-            pstm.setString(6, permissoes.isAlterarCategoria() ? "S" : "N");
+            pstm.setString(6, permissoes.isAlteraCategoria() ? "S" : "N");
             pstm.setString(7, permissoes.isCadastraUsuario() ? "S" : "N");
             pstm.setString(8, permissoes.isAlteraUsuario() ? "S" : "N");
             pstm.setString(9, permissoes.isCadastraCliente() ? "S" : "N");
@@ -90,7 +90,7 @@ public class PermissoesDAO {
             pstm.setString(3, permissoes.isCadastraProduto() ? "S" : "N");
             pstm.setString(4, permissoes.isAlteraProduto() ? "S" : "N");
             pstm.setString(5, permissoes.isCadastraCategoria() ? "S" : "N");
-            pstm.setString(6, permissoes.isAlterarCategoria() ? "S" : "N");
+            pstm.setString(6, permissoes.isAlteraCategoria() ? "S" : "N");
             pstm.setString(7, permissoes.isCadastraUsuario() ? "S" : "N");
             pstm.setString(8, permissoes.isAlteraUsuario() ? "S" : "N");
             pstm.setString(9, permissoes.isCadastraCliente() ? "S" : "N");

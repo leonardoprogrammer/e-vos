@@ -105,11 +105,11 @@ public class ConsultarClientesController implements Initializable {
             filtrosClientes.setCpf(txtCpf.getText());
         }
 
-        if (dateCadastro != null) {
+        if (dateCadastro.getValue() != null) {
             filtrosClientes.setDataCadastro(dateCadastro.getValue().toString());
         }
 
-        if (cbxEnviaEmail != null) {
+        if (cbxEnviaEmail.getValue() != null) {
             filtrosClientes.setEnviaEmail(cbxEnviaEmail.getValue().isStatus() ? "S" : "N");
         }
     }

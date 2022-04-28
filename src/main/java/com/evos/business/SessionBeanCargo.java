@@ -1,5 +1,6 @@
 package com.evos.business;
 
+import com.evos.filtro.FiltrosCargos;
 import com.evos.model.dao.CargoDAO;
 import com.evos.model.entity.Cargo;
 import com.evos.model.entity.Usuario;
@@ -67,6 +68,10 @@ public class SessionBeanCargo {
             }
             return cargosVO;
         }
+        return null;
+    }
+
+    public List<CargoVO> recuperarCargosPorFiltros(FiltrosCargos filtros) {
         return null;
     }
 

@@ -18,7 +18,7 @@ public class PermissoesVO {
     // CATEGORIAS
     private boolean consultaCategoria;
     private boolean cadastraCategoria;
-    private boolean alterarCategoria; // serve para alterar, ativar/desativar e deletar
+    private boolean alteraCategoria; // serve para alterar, ativar/desativar e deletar
     // USUARIOS
     private boolean consultaUsuario;
     private boolean cadastraUsuario;
@@ -31,6 +31,10 @@ public class PermissoesVO {
     private boolean consultaDesconto;
     private boolean cadastraDesconto;
     private boolean alteraDesconto; // serve para alterar, ativar/desativar e deletar
+    // CARGOS
+    private boolean consultaCargo;
+    private boolean cadastraCargo;
+    private boolean alteraCargo; // serve para alterar, ativar/desativar e deletar
 
     private String dtaInc;
     private String loginInc;
@@ -41,7 +45,7 @@ public class PermissoesVO {
 
     }
 
-    public PermissoesVO(long id, boolean consultaVenda, boolean registraVenda, boolean alteraVenda, boolean consultaProduto, boolean cadastraProduto, boolean alteraProduto, boolean consultaCategoria, boolean cadastraCategoria, boolean alterarCategoria, boolean consultaUsuario, boolean cadastraUsuario, boolean alteraUsuario, boolean consultaCliente, boolean cadastraCliente, boolean alteraCliente, boolean consultaDesconto, boolean cadastraDesconto, boolean alteraDesconto, String dtaInc, String loginInc, String dtaAlt, String loginAlt) {
+    public PermissoesVO(long id, boolean consultaVenda, boolean registraVenda, boolean alteraVenda, boolean consultaProduto, boolean cadastraProduto, boolean alteraProduto, boolean consultaCategoria, boolean cadastraCategoria, boolean alterarCategoria, boolean consultaUsuario, boolean cadastraUsuario, boolean alteraUsuario, boolean consultaCliente, boolean cadastraCliente, boolean alteraCliente, boolean consultaDesconto, boolean cadastraDesconto, boolean alteraDesconto, boolean consultaCargo, boolean cadastroCargo, boolean alterarCargo, String dtaInc, String loginInc, String dtaAlt, String loginAlt) {
         this.id = id;
         this.consultaVenda = consultaVenda;
         this.registraVenda = registraVenda;
@@ -51,7 +55,7 @@ public class PermissoesVO {
         this.alteraProduto = alteraProduto;
         this.consultaCategoria = consultaCategoria;
         this.cadastraCategoria = cadastraCategoria;
-        this.alterarCategoria = alterarCategoria;
+        this.alteraCategoria = alterarCategoria;
         this.consultaUsuario = consultaUsuario;
         this.cadastraUsuario = cadastraUsuario;
         this.alteraUsuario = alteraUsuario;
@@ -61,6 +65,9 @@ public class PermissoesVO {
         this.consultaDesconto = consultaDesconto;
         this.cadastraDesconto = cadastraDesconto;
         this.alteraDesconto = alteraDesconto;
+        this.consultaCargo = consultaCargo;
+        this.cadastraCargo = cadastroCargo;
+        this.alteraCargo = alterarCargo;
         this.dtaInc = dtaInc;
         this.loginInc = loginInc;
         this.dtaAlt = dtaAlt;
@@ -139,12 +146,12 @@ public class PermissoesVO {
         this.cadastraCategoria = cadastraCategoria;
     }
 
-    public boolean isAlterarCategoria() {
-        return alterarCategoria;
+    public boolean isAlteraCategoria() {
+        return alteraCategoria;
     }
 
-    public void setAlterarCategoria(boolean alterarCategoria) {
-        this.alterarCategoria = alterarCategoria;
+    public void setAlteraCategoria(boolean alteraCategoria) {
+        this.alteraCategoria = alteraCategoria;
     }
 
     public boolean isConsultaUsuario() {
@@ -217,6 +224,30 @@ public class PermissoesVO {
 
     public void setAlteraDesconto(boolean alteraDesconto) {
         this.alteraDesconto = alteraDesconto;
+    }
+
+    public boolean isConsultaCargo() {
+        return consultaCargo;
+    }
+
+    public void setConsultaCargo(boolean consultaCargo) {
+        this.consultaCargo = consultaCargo;
+    }
+
+    public boolean isCadastraCargo() {
+        return cadastraCargo;
+    }
+
+    public void setCadastraCargo(boolean cadastraCargo) {
+        this.cadastraCargo = cadastraCargo;
+    }
+
+    public boolean isAlteraCargo() {
+        return alteraCargo;
+    }
+
+    public void setAlteraCargo(boolean alteraCargo) {
+        this.alteraCargo = alteraCargo;
     }
 
     public String getDtaInc() {

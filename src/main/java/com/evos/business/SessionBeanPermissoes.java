@@ -75,7 +75,7 @@ public class SessionBeanPermissoes {
             permissoesVO.setCadastraCategoria(permissoes.getCadastraCategoria().equalsIgnoreCase("S") ? true : false);
         }
         if (!Utils.isNullOrEmpty(permissoes.getAlteraCategoria())) {
-            permissoesVO.setAlterarCategoria(permissoes.getAlteraCategoria().equalsIgnoreCase("S") ? true : false);
+            permissoesVO.setAlteraCategoria(permissoes.getAlteraCategoria().equalsIgnoreCase("S") ? true : false);
         }
         if (!Utils.isNullOrEmpty(permissoes.getCadastraUsuario())) {
             permissoesVO.setCadastraUsuario(permissoes.getCadastraUsuario().equalsIgnoreCase("S") ? true : false);
