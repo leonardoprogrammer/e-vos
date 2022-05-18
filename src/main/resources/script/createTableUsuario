@@ -1,0 +1,16 @@
+CREATE TABLE USUARIO
+(
+    id long primary key,
+    nome varchar(150),
+    id_cargo long,
+    tipo_usuario int,
+    data_admissao timestamp,
+    cpf varchar(20),
+    data_nasc timestamp,
+    email varchar(60),
+    ativo varchar(1),
+    dta_inc varchar(20),
+    login_inc varchar(30),
+    dta_alt varchar(20),
+    login_alt varchar(30)
+)

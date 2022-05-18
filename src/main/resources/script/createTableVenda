@@ -1,0 +1,21 @@
+CREATE TABLE VENDA
+(
+    id long primary key,
+    id_produto long,
+    id_vendedor long,
+    id_cliente long,
+    valor_total double,
+    valor_desconto double,
+    qtd_itens int,
+    data_compra timestamp,
+    tipo_venda int,
+    forma_pagamento int,
+    gerou_nfse varchar(1),
+    observacao varchar(1),
+    cancelada varchar(1),
+    data_cancela timestamp,
+    dta_inc varchar(20),
+    login_inc varchar(30),
+    dta_alt varchar(20),
+    login_alt varchar (30)
+)

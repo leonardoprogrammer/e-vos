@@ -1,0 +1,10 @@
+CREATE TABLE CONFIGURACOES
+(
+    enviar_email_venda varchar(1),
+    enviar_notif_venda_app varchar(1),
+    enviar_notif_meta_app varchar(1),
+    dta_inc varchar(20),
+    login_inc varchar(30),
+    dta_alt varchar(20),
+    login_alt varchar(30)
+)

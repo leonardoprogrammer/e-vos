@@ -1,0 +1,15 @@
+CREATE TABLE DESCONTOPRODUTO
+(
+    id long primary key,
+    id_produto long,
+    qtd_minima int,
+    tipo_desconto int,
+    porcentagem double,
+    valor double,
+    apenar_um varchar(1),
+    ativo varchar(1),
+    dta_inc varchar(20),
+    login_inc varchar(30),
+    dta_alt varchar(20),
+    login_alt varchar(30)
+)

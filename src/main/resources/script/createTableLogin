@@ -1,0 +1,11 @@
+CREATE TABLE LOGIN
+(
+    id long primary key,
+    id_usuario long,
+    username varchar(30),
+    senha varchar(100),
+    dta_inc varchar(20),
+    login_inc varchar(30),
+    dta_alt varchar(20),
+    login_alt varchar(30)
+)

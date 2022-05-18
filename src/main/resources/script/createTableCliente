@@ -1,0 +1,16 @@
+CREATE TABLE CLIENTE
+(
+    id long primary key,
+    nome varchar(150),
+    cpf_cnpj varchar(20),
+    data_nasc timestamp,
+    email varchar(60),
+    endereco varchar(150),
+    telefone_um varchar(20),
+    telefone_dois varchar(20),
+    envia_email varchar(1),
+    dta_inc varchar(20),
+    login_inc varchar(30),
+    dta_alt varchar(20),
+    login_alt varchar(30)
+)

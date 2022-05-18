@@ -1,0 +1,10 @@
+CREATE TABLE CATEGORIA
+(
+    id long primary key,
+    nome varchar(150),
+    ativo varchar(1),
+    dta_inc varchar(20),
+    login_inc varchar(30),
+    dta_alt varchar(20),
+    login_alt varchar(30)
+)

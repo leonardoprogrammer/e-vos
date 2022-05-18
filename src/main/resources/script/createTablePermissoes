@@ -1,0 +1,25 @@
+CREATE TABLE PERMISSOES
+(
+    id long primary key,
+    consulta_venda varchar(1),
+    registra_venda varchar(1),
+    altera_venda varchar(1),
+    consulta_produto varchar(1),
+    cadastra_produto varchar(1),
+    altera_produto varchar(1),
+    consulta_categoria varchar(1),
+    cadastra_categoria varchar(1),
+    altera_categoria varchar(1),
+    consulta_usuario varchar(1),
+    cadastra_usuario varchar(1),
+    altera_usuario varchar(1),
+    cosulta_cliente varchar(1),
+    cadastra_cliente varchar(1),
+    altera_cliente varchar(1),
+    consulta_desconto varchar(1),
+    altera_desconto varchar(1),
+    dta_inc varchar(20),
+    login_inc varchar(30),
+    dta_alt varchar(20),
+    login_alt varchar(30)
+)

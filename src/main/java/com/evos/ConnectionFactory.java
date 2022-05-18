@@ -8,11 +8,11 @@ import java.sql.DriverManager;
  */
 public class ConnectionFactory {
 
-    private static final String DB_USERNAME = "root";
-    private static final String DB_PASSWORD = "root";
+    private static final String DB_USERNAME = "evosgold";
+    private static final String DB_PASSWORD = "devacs";
 
     // jdbc:[banco]://[ip ou caminho]:[porta]/[nome do banco]
-    private static final String DB_URL = "jdbc:mysql://127.0.0.1:3055/C:/Evos/data/db/dbevos";
+    private static final String DB_URL = "jdbc:mysql://127.0.0.1:3050/C:/Evos/data/db/dbevos";
 
     public static Connection createConnectionToMySql() throws Exception {
         Class.forName("com.mysql.jdbc.Driver"); // Faz com que a classe seja carregada

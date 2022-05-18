@@ -1,0 +1,11 @@
+CREATE TABLE VENDAITEM
+(
+    id long primary key,
+    id_venda long,
+    sequencial long,
+    id_produto long,
+    valor_unidade double,
+    desconto_produto double,
+    valor_item double,
+    quantidade int
+)

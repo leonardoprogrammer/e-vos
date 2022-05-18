@@ -1,0 +1,12 @@
+CREATE TABLE EMPRESA
+(
+    id long primary key,
+    nome varchar(150),
+    cnpj varchar(20),
+    possui_cnpj varchar(1),
+    ativa varchar(1),
+    dta_inc varchar(20),
+    login_inc varchar(30),
+    dta_alt varchar(20),
+    login_alt varchar(30)
+)
