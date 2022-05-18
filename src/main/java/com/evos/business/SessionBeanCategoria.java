@@ -1,5 +1,6 @@
 package com.evos.business;
 
+import com.evos.filtro.FiltrosCategorias;
 import com.evos.model.dao.CategoriaDAO;
 import com.evos.model.entity.Categoria;
 import com.evos.model.vo.CategoriaVO;
@@ -43,6 +44,10 @@ public class SessionBeanCategoria {
             }
             return categoriasVO;
         }
+        return null;
+    }
+
+    public List<CategoriaVO> recuperarCategoriasPorFiltros(FiltrosCategorias filtros) {
         return null;
     }
 
